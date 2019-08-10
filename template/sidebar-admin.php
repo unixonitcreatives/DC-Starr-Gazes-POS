@@ -23,7 +23,7 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="supplier-add.php"><i class="fa fa-circle-o"></i>Add Suppliers</a></li>
+                                <li><a href="supplier-add.php">Add Suppliers</a></li>
                                 <li><a href="supplier-manage.php">Manage Suppliers</a></li>
                             </ul>
                         </li>

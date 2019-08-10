@@ -23,8 +23,8 @@
           </li>
 
           <li class="dropdown user user-menu">
-            <a href="logout.php" class="icon-bar">
-              <span class="hidden-xs">Log out</span>
+            <a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default">
+              <span class="hidden-xs">Log out</span> 
             </a>
           </li>
 
@@ -32,3 +32,25 @@
       </div>
     </nav>
   </header>
+
+  <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Log out</h4>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to log out your account?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">No</button>
+                <a href="login.php" class="btn btn-primary btn">Yes</a>
+                
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+  </div>

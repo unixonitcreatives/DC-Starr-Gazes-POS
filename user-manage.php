@@ -113,53 +113,71 @@ function test_input($data) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Add User Accounts<br>
+         Manage User Accounts<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          <div class="col-md-6">
+          <div class="col-md-8">
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
-              <h3 class="box-title">User's Information</h3>
-              <br>View all <a href="user-manage.php" class="text-center">user accounts</a>
+              <h3 class="box-title">Search for User Account Information</h3>
+              <br><a href="user-add.php" class="text-center">+ add new user</a>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-              <div class="box-body">
-                <div class="form-group">
-                  <label>Username</label> <code class="text-orange">Max. 10 characters</code>
-                  <input type="text" class="form-control" placeholder="Username" name="username" oninput="upperCase(this)" maxlength="10" required>
-                </div>
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover dataTable">
+                      <thead>
+                        <tr>
+                          <th>No.</th>
+                          <th>Username</th>
+                          <th>User Type</th>
+                          <th>Time Created</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        // Include config file
+                        require_once 'config.php';
 
-                <div class="form-group">
-                  <label>Password</label>  <code class="text-orange">Max. 20 characters</code>
-                  <input type="password" class="form-control" placeholder="Password" name="password" maxlength="20" required>
-                </div>
+                        // Attempt select query execution
+                        $query = "SELECT * FROM users ORDER BY usertype asc, username asc";
+                        if($result = mysqli_query($link, $query)){
+                          if(mysqli_num_rows($result) > 0){
+                            $ctr = 0;
+                            while($row = mysqli_fetch_array($result)){
+                              $ctr++;
+                              echo "<tr>";
+                              echo "<td>" . $ctr . "</td>";
+                              echo "<td>" . $row['username'] . "</td>";
+                              echo "<td>" . $row['usertype'] . "</td>";
+                              echo "<td>" . $row['created_at'] . "</td>";
+                              echo "<td>";
+                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                              echo "</td>";
+                              echo "</tr>";
+                            }
+                            // Free result set
+                            mysqli_free_result($result);
+                          } else{
+                            echo "<p class='lead'><em>No records were found.</em></p>";
+                          }
+                        } else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
 
-                <div class="form-group">
-                <label>User Type</label>
-                <select class="form-control select2" style="width: 100%;" name="usertype" required>
-                  <option>Administrator</option>
-                  <option>Manager</option>
-                  <option>Cashier</option>
-                </select>
-              </div>
-              <!-- /.box-body -->
+                        // Close connection
+                        mysqli_close($link);
+                        ?>
+                      </tbody>
+                    </table>
             </div>
-              <div class="box-footer">
-                <button type="submit" class="btn btn-default" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();" >Save</button>
-              </div>
-            </form>
           </div>
-          <!-- /.box -->
-
-
-        </div>
+      </div>
     </section>
   <!-- /.content-wrapper -->
 </div>

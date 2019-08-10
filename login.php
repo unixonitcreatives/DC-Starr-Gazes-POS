@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   else
   {
     // Display an error message
-    $alertError = "No account found with that username or password.";
+    $alertError = "Invalid username & password combination";
   }
 
   // Close connection
@@ -141,25 +141,24 @@ body {
 
     <img class="img-responsive pad" src="dist/logo-01.png">
     <p class="login-box-msg">Sign in your credentials</p>
-
+      <p class="text-danger"><?php echo $alertError ?></p>
+    
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
       <div class="form-group has-feedback">
-        <input type="text" name="username" class="form-control" placeholder="Username">
+        <input type="text" name="username" class="form-control" placeholder="Username" oninput="upperCase(this)">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <p class="text-danger"><?php echo $username_err; ?></p>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password">
+        <input type="password" name="password" class="form-control" placeholder="Password"> 
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <p class="text-danger"><?php echo $password_err; ?></p>
       <div class="row">
-        <div class="col-xs-8">
 
-        </div>
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-12">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </div>
         <!-- /.col -->
@@ -174,34 +173,7 @@ body {
 </div>
 <!-- /.login-box -->
 
-<!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="plugins/iCheck/icheck.min.js"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' /* optional */
-    });
-  });
-</script>
-
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
-
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
-
-});
-</script>
+<?php include('template/js.php'); ?>
 
 </body>
 </html>
