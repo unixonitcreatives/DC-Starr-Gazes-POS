@@ -33,8 +33,8 @@
     </nav>
   </header>
 
-  <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal modal-default fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -42,11 +42,11 @@
                 <h4 class="modal-title">Log out</h4>
               </div>
               <div class="modal-body">
-                <p>Are you sure you want to log out your account?</p>
+                <p>Are you sure you want to log-out your account?</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">No</button>
-                <a href="login.php" class="btn btn-primary btn">Yes</a>
+                <a href="login.php" class="btn btn-default btn" data-dismiss="modal">No</a>
+                <a href="login.php" class="btn btn-danger btn">Yes</a>
                 
               </div>
             </div>

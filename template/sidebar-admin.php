@@ -129,8 +129,9 @@
                         <li><a href="report.php"><i class="fa fa-pie-chart"></i> <span>Reports</span></a>
                         </li>
 
-                        <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
+                        <li><a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default"><i class="fa fa-close"></i> <span>Logout</span></a>
                         </li>
                     </ul>      
                 </section>
             </aside>
+
