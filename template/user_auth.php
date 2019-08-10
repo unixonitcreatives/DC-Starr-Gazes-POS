@@ -5,7 +5,7 @@
     else if($Manager_auth && $_SESSION["usertype"] == "Manager"){
 
     }
-    else if($Accounting_auth && $_SESSION["usertype"] == "Accounting"){
+    else if($Cashier_auth && $_SESSION["usertype"] == "Cashier"){
 
     }
     else {
