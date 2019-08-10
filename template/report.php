@@ -6,11 +6,11 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>DC Star Gazes | Dashboard</title>
+<title>MyHome | Report</title>
 <!-- ======================= CSS ================================= -->
 <?php include('template/css.php'); ?>
 </head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition skin-green fixed sidebar-mini">
 <div class="wrapper">
 
   <!-- ======================= MENU BAR =========================== -->
@@ -22,14 +22,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Welcome to DC Starr Gazes Dashboard<br>
-        <small>Insert Tagline, Contact Details or Important Details</small>
+        Report
+        <small>asdasdas</small>
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-    
+      <?php  echo $_SESSION['usertype']; ?>
     </section>
   <!-- /.content-wrapper -->
 </div>
