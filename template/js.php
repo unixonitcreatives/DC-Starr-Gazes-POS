@@ -32,6 +32,10 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<!-- Notify -->
+<script src="dist/js/notify.js"></script>
+<!-- Notify -->
+<script src="dist/js/notify.min.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -40,6 +44,12 @@
   function upperCase(a){
     setTimeout(function(){
         a.value = a.value.toUpperCase();
+
     }, 1);
-}
+
+	}
+
+	function Notify(verb,mode){
+		$.notify(verb,mode);
+	}
 </script>

@@ -59,13 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
 
                                     if($result){
-                                      //If execution is completed
-
-                                      $alertMessage = "<div class='alert alert-success' role='alert'>
-                                      New user successfully added.
-                                      </div>";
-
-                                      header("location: user-add.php");
+                                      echo "<script>Notify('new user added succesfully','success');</script>";
                                     }else{
                                       //If execution failed
 
