@@ -9,51 +9,85 @@
 ?>
 <!-- =======================   =================== -->
 <?php
-// Define variables and initialize with empty values
-$username=$password=$usertype=$alertMessage="";
 
 require_once "config.php";
-
+echo "<script>console.log('Post')</script>";
 //If the form is submitted or not.
 //If the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    //Assigning posted values to variables.
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
-    $usertype = test_input($_POST['usertype']);
+if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapag inapprove ko
 
-    // Validate username
-    if(empty($username)){
-        $alertMessage = "Please enter a username.";
-    }
-
-    // Validate password
-    if(empty($password)){
-        $alertMessage = "Please enter a password.";
-    }
-
-    // Validate user type
-    if(empty($usertype)){
         $alertMessage = "Please enter a user type.";
-    }
+    
 
 
     // Check input errors before inserting in database
     if(empty($alertMessage)){
-      /*=======================================================================================================
+      //=======================================================================================================
+
+
+    $query = "SELECT * FROM generate_po WHERE custID = '".$_GET['custID']."'"; // Get Data of the row approved
+      echo $_GET['custID'];  echo "<script>console.log('Test')</script>";
+
+          if($result = mysqli_query($link, $query)){ // Execute Query
+              if(mysqli_num_rows($result) > 0){ 
+                while($row = mysqli_fetch_array($result)){ // This is where the Magic Begins
+                $count = $row['qty']; //$count is equal to the quantity in the PO
+                $j = 0; //set lng ng mga variable
+                $product_SKU = $row['product_description']; //kukunin product description ng PO
+                $warehouse_ID = $row['warehouse_name']; //kukunin warehouse info ng PO
+                $stock_status = "In Stock"; //Automatic pag ka approve, In Stock na
+                $approved_by = $_SESSION["username"]; //Kung sino nag pindot ng Approve (Check Button)
+                $sold_to = "";
+                $sold_by = "";
+                
+                for ($j = 0; $j < $count; $j++) {//LOOP Start.
+
+                    $IDtype = "SC";//Set yung custom ID natin, mag sisimula lahat sa "SC"
+
+                    $qry = mysqli_query($link,"SELECT MAX(id) FROM `stock`"); // Get the latest ID dun sa stock table
+                    $resulta = mysqli_fetch_array($qry);//Execute and fetch data
+                    $newID = $resulta['MAX(id)'] + 1; //Get the latest ID then Add 1
+                    $custID = str_pad($newID, 8, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
+                    $custnewID = $IDtype.$custID; //Prepare $custom new ID
+
+                    $query = "INSERT INTO stock 
+                    (custID, product_SKU, warehouse_ID, stock_status, approved_by, sold_to, sold_by, approved_by) 
+                    VALUES 
+                    ('$custnewID', '$product_SKU', '$warehouse_ID', '$stock_status', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
+
+                    $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
+                                    
+                    if($result){
+                                    echo "<script>Notify('new product model added succesfully','Success');</script>";
+                                    echo "<script>console.log('new user added');</script>";
+                                    echo "<script>window.location('po-manage.php');</script>";
+                    }else{
+                                    //If execution failed
+                                    $alertMessage = "<div class='alert alert-danger' role='alert'>
+                                    Error adding data.
+                                    </div>";}
+                                    mysqli_close($link);
+                    }
+                }//Loop End                    
+
+
+                  }
+
+                }
+          }
+
+
+          /*
           $j = 0;
           //count of product SKU posted
-          $count = sizeof($_POST['Product SKU']);
-
+          $count = sizeof($_POST['product_SKU']);
           // Get the id of last table inserted and insert into new table
           $po_trans_id = $link->insert_id;
-
           //session loggedin user
           $user  = $_SESSION["username"];
-
           //for loop
-          for ($j = 0; $j < $count; $j++) {
-            $query = "INSERT INTO table (product_sku,warehouse,user) VALUES (
+          for ($j = 0; $j < $count; $j++) { // LOOP START
+              $query = "INSERT INTO table (product_sku,warehouse,user) VALUES (
               '".$po_trans_id."',
               '".$_POST['product_sku'][$j]."',
               '".$_POST['warehouse'][$j]."',
@@ -62,58 +96,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
 
               if($result){
-       $alertMessage = "<div class='alert alert-success' role='alert'>
-       New user successfully added in database.
-       </div>";
-     }else{
-       $alertMessage = "<div class='alert alert-danger' role='alert'>
-       Error Adding data in Database.
-       </div>";}
+                 $alertMessage = "<div class='alert alert-success' role='alert'>
+                 New user successfully added in database.
+                 </div>";
+               }else{
+                 $alertMessage = "<div class='alert alert-danger' role='alert'>
+                 Error Adding data in Database.
+                 </div>";}
+          }
+          */
 
 
-      =========================================================================================================*/
-        //Check if the username is already in the database
-        $sql_check = "SELECT username FROM users WHERE username ='$username'";
-        if($result = mysqli_query($link, $sql_check)){ //Execute query
-                                 if(mysqli_num_rows($result) > 0){
-                                    //If the username already exists
-                                    //Try another username pop up
-                                    echo "<script> window.alert('Username already exist, Please try again a different name')</script>";
-
-                                     mysqli_free_result($result);
-                                 } else{
-                                    //If the username doesnt exist in the database
-                                    //Proceed adding to database
-                                    //Checking the values are existing in the database or not
-                                    $query = "INSERT INTO users (username, password, usertype)
-                                                   VALUES ('$username', '$password', '$usertype')"; //Prepare query
-
-                                    $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
-
-                                    if($result){
-                                      //If execution is completed
-
-                                      $alertMessage = "<div class='alert alert-success' role='alert'>
-                                      New user successfully added.
-                                      </div>";
-
-                                      header("location: user-add.php");
-                                    }else{
-                                      //If execution failed
-
-                                      $alertMessage = "<div class='alert alert-danger' role='alert'>
-                                      Error adding data.
-                                      </div>";}
-                                      mysqli_close($link);
-                                 }
-                             } else{
-                                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                             }
-
-                             mysqli_close($link);
-
-        }
-      }
+}
 
 function test_input($data) {
     $data = trim($data);
@@ -195,7 +189,8 @@ function test_input($data) {
                               echo "<td>" . $row['created_by']." on ". $row['created_at'] . "</td>";
                               echo "<td>";
 
-                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Approve' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+                              echo "<a href='po-manage.php?id=". $row['custID'] ."' methodtitle='Approve' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+                               echo "<script>console.log('Approved Clicked')</script>";
 
                               echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
