@@ -1,4 +1,6 @@
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+
+
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -32,24 +34,27 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- Notify -->
-<script src="dist/js/notify.js"></script>
-<!-- Notify -->
-<script src="dist/js/notify.min.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+
+  <!-- Notify -->
+<script src="dist/js/notify.js"></script>
+<!-- Notify -->
+<script src="dist/js/notify.min.js"></script>
+
 <script>
   //uppercase text box
   function upperCase(a){
     setTimeout(function(){
         a.value = a.value.toUpperCase();
-
+        $.notify("its woooorking","warn");
     }, 1);
 
-	}
+  }
 
-	function Notify(verb,mode){
-		$.notify(verb,mode);
-	}
+  function Notify(msg,mode){
+    $.notify(msg,mode);
+  }
 </script>

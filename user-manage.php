@@ -120,7 +120,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          <div class="col-md-8">
+          <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
@@ -132,6 +132,7 @@ function test_input($data) {
                       <thead>
                         <tr>
                           <th>No.</th>
+                          <th>ACC No.</th>
                           <th>Username</th>
                           <th>User Type</th>
                           <th>Time Created</th>
@@ -152,6 +153,7 @@ function test_input($data) {
                               $ctr++;
                               echo "<tr>";
                               echo "<td>" . $ctr . "</td>";
+                              echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['username'] . "</td>";
                               echo "<td>" . $row['usertype'] . "</td>";
                               echo "<td>" . $row['created_at'] . "</td>";
