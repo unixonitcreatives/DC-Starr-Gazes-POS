@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
@@ -40,6 +40,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Check input errors before inserting in database
     if(empty($alertMessage)){
+      /*=======================================================================================================
+          $j = 0;
+          //count of product SKU posted
+          $count = sizeof($_POST['Product SKU']);
+
+          // Get the id of last table inserted and insert into new table
+          $po_trans_id = $link->insert_id;
+
+          //session loggedin user
+          $user  = $_SESSION["username"];
+
+          //for loop
+          for ($j = 0; $j < $count; $j++) {
+            $query = "INSERT INTO table (product_sku,warehouse,user) VALUES (
+              '".$po_trans_id."',
+              '".$_POST['product_sku'][$j]."',
+              '".$_POST['warehouse'][$j]."',
+              '".$user."')";
+
+              $result = mysqli_multi_query($link, $query) or die(mysqli_error($link));
+
+              if($result){
+       $alertMessage = "<div class='alert alert-success' role='alert'>
+       New user successfully added in database.
+       </div>";
+     }else{
+       $alertMessage = "<div class='alert alert-danger' role='alert'>
+       Error Adding data in Database.
+       </div>";}
+
+
+      =========================================================================================================*/
         //Check if the username is already in the database
         $sql_check = "SELECT username FROM users WHERE username ='$username'";
         if($result = mysqli_query($link, $sql_check)){ //Execute query
@@ -53,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     //If the username doesnt exist in the database
                                     //Proceed adding to database
                                     //Checking the values are existing in the database or not
-                                    $query = "INSERT INTO users (username, password, usertype) 
+                                    $query = "INSERT INTO users (username, password, usertype)
                                                    VALUES ('$username', '$password', '$usertype')"; //Prepare query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
