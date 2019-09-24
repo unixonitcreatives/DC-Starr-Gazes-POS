@@ -7,7 +7,7 @@
   $Cashier_auth = 0;
  include('template/user_auth.php');
 ?>
-<!-- =======================   =================== -->
+<!-- ========================================== -->
 <?php
 
 require_once "config.php";
@@ -185,15 +185,34 @@ function test_input($data) {
                               echo "<td>" . $row['product_description'] . "</td>";
                               echo "<td>" . $row['warehouse_name'] . "</td>";
                               echo "<td>" . $row['qty'] . "</td>";
-                              echo "<td>" . $row['po_status'] . "</td>";
+
+                              if($row['po_status']=="Pending"){
+                                echo "<td><span class='badge bg-orange'>Pending</span></td>";
+                              } elseif ($row['po_status']=="Approved"){
+                                echo "<td><span class='badge bg-green'>Approved</span></td>";
+                              } elseif ($row['po_status']=="Void"){
+                                echo "<td><span class='badge bg-red'>Void</span></td>";
+                              } else {
+                                echo "<td><span class='badge bg-gray'>Error</span></td>";
+                              }
+
                               echo "<td>" . $row['created_by']." on ". $row['created_at'] . "</td>";
                               echo "<td>";
 
-                              echo "<a href='po-manage.php?id=". $row['custID'] ."' methodtitle='Approve' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-                               echo "<script>console.log('Approved Clicked')</script>";
+                              if($row['po_status']=="Pending"){
+                                echo "<a href='po-approve.php?custID=". $row['custID'] ."' methodtitle='Approve' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
-                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                              } elseif ($row['po_status']=="Approved"){
 
+
+                              } elseif ($row['po_status']=="Void"){
+
+
+                              } else {
+
+                              }
+                              
                               echo "</td>";
                               echo "</tr>";
                             }
