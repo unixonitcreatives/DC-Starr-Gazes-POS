@@ -74,7 +74,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <!-- <li><a href="PO-add.php">Add PO</a></li> -->
-                                <li><a href="SO-manage.php">Manage Stocks</a></li>
+                                <li><a href="stock-manage.php">Manage Stocks</a></li>
 
                             </ul>
                         </li>
