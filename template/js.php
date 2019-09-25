@@ -66,6 +66,21 @@
 {
     $('#loader').show();
     // do your upload stuff
-    $('#loader').hide();    
+    $('#loader').hide();
 }
+</script>
+
+<!-- dataTable script -->
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
 </script>
