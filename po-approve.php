@@ -54,7 +54,10 @@ require_once "config.php";
                                                               $result_update = mysqli_query($link, $query_update) or die(mysqli_error($link));
                                                               if($result_update){
                                                                 //Update Query OK
+                                                                echo "<script>$.notify('success','success');</script>";
                                                                 header( "Location: po-manage.php" );
+                                                                
+
                                                               }else{
                                                                 //Update Query Fail
                                                               }
@@ -67,6 +70,7 @@ require_once "config.php";
                                       }//If End (Check PO Status)
                                       else {
                                         echo "<script>alert('this PO is no longer available for approval.')</script>";
+                                        echo "<script>$.notify('asd','warn');</script>";
                                         header( "Location: po-manage.php" );
                                       }
                             

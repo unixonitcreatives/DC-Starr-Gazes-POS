@@ -160,6 +160,7 @@ function test_input($data) {
                           <th>No.</th>
                           <th>SC No.</th>
                           <th>Product SKU</th>
+                          <th>PO No.</th>
                           <th>Warehouse</th>
                           <th>Status</th>
                           <th>Sold To</th>
@@ -185,6 +186,7 @@ function test_input($data) {
                               echo "<td>" . $ctr . "</td>";
                               echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['product_SKU'] . "</td>";
+                              echo "<td>" . $row['PO_ID'] . "</td>";
                               echo "<td>" . $row['warehouse_ID'] . "</td>";
 
                               if($row['stock_status']=="In Stock"){

@@ -39,6 +39,10 @@
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<img id="loader" src="loading.gif" />
+
+
   <!-- Notify -->
 <script src="dist/js/notify.js"></script>
 <!-- Notify -->
@@ -57,4 +61,11 @@
   function Notify(msg,mode){
     $.notify(msg,mode);
   }
+
+  function submit()
+{
+    $('#loader').show();
+    // do your upload stuff
+    $('#loader').hide();    
+}
 </script>
