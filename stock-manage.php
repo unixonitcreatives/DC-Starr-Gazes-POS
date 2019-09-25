@@ -164,8 +164,7 @@ function test_input($data) {
 
                           <th>Warehouse</th>
                           <th>Status</th>
-                          <th>Sold To</th>
-                          <th>Sold By</th>
+
                           <th>Approved By</th>
 
                           <th>Action</th>
@@ -188,7 +187,7 @@ function test_input($data) {
                               echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['product_SKU'] . "</td>";
                               echo "<td>" . $row['PO_ID'] . "</td>";
-                              echo "<td>" . $row['warehouse_ID'] . "</td>";
+                              echo "<td><a href='warehouse-view.php?WHid=".$row['warehouse_ID']."'>" . $row['warehouse_ID'] . "</a></td>";
 
                               if($row['stock_status']=="In Stock"){
                                 echo "<td><span class='badge bg-green'>In Stock</span></td>";
@@ -199,8 +198,7 @@ function test_input($data) {
                               } else {
                                 echo "<td><span class='badge bg-gray'>Error</span></td>";
                               }
-                              echo "<td>" . $row['sold_to'] . "</td>";
-                              echo "<td>" . $row['sold_by'] . "</td>";
+
                               echo "<td>" . $row['approved_by']." on ". $row['created_at'] . "</td>";
                               echo "<td>";
 

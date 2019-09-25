@@ -1,95 +1,11 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
  include('template/user_auth.php');
-?>
-<!-- =======================   =================== -->
-<?php
-// Define variables and initialize with empty values
-$username=$password=$usertype=$alertMessage="";
-
-require_once "config.php";
-
-//If the form is submitted or not.
-//If the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    //Assigning posted values to variables.
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
-    $usertype = test_input($_POST['usertype']);
-
-    // Validate username
-    if(empty($username)){
-        $alertMessage = "Please enter a username.";
-    }
-
-    // Validate password
-    if(empty($password)){
-        $alertMessage = "Please enter a password.";
-    }
-
-    // Validate user type
-    if(empty($usertype)){
-        $alertMessage = "Please enter a user type.";
-    }
-
-
-    // Check input errors before inserting in database
-    if(empty($alertMessage)){
-        //Check if the username is already in the database
-        $sql_check = "SELECT username FROM users WHERE username ='$username'";
-        if($result = mysqli_query($link, $sql_check)){ //Execute query
-                                 if(mysqli_num_rows($result) > 0){
-                                    //If the username already exists
-                                    //Try another username pop up
-                                    echo "<script> window.alert('Username already exist, Please try again a different name')</script>";
-
-                                     mysqli_free_result($result);
-                                 } else{
-                                    //If the username doesnt exist in the database
-                                    //Proceed adding to database
-                                    //Checking the values are existing in the database or not
-                                    $query = "INSERT INTO users (username, password, usertype) 
-                                                   VALUES ('$username', '$password', '$usertype')"; //Prepare query
-
-                                    $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
-
-                                    if($result){
-                                      //If execution is completed
-
-                                      $alertMessage = "<div class='alert alert-success' role='alert'>
-                                      New user successfully added.
-                                      </div>";
-
-                                      header("location: user-add.php");
-                                    }else{
-                                      //If execution failed
-
-                                      $alertMessage = "<div class='alert alert-danger' role='alert'>
-                                      Error adding data.
-                                      </div>";}
-                                      mysqli_close($link);
-                                 }
-                             } else{
-                                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                             }
-
-                             mysqli_close($link);
-
-        }
-      }
-
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-
 ?>
 <!-- ================================================================ -->
 <!DOCTYPE html>
@@ -113,38 +29,51 @@ function test_input($data) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Manage Warehouse<br>
+         Stock<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          <div class="col-md-6">
+          <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
-              <h3 class="box-title">Search for Warehouse Information</h3>
-              <br><a href="warehouse-add.php" class="text-center">+ add new warehouse</a>
+              <h3 class="box-title"><?php echo $_GET['WHid'];
+              require_once "config.php";
+              $select_query = "SELECT warehouse_name FROM warehouse WHERE custID = '".$_GET['WHid']."'";
+              $qry = mysqli_query($link,$select_query);
+              $warehouse_name = mysqli_fetch_array($qry);
+              echo $warehouse_name[''];
+
+              ?> </h3>
+              <br><a href="warehouse-manage.php" class="text-center">Warehouse Menu</a>, 
+              <a href="#" class="text-center">Distinct Mode</a>
             </div>
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover dataTable">
                       <thead>
                         <tr>
                           <th>No.</th>
-                          <th>ACC No.</th>
-                          <th>Warehouse Name</th>
+                          <th>SC No.</th>
+                          <th>PO No.</th>
+                          <th>SKU</th>
+
+                          <th>Warehouse</th>
+                          <th>Status</th>
+                          <th>Approved By</th>
+
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-
                         <?php
                         // Include config file
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM warehouse ORDER BY warehouse_name asc";
+                        $query = "SELECT * FROM stock WHERE warehouse_ID = '".$_GET['WHid']."'";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -152,12 +81,43 @@ function test_input($data) {
                               $ctr++;
                               echo "<tr>";
                               echo "<td>" . $ctr . "</td>";
-                              echo "<td><a href='warehouse-view.php?WHid=".$row['custID']."'>" . $row['custID'] . "</a></td>";
-                              echo "<td>" . $row['warehouse_name'] . "</td>";
-                               echo "<td>" . $row['address'] . "</td>";
+                              echo "<td>" . $row['custID'] . "</td>";
+                              echo "<td>" . $row['product_SKU'] . "</td>";
+                              echo "<td>" . $row['PO_ID'] . "</td>";
+                              echo "<td>" . $row['warehouse_ID'] . "</td>";
+
+                              if($row['stock_status']=="In Stock"){
+                                echo "<td><span class='badge bg-green'>In Stock</span></td>";
+                              } elseif ($row['stock_status']=="Sold"){
+                                echo "<td><span class='badge bg-orange'>Sold</span></td>";
+                              } elseif ($row['stock_status']=="Void"){
+                                echo "<td><span class='badge bg-red'>Void</span></td>";
+                              } else {
+                                echo "<td><span class='badge bg-gray'>Error</span></td>";
+                              }
+
+                              echo "<td>" . $row['approved_by']." on ". $row['created_at'] . "</td>";
                               echo "<td>";
-                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+
+                              if($row['stock_status']=="In Stock"){
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
+
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
+
+                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+
+                              } elseif ($row['po_status']=="Sold"){
+
+
+                              } elseif ($row['po_status']=="Void"){
+
+
+                              } else {
+
+                              }
+                              
                               echo "</td>";
                               echo "</tr>";
                             }
