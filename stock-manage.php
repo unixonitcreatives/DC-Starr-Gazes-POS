@@ -159,8 +159,9 @@ function test_input($data) {
                         <tr>
                           <th>No.</th>
                           <th>SC No.</th>
-                          <th>Product SKU</th>
                           <th>PO No.</th>
+                          <th>SKU</th>
+
                           <th>Warehouse</th>
                           <th>Status</th>
                           <th>Sold To</th>
