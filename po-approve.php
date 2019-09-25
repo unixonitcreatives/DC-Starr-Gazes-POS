@@ -42,9 +42,9 @@ require_once "config.php";
                                                           $custnewID = $IDtype.$custID; //Prepare $custom new ID
 
                                                           $query = "INSERT INTO stock 
-                                                          (custID, product_SKU, warehouse_ID, stock_status, sold_to, sold_by, approved_by) 
+                                                          (custID, product_SKU, PO_ID, warehouse_ID, stock_status, sold_to, sold_by, approved_by) 
                                                           VALUES 
-                                                          ('$custnewID', '$product_SKU', '$warehouse_ID', '$stock_status', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
+                                                          ('$custnewID', '$PO', '$product_SKU', '$warehouse_ID', '$stock_status', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
 
                                                           $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
                                                                           
