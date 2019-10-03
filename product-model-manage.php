@@ -128,19 +128,19 @@ function test_input($data) {
               <br><a href="product-model-add.php" class="text-center">+ add new product model</a>
             </div>
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover dataTable">
+              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th width="3%">No.</th>
-                          <th width="10%">PM No.</th>
-                          <th width="20%">Product Description</th>
-                          <th width="5%">SKU</th>
-                          <th width="5%">Category</th>
-                          <th width="5%">Supplier</th>
-                          <th width="10%">Supplier Price</th>
-                          <th width="10%">Retail Price</th>
-                          <th width="20%">Detail</th>
-                          <th width="0%">Action</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
+                          <th  class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PM No.</th>
+                          <th  class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product Description</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SKU</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier</th>
+                          <th  class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Supplier Price</th>
+                          <th  class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Retail Price</th>
+                          <th  class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Detail</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>

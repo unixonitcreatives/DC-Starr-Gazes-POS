@@ -128,16 +128,16 @@ function test_input($data) {
               <br><a href="customer-add.php" class="text-center">+ add new customer</a>
             </div>
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover dataTable">
+              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>CS No.</th>
-                          <th>Last Name</th>
-                          <th>First Name</th>
-                          <th>Contact</th>
-                          <th>Address</th>
-                          <th>Time Created</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">CS No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Last Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">First Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Contact</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Address</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Time Created</th>
                           <th>Action</th>
                         </tr>
                       </thead>

@@ -120,7 +120,6 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
@@ -128,12 +127,12 @@ function test_input($data) {
               <br><a href="category-add.php" class="text-center">+ add new category</a>
             </div>
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover dataTable">
+              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>CT No.</th>
-                          <th>Category</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">CT No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Category</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -176,7 +175,6 @@ function test_input($data) {
                     </table>
             </div>
           </div>
-      </div>
     </section>
   <!-- /.content-wrapper -->
 </div>
