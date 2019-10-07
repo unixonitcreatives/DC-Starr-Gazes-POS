@@ -22,14 +22,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $password = test_input($_POST['password']);
     $usertype = test_input($_POST['usertype']);
 
-    // Validate username
-    if(empty($username)){
-        $alertMessage = "Please enter a username.";
-    }
+
 
     // Validate password
     if(empty($password)){
         $alertMessage = "Please enter a password.";
+    }
+
+    // Validate username
+    if(empty($username)){
+        $alertMessage = "Please enter a username.";
     }
 
     // Validate user type
@@ -46,20 +48,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                  if(mysqli_num_rows($result) > 0){
                                     //If the username already exists
                                     //Try another username pop up
-                                    echo "<script> window.alert('Username already exist, Please try again a different name')</script>";
-
-                                     mysqli_free_result($result);
+                                    echo "<script>$.notify('Username already exist','success');</script>";
+                                    echo "<script>console.log('Username already exist');</script>";
+                                    mysqli_free_result($result);
                                  } else{
                                     //If the username doesnt exist in the database
                                     //Proceed adding to database
-                                    //Checking the values are existing in the database or not
-                                    $query = "INSERT INTO users (username, password, usertype) 
-                                                   VALUES ('$username', '$password', '$usertype')"; //Prepare query
 
-                                    $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
+                                    //Prepare Date for custom ID
+                                    $IDtype = "ACC";
+                                    $m = date('m');
+                                    $y = date('y');
+                                    $d = date('d');
 
+                                    $qry = mysqli_query($link,"SELECT MAX(id) FROM `users`"); // Get the latest ID
+                                    $resulta = mysqli_fetch_array($qry);
+                                    $newID = $resulta['MAX(id)'] + 1; //Get the latest ID then Add 1
+                                    $custID = str_pad($newID, 4, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
+                                    $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
+
+                                    $query = "INSERT INTO users (custID, username, password, usertype) 
+                                                   VALUES ('$custnewID', '$username', '$password', '$usertype')"; //Prepare insert query
+
+                                    $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
+                                    
+                                    
                                     if($result){
-                                      echo "<script>Notify('new user added succesfully','success');</script>";
+                                    echo "<script>Notify('new user added succesfully','Success');</script>";
+                                    echo "<script>console.log('new user added');</script>";
                                     }else{
                                       //If execution failed
 
@@ -114,6 +130,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
+          
           <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
@@ -125,6 +142,7 @@ function test_input($data) {
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
+                <?php echo $alertMessage ?></p>
                 <div class="form-group">
                   <label>Username</label> <code class="text-orange">Max. 10 characters</code>
                   <input type="text" class="form-control" placeholder="Username" name="username" oninput="upperCase(this)" maxlength="10" required>
@@ -250,6 +268,8 @@ $(document).ready(function () {
       showInputs: false
     })
   })
+
+
 </script>
 
 
