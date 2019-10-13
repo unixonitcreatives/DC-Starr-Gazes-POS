@@ -29,7 +29,7 @@
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-              
+
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
@@ -41,7 +41,9 @@
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
-                <?php echo $alertMessage ?></p>              
+
+                <?php echo $alertMessage ?>
+
               <div class="col-md-6">
                 <div class="form-group">
                 <label>Customer</label>
@@ -172,7 +174,7 @@
                         </tr>
                       </tbody>
                     </table>
-   
+
         </div>
               <!-- /.box-body -->
             </div>
@@ -212,7 +214,9 @@
       <?php include('template/js.php'); ?>
 
 
-<!-- =========================== PAGE SCRIPT ======================== -->
+
+<!-- =========================== MODAL ======================== -->
+
   <div class="modal modal-default fade" id="modal-add-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-l" role="document">
             <div class="modal-content">
@@ -224,13 +228,48 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label>Stock No. (SCxxxxxxxxx)</label>
-                  <input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required>
+
+                  <!--<input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required> -->
+                  <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" required>
+                          <?php
+                          // Include config file
+                          require_once "config.php";
+                          // Attempt select query execution
+                          $query = "";
+                          $query = "SELECT * FROM stock ORDER BY custID, stock_status asc";
+                          if($result = mysqli_query($link, $query)){
+                          if(mysqli_num_rows($result) > 0){
+
+                          while($row = mysqli_fetch_array($result)){
+
+                          echo "<option value='".$row['custID']."'>"
+                          echo " - .$row['product_SKU'].";
+                          echo " - .$row['product_SKU'].";
+
+
+                          "</option>";
+                          }
+
+                           // Free result set
+                          mysqli_free_result($result);
+                          } else{
+                          echo "<p class='lead'><em>No records were found.</em></p>";
+                          }
+                          } else{
+                            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                          }
+
+                          mysqli_close($link);
+
+                          ?>
+                  </select>
+
                 </div>
               </div>
               <div class="modal-footer">
                 <a href="" class="btn btn-default btn" data-dismiss="modal">No</a>
                 <a href="" class="btn btn-success btn">Add</a>
-                
+
               </div>
             </div>
             <!-- /.modal-content -->
@@ -247,7 +286,7 @@
                 <h4 class="modal-title">ORDER SUMMARY</h4>
               </div>
               <div class="modal-body">
-            
+
                 <table class="table table-bordered table-striped">
                   <tr>
                     <td><label>Customer:</label></td>
@@ -288,11 +327,12 @@
               <div class="modal-footer">
                 <a href="" class="btn btn-default btn" data-dismiss="modal">Close</a>
                 <a href="" class="btn btn-warning btn">Save</a>
-                <a href="" class="btn btn-success btn">Print & Save</a>
+                <a href="" class="btn btn-success btn">Print &amp; Save</a>
+
                 
               </div>
 
-             
+
             </div>
             <!-- /.modal-content -->
           </div>
@@ -300,5 +340,4 @@
     </div>
 </body>
 </html>
-
 

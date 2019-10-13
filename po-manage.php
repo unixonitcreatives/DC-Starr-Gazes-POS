@@ -17,7 +17,7 @@ echo "<script>console.log('Post')</script>";
 if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapag inapprove ko
 
         $alertMessage = "Please enter a user type.";
-    
+
 
 
     // Check input errors before inserting in database
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
       echo $_GET['custID'];  echo "<script>console.log('Test')</script>";
 
           if($result = mysqli_query($link, $query)){ // Execute Query
-              if(mysqli_num_rows($result) > 0){ 
+              if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_array($result)){ // This is where the Magic Begins
                 $count = $row['qty']; //$count is equal to the quantity in the PO
                 $j = 0; //set lng ng mga variable
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                 $approved_by = $_SESSION["username"]; //Kung sino nag pindot ng Approve (Check Button)
                 $sold_to = "";
                 $sold_by = "";
-                
+
                 for ($j = 0; $j < $count; $j++) {//LOOP Start.
 
                     $IDtype = "SC";//Set yung custom ID natin, mag sisimula lahat sa "SC"
@@ -50,13 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                     $custID = str_pad($newID, 8, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                     $custnewID = $IDtype.$custID; //Prepare $custom new ID
 
-                    $query = "INSERT INTO stock 
-                    (custID, product_SKU, warehouse_ID, stock_status, approved_by, sold_to, sold_by, approved_by) 
-                    VALUES 
+                    $query = "INSERT INTO stock
+                    (custID, product_SKU, warehouse_ID, stock_status, approved_by, sold_to, sold_by, approved_by)
+                    VALUES
                     ('$custnewID', '$product_SKU', '$warehouse_ID', '$stock_status', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
 
                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
-                                    
+
                     if($result){
                                     echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                                     </div>";}
                                     mysqli_close($link);
                     }
-                }//Loop End                    
+                }//Loop End
 
 
                   }
@@ -154,16 +154,16 @@ function test_input($data) {
               <br><a href="po-generate.php" class="text-center">+ generate new PO</a>
             </div>
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover dataTable">
+              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>PO No.</th>
-                          <th>Product SKU</th>
-                          <th>Warehouse</th>
-                          <th>Quantity</th>
-                          <th>Status</th>
-                          <th>Created by</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Product SKU</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Warehouse</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Quantity</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Created by</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -212,7 +212,7 @@ function test_input($data) {
                               } else {
 
                               }
-                              
+
                               echo "</td>";
                               echo "</tr>";
                             }
@@ -248,88 +248,8 @@ function test_input($data) {
       <?php include('template/js.php'); ?>
 
 
-<!-- =========================== PAGE SCRIPT ======================== -->
 
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
-
-});
-</script>
-
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
-
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
-
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    })
-
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass   : 'iradio_minimal-blue'
-    })
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass   : 'iradio_minimal-red'
-    })
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass   : 'iradio_flat-green'
-    })
-
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
-
-    //Timepicker
-    $('.timepicker').timepicker({
-      showInputs: false
-    })
-  })
-</script>
 
 
 
