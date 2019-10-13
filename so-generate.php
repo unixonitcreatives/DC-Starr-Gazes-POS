@@ -100,7 +100,7 @@
                           echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                         }
 
-                        mysqli_close($link);
+                        //mysqli_close($link);
 
                         ?>
                 </select>
@@ -232,12 +232,8 @@
 
                           while($row = mysqli_fetch_array($result)){
 
-                          echo "<option value='".$row['custID']."'>"
-                          echo " - .$row['product_SKU'].";
-                          echo " - .$row['product_SKU'].";
+                          echo "<option value='".$row['custID']."'>" .$row['custID'].  "</option>";
 
-
-                          "</option>";
                           }
 
                            // Free result set
@@ -326,4 +322,3 @@
     </div>
 </body>
 </html>
-
