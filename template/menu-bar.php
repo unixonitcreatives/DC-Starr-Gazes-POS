@@ -46,7 +46,7 @@
               </div>
               <div class="modal-footer">
                 <a href="login.php" class="btn btn-default btn" data-dismiss="modal">No</a>
-                <a href="login.php" class="btn btn-danger btn">Yes</a>
+                <a href="logout.php" class="btn btn-danger btn">Yes</a>
                 
               </div>
             </div>

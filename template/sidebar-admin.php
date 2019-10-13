@@ -98,8 +98,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="customer-add.php">Add SO</a></li>
-                                <li><a href="customer-manage.php">Manage SO</a></li>
+                                <li><a href="so-generate.php">Generate SO</a></li>
+                                <li><a href="so-manage.php">Manage SO</a></li>
                             </ul>
                         </li>
                         <li class="treeview">

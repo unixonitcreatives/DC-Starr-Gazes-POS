@@ -49,7 +49,7 @@
 
               ?> </h3>
               <br><a href="warehouse-manage.php" class="text-center">Warehouse Menu</a>, 
-              <a href="warehouse-view-distinct.php?WHid="<?php echo $_GET['WHid']; ?>" class="text-center">Distinct Mode</a>
+              <a href="#" class="text-center">Distinct Mode</a>
             </div>
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover dataTable">
@@ -73,7 +73,7 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM stock WHERE warehouse_ID = '".$_GET['WHid']."'";
+                        $query = "SELECT COUNT(DISTINCT product_SKU) FROM stock WHERE warehouse_ID = '".$_GET['WHid']."'";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -83,7 +83,7 @@
                               echo "<td>" . $ctr . "</td>";
                               echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['product_SKU'] . "</td>";
-                              echo "<td>" . $row['PO_ID'] . "</td>";
+                              echo "<td>" . $row['COUNT'] . "</td>";
                               echo "<td>" . $row['warehouse_ID'] . "</td>";
 
                               if($row['stock_status']=="In Stock"){

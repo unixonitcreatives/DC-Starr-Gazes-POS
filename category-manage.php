@@ -7,90 +7,8 @@
   $Cashier_auth = 0;
  include('template/user_auth.php');
 ?>
-<!-- =======================   =================== -->
-<?php
-// Define variables and initialize with empty values
-$username=$password=$usertype=$alertMessage="";
-
-require_once "config.php";
-
-//If the form is submitted or not.
-//If the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    //Assigning posted values to variables.
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
-    $usertype = test_input($_POST['usertype']);
-
-    // Validate username
-    if(empty($username)){
-        $alertMessage = "Please enter a username.";
-    }
-
-    // Validate password
-    if(empty($password)){
-        $alertMessage = "Please enter a password.";
-    }
-
-    // Validate user type
-    if(empty($usertype)){
-        $alertMessage = "Please enter a user type.";
-    }
-
-
-    // Check input errors before inserting in database
-    if(empty($alertMessage)){
-        //Check if the username is already in the database
-        $sql_check = "SELECT username FROM users WHERE username ='$username'";
-        if($result = mysqli_query($link, $sql_check)){ //Execute query
-                                 if(mysqli_num_rows($result) > 0){
-                                    //If the username already exists
-                                    //Try another username pop up
-                                    echo "<script> window.alert('Username already exist, Please try again a different name')</script>";
-
-                                     mysqli_free_result($result);
-                                 } else{
-                                    //If the username doesnt exist in the database
-                                    //Proceed adding to database
-                                    //Checking the values are existing in the database or not
-                                    $query = "INSERT INTO users (username, password, usertype) 
-                                                   VALUES ('$username', '$password', '$usertype')"; //Prepare query
-
-                                    $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
-
-                                    if($result){
-                                      //If execution is completed
-
-                                      $alertMessage = "<div class='alert alert-success' role='alert'>
-                                      New user successfully added.
-                                      </div>";
-
-                                      header("location: user-add.php");
-                                    }else{
-                                      //If execution failed
-
-                                      $alertMessage = "<div class='alert alert-danger' role='alert'>
-                                      Error adding data.
-                                      </div>";}
-                                      mysqli_close($link);
-                                 }
-                             } else{
-                                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                             }
-
-                             mysqli_close($link);
-
-        }
-      }
-
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-
-?>
+<!-- =========================== JAVASCRIPT ========================= -->
+<?php include('template/js.php'); ?>
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -126,6 +44,7 @@ function test_input($data) {
               <h3 class="box-title">Search for Categories</h3>
               <br><a href="category-add.php" class="text-center">+ add new category</a>
             </div>
+
             <div class="box-body">
               <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
@@ -140,7 +59,6 @@ function test_input($data) {
                         <?php
                         // Include config file
                         require_once 'config.php';
-
                         // Attempt select query execution
                         $query = "SELECT * FROM categories ORDER BY category_name asc";
                         if($result = mysqli_query($link, $query)){
@@ -152,7 +70,6 @@ function test_input($data) {
                               echo "<td>" . $ctr . "</td>";
                               echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['category_name'] . "</td>";
-
                               echo "<td>";
                               echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                               echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
@@ -185,93 +102,6 @@ function test_input($data) {
       <?php include('template/footer.php'); ?>
   </footer>
 
-
-<!-- =========================== JAVASCRIPT ========================= -->
-      <?php include('template/js.php'); ?>
-
-
-<!-- =========================== PAGE SCRIPT ======================== -->
-
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
-
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
-
-});
-</script>
-
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
-
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
-
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    })
-
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass   : 'iradio_minimal-blue'
-    })
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass   : 'iradio_minimal-red'
-    })
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass   : 'iradio_flat-green'
-    })
-
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
-
-    //Timepicker
-    $('.timepicker').timepicker({
-      showInputs: false
-    })
-  })
-</script>
 
 
 

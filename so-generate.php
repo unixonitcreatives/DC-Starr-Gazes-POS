@@ -29,7 +29,6 @@
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
@@ -172,7 +171,6 @@
                         </tr>
                       </tbody>
                     </table>
-
         </div>
               <!-- /.box-body -->
             </div>
@@ -193,10 +191,6 @@
 
         </div>
 
-
-
-
-
     </section>
   <!-- /.content-wrapper -->
 </div>
@@ -213,6 +207,7 @@
 
 
 <!-- =========================== MODAL ======================== -->
+
   <div class="modal modal-default fade" id="modal-add-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-l" role="document">
             <div class="modal-content">
@@ -258,12 +253,12 @@
 
                           ?>
                   </select>
+
                 </div>
               </div>
               <div class="modal-footer">
                 <a href="" class="btn btn-default btn" data-dismiss="modal">No</a>
                 <a href="" class="btn btn-success btn">Add</a>
-
               </div>
             </div>
             <!-- /.modal-content -->
@@ -280,7 +275,6 @@
                 <h4 class="modal-title">ORDER SUMMARY</h4>
               </div>
               <div class="modal-body">
-
                 <table class="table table-bordered table-striped">
                   <tr>
                     <td><label>Customer:</label></td>
@@ -325,7 +319,6 @@
 
               </div>
 
-
             </div>
             <!-- /.modal-content -->
           </div>
@@ -333,3 +326,4 @@
     </div>
 </body>
 </html>
+
