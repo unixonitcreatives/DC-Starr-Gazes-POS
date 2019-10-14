@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
