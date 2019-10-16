@@ -38,14 +38,14 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form method="post" action="functions/incoming_so.php" class="form-group">
+            <form method="POST" action="functions/incoming_so.php">
               <div class="box-body">
                 <!--<?php echo $alertMessage ?>-->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Stock No. (SCxxxxxxxxx)</label>
                     <!--<input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required> -->
-                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="scNum" required>
+                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="scNum" id="scNum" required>
                       <?php
                       // Include config file
                       require_once "config.php";
@@ -77,7 +77,7 @@
                   </div>
                   <div class="form-group">
                     <label>Customer</label>
-                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" required>
+                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" id="customer_ID" required>
                       <?php
                       // Include config file
                       require_once "config.php";
@@ -108,7 +108,7 @@
 
                   <div class="form-group">
                     <label>Warehouse</label>
-                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" required>
+                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name" required>
                       <?php
                       // Include config file
                       require_once "config.php";
@@ -152,8 +152,8 @@
             <div class="form-group">
             <label>Detail</label>
             <textarea class="form-control" rows="3" maxlength="300" id="" oninput="upperCase(this)" placeholder="This text area has a limit of 300 char" name="product_detail"></textarea>
-          </div>
-        -->
+          </div>-->
+
       </div>
       <div class="col-md-6 ">
         <table class="table table-borderless ">
@@ -179,7 +179,7 @@
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
                   echo "<tr>";
-                  echo "<td><a href='#' methodtitle='Remove Item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>";
+                  echo "<td><a href='functions/delete_item_list.php?stock_ID=". $row['stock_ID'] ."&&so_price=". $row['so_price'] ."  ' title='delete item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>";
                   echo "<td>" .$row['stock_ID']. "</td>";
                   echo "<td>" .$row['so_desc']. "</td>";
                   echo "<td>" .$row['so_qty']. "</td>";
@@ -215,14 +215,21 @@
           <td></td>
           <td>TAX:</td>
           <td>0</td>-->
+          <?php
+          require_once 'config.php';
+          $gTotal="";
+          $totalQuery = "SELECT SUM(so_price) AS totalAmount FROM sales_order";
+          $totalResult = mysqli_query($link, $totalQuery);
 
+          while ($row = mysqli_fetch_assoc($totalResult)){
+          $gTotal = $row['totalAmount'];
+
+          }
+          ?>
 
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>GRANDTOTAL:</td>
-          <td>25</td>
+          <td colspan="4">GRANDTOTAL:</td>
+          <td><?php echo $gTotal; ?></td>
         </tr>
       </tbody>
     </table>
@@ -231,7 +238,7 @@
 </div>
 <div class="box-footer">
   <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product</a>
-  <button class="btn btn-primary" type="submit" name="add" value="add" >List Product</button>
+  <button class="btn btn-primary" type="submit" name="addList">List Product</button>
   <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
   <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
   <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
@@ -276,37 +283,7 @@
           <form method="post" action="functions/incoming_so.php">
             <div class="form-group">
               <label>Stock No. (SCxxxxxxxxx)</label>
-              <!--<input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required> -->
-              <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" required>
-                <?php
-                // Include config file
-                require_once "config.php";
-                // Attempt select query execution
-                $query = "";
-                $query = "SELECT * FROM stock ORDER BY custID, stock_status asc";
-                if($result = mysqli_query($link, $query)){
-                  if(mysqli_num_rows($result) > 0){
-
-                    while($row = mysqli_fetch_array($result)){
-
-                      echo "<option value='".$row['custID']."'>" .$row['custID']. " | " .$row['product_SKU']. " | " .$row['stock_status']."</option>";
-
-                    }
-
-                    // Free result set
-                    mysqli_free_result($result);
-                  } else{
-                    echo "<p class='lead'><em>No records were found.</em></p>";
-                  }
-                } else{
-                  echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                }
-
-                mysqli_close($link);
-
-                ?>
-              </select>
-
+              <input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required>
             </div>
 
           </div>
@@ -379,5 +356,26 @@
       </div>
       <!-- /.modal-dialog -->
     </div>
+
+<!------------------------------------- WIP for AJAX --------------------------------->
+    <!--<script>
+    //ajax script to add product on the list
+    //attached submit handler to the form
+      $("#addList").submit(function(event){
+    // Stop form from submitting normally
+    event.preventDefault();
+    //get the action attribute from the <form action=""> element
+      var $form = $( this ),
+          url = $form.attr( 'functions/incoming_so.php' );
+    //Send the data using post with element id name and name2*/
+      var posting = $.post( url, { scNum: $('#scNum').val(), customer_ID: $('#customer_ID').val(), warehouse_name:  $('#warehouse_name').val()} );
+    //Send form data using Ajax requests
+    //$.post("functions/incoming_so.php", $("#listForm").serialize());
+    //Alerts the results
+      posting.done(function( data ) {
+        alert('success');
+      });
+      });
+    </script>-->
   </body>
   </html>
