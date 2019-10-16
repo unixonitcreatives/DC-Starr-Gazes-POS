@@ -38,18 +38,46 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form method="post" action="functions/incoming_so.php">
+            <form method="post" action="functions/incoming_so.php" class="form-group">
               <div class="box-body">
-                <?php echo $alertMessage ?></p>
+                <!--<?php echo $alertMessage ?>-->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Stock No. (SCxxxxxxxxx)</label>
-                    <input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required>
+                    <!--<input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required> -->
+                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="scNum" required>
+                      <?php
+                      // Include config file
+                      require_once "config.php";
+                      // Attempt select query execution
+                      $query = "";
+                      $query = "SELECT * FROM stock ORDER BY custID, stock_status asc";
+                      if($result = mysqli_query($link, $query)){
+                        if(mysqli_num_rows($result) > 0){
 
+                          while($row = mysqli_fetch_array($result)){
+
+                            echo "<option value='".$row['custID']."'>" .$row['custID']. " | " .$row['product_SKU']. " | " .$row['stock_status']."</option>";
+
+                          }
+
+                          // Free result set
+                          mysqli_free_result($result);
+                        } else{
+                          echo "<p class='lead'><em>No records were found.</em></p>";
+                        }
+                      } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                      }
+
+                      //mysqli_close($link);
+
+                      ?>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label>Customer</label>
-                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="product_SKU" required>
+                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" required>
                       <?php
                       // Include config file
                       require_once "config.php";
@@ -127,12 +155,11 @@
           </div>
         -->
       </div>
-      <div class="col-md-6">
-        <table id="example" class="table table-bordered table-striped dataTable">
+      <div class="col-md-6 ">
+        <table class="table table-borderless ">
           <thead>
             <tr>
               <th>Option</th>
-              <th>No.</th>
               <th>Stock No.</th>
               <th>Description</th>
               <th>Qty</th>
@@ -140,8 +167,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td> </td>
+
 
               <?php
               require_once ('config.php');
@@ -152,12 +178,13 @@
               if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
+                  echo "<tr>";
                   echo "<td><a href='#' methodtitle='Remove Item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                  echo "<td>" .$row['id']. "</td>";
                   echo "<td>" .$row['stock_ID']. "</td>";
                   echo "<td>" .$row['so_desc']. "</td>";
                   echo "<td>" .$row['so_qty']. "</td>";
                   echo "<td>" .$row['so_price']. "</td>";
+                  echo "</tr>";
 
                 }
               } else {
@@ -187,11 +214,10 @@
           <td></td>
           <td></td>
           <td>TAX:</td>
-          <td>0</td>
-        </tr> -->
+          <td>0</td>-->
+
 
         <tr>
-          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -205,6 +231,7 @@
 </div>
 <div class="box-footer">
   <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product</a>
+  <button class="btn btn-primary" type="submit" name="add" value="add" >List Product</button>
   <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
   <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
   <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
