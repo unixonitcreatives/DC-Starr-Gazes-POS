@@ -180,7 +180,6 @@
                 while($row = mysqli_fetch_assoc($result)) {
                   echo "<tr>";
                   echo "<td><a href='functions/delete_item_list.php?stock_ID=". $row['stock_ID'] ."&&so_price=". $row['so_price'] ."  ' title='delete item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                  echo "<td>" .$row['stock_ID']. "</td>";
                   echo "<td>" .$row['so_desc']. "</td>";
                   echo "<td>" .$row['so_qty']. "</td>";
                   echo "<td>" .$row['so_price']. "</td>";
