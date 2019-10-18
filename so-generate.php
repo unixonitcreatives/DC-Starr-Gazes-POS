@@ -160,7 +160,6 @@
           <thead>
             <tr>
               <th>Option</th>
-              <th>Stock No.</th>
               <th>Description</th>
               <th>Qty</th>
               <th>Price</th>
@@ -171,18 +170,22 @@
 
               <?php
               require_once ('config.php');
+              $desc=$qty=$price="";
 
-              $query  = "SELECT * from sales_order";
+              $query  = "SELECT stock_ID, so_desc AS DESCRIPTION, COUNT(so_qty) AS QTY, SUM(so_price) AS PRICE from sales_order GROUP BY so_desc";
               $result = mysqli_query($link, $query);
 
               if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
+                  $desc = $row['DESCRIPTION'];
+                  $qty = $row['QTY'];
+                  $price = $row['PRICE'];
                   echo "<tr>";
-                  echo "<td><a href='functions/delete_item_list.php?stock_ID=". $row['stock_ID'] ."&&so_price=". $row['so_price'] ."  ' title='delete item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>";
-                  echo "<td>" .$row['so_desc']. "</td>";
-                  echo "<td>" .$row['so_qty']. "</td>";
-                  echo "<td>" .$row['so_price']. "</td>";
+                  echo "<td><a href='functions/delete_item_list.php?stock_ID=". $row['stock_ID'] ."&&so_price=". $price ."  ' title='delete item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>";
+                  echo "<td>" . $desc . "</td>";
+                  echo "<td>" . $qty . "</td>";
+                  echo "<td>" . $price . "</td>";
                   echo "</tr>";
 
                 }
@@ -227,7 +230,7 @@
           ?>
 
         <tr>
-          <td colspan="4">GRANDTOTAL:</td>
+          <td colspan="3">GRANDTOTAL:</td>
           <td><?php echo $gTotal; ?></td>
         </tr>
       </tbody>
