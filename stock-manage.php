@@ -17,7 +17,7 @@ echo "<script>console.log('Post')</script>";
 if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapag inapprove ko
 
         $alertMessage = "Please enter a user type.";
-    
+
 
 
     // Check input errors before inserting in database
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
       echo $_GET['custID'];  echo "<script>console.log('Test')</script>";
 
           if($result = mysqli_query($link, $query)){ // Execute Query
-              if(mysqli_num_rows($result) > 0){ 
+              if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_array($result)){ // This is where the Magic Begins
                 $count = $row['qty']; //$count is equal to the quantity in the PO
                 $j = 0; //set lng ng mga variable
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                 $approved_by = $_SESSION["username"]; //Kung sino nag pindot ng Approve (Check Button)
                 $sold_to = "";
                 $sold_by = "";
-                
+
                 for ($j = 0; $j < $count; $j++) {//LOOP Start.
 
                     $IDtype = "SC";//Set yung custom ID natin, mag sisimula lahat sa "SC"
@@ -50,13 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                     $custID = str_pad($newID, 8, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                     $custnewID = $IDtype.$custID; //Prepare $custom new ID
 
-                    $query = "INSERT INTO stock 
-                    (custID, product_SKU, warehouse_ID, stock_status, approved_by, sold_to, sold_by, approved_by) 
-                    VALUES 
+                    $query = "INSERT INTO stock
+                    (custID, product_SKU, warehouse_ID, stock_status, approved_by, sold_to, sold_by, approved_by)
+                    VALUES
                     ('$custnewID', '$product_SKU', '$warehouse_ID', '$stock_status', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
 
                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
-                                    
+
                     if($result){
                                     echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                                     </div>";}
                                     mysqli_close($link);
                     }
-                }//Loop End                    
+                }//Loop End
 
 
                   }
@@ -211,16 +211,29 @@ function test_input($data) {
 
                                 echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
-                              } elseif ($row['po_status']=="Sold"){
+                              } elseif ($row['stock_status']=="Sold"){
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
+
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
+
+                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
 
-                              } elseif ($row['po_status']=="Void"){
+                              } elseif ($row['stock_status']=="Void"){
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
 
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
+
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
+
+                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
                               } else {
 
                               }
-                              
+
                               echo "</td>";
                               echo "</tr>";
                             }

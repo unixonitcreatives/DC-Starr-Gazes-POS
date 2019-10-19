@@ -159,7 +159,6 @@
         <table class="table table-borderless ">
           <thead>
             <tr>
-              <th>Option</th>
               <th>Description</th>
               <th>Qty</th>
               <th>Price</th>
@@ -172,7 +171,7 @@
               require_once ('config.php');
               $desc=$qty=$price="";
 
-              $query  = "SELECT stock_ID, so_desc AS DESCRIPTION, COUNT(so_qty) AS QTY, SUM(so_price) AS PRICE from sales_order GROUP BY so_desc";
+              $query  = "SELECT so_desc AS DESCRIPTION, COUNT(so_qty) AS QTY, SUM(so_price) AS PRICE from sales_order GROUP BY so_desc";
               $result = mysqli_query($link, $query);
 
               if (mysqli_num_rows($result) > 0) {
@@ -182,7 +181,6 @@
                   $qty = $row['QTY'];
                   $price = $row['PRICE'];
                   echo "<tr>";
-                  echo "<td><a href='functions/delete_item_list.php?stock_ID=". $row['stock_ID'] ."&&so_price=". $price ."  ' title='delete item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>";
                   echo "<td>" . $desc . "</td>";
                   echo "<td>" . $qty . "</td>";
                   echo "<td>" . $price . "</td>";
@@ -230,7 +228,7 @@
           ?>
 
         <tr>
-          <td colspan="3">GRANDTOTAL:</td>
+          <td colspan="2">GRANDTOTAL:</td>
           <td><?php echo $gTotal; ?></td>
         </tr>
       </tbody>
