@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
@@ -75,12 +75,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custID = str_pad($newID, 7, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
-                                    $query = "INSERT INTO product_model (custID, product_description, product_SKU, product_category, product_supplier, supplier_price, sell_price, product_detail) 
+                                    $query = "INSERT INTO product_model (custID, product_description, product_SKU, product_category, product_supplier, supplier_price, sell_price, product_detail)
                                     VALUES ('$custnewID', '$product_description', '$product_SKU', '$product_category', '$product_supplier', '$supplier_price', '$sell_price', '$product_detail')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
-                                    
-                                    
+
+
                                     if($result){
                                     echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
@@ -143,7 +143,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          
+      <div class="row">
           <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
@@ -258,6 +258,7 @@ function test_input($data) {
 
 
         </div>
+      </div>
     </section>
   <!-- /.content-wrapper -->
 </div>

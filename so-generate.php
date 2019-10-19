@@ -51,13 +51,13 @@
                       require_once "config.php";
                       // Attempt select query execution
                       $query = "";
-                      $query = "SELECT * FROM stock ORDER BY custID, stock_status asc";
+                      $query = "SELECT * FROM stock WHERE stock_status = 'In Stock' ";
                       if($result = mysqli_query($link, $query)){
                         if(mysqli_num_rows($result) > 0){
 
                           while($row = mysqli_fetch_array($result)){
 
-                            echo "<option value='".$row['custID']."'>" .$row['custID']. " | " .$row['product_SKU']. " | " .$row['stock_status']."</option>";
+                            echo "<option value='".$row['custID']."'>" .$row['custID']. " | " .$row['PO_ID']. " | " .$row['stock_status']."</option>";
 
                           }
 
@@ -298,6 +298,7 @@
     <!-- /.modal-dialog -->
   </div>
 
+<!-- ================================== ORDER SUMMARY MODAL ===================================== --------------->
   <div class="modal modal-default fade" id="modal-checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-l" role="document">
       <div class="modal-content">
