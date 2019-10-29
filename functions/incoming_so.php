@@ -1,5 +1,7 @@
 <?php
 
+//echo "OOHHHH YEEAAAHHH!!!";
+
 include '../config.php';
 
 
@@ -31,13 +33,6 @@ $insertQuery = "INSERT INTO sales_order (stock_ID, so_desc, so_qty, so_price, so
 $insertResult = mysqli_query($link, $insertQuery);
 
 header("location:../so-generate.php");
-
-
-
-
-
-
-
 
 
 

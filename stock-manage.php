@@ -176,7 +176,7 @@ function test_input($data) {
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM stock ORDER BY custID, stock_status asc";
+                        $query = "SELECT * FROM stock ORDER BY custID, stock_status DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;

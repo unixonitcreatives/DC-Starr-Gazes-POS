@@ -37,7 +37,7 @@
               <br><a href="so-manage.php" class="text-center">Manage SO</a>
             </div>
             <!-- /.box-header -->
-            <!-- form start -->
+            <!-- form start method="POST" action="functions/incoming_so.php" -->
             <form method="POST" action="functions/incoming_so.php">
               <div class="box-body">
                 <!--<?php echo $alertMessage ?>-->
@@ -154,17 +154,17 @@
             <textarea class="form-control" rows="3" maxlength="300" id="" oninput="upperCase(this)" placeholder="This text area has a limit of 300 char" name="product_detail"></textarea>
           </div>-->
 
-      </div>
-      <div class="col-md-6 ">
-        <table class="table table-borderless ">
-          <thead>
-            <tr>
-              <th>Description</th>
-              <th>Qty</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
+        </div>
+        <div class="col-md-6 ">
+          <table class="table table-borderless ">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
 
 
               <?php
@@ -222,30 +222,30 @@
           $totalResult = mysqli_query($link, $totalQuery);
 
           while ($row = mysqli_fetch_assoc($totalResult)){
-          $gTotal = $row['totalAmount'];
+            $gTotal = $row['totalAmount'];
 
           }
           ?>
 
-        <tr>
-          <td colspan="2">GRANDTOTAL:</td>
-          <td><?php echo $gTotal; ?></td>
-        </tr>
-      </tbody>
-    </table>
+          <tr>
+            <td colspan="2">GRANDTOTAL:</td>
+            <td><?php echo $gTotal; ?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
   </div>
-  <!-- /.box-body -->
-</div>
-<div class="box-footer">
-  <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product</a>
-  <button class="btn btn-primary" type="submit" name="addList">List Product</button>
-  <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
-  <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
-  <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
-  <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
+  <div class="box-footer">
+    <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product</a>
+    <button class="btn btn-primary" type="submit" name="addList" id="submit">List Product</button>
+    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
+    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
+    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
+    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
 
-  <a class="btn btn-success" data-toggle="modal" data-target="#modal-checkout" >Check out</a>
-</div>
+    <a class="btn btn-success" data-toggle="modal" data-target="#modal-checkout" >Check out</a>
+  </div>
 </form>
 
 </div>
@@ -298,7 +298,7 @@
     <!-- /.modal-dialog -->
   </div>
 
-<!-- ================================== ORDER SUMMARY MODAL ===================================== --------------->
+  <!-- ================================== ORDER SUMMARY MODAL ===================================== --------------->
   <div class="modal modal-default fade" id="modal-checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-l" role="document">
       <div class="modal-content">
@@ -358,25 +358,29 @@
       <!-- /.modal-dialog -->
     </div>
 
-<!------------------------------------- WIP for AJAX --------------------------------->
+    <!--========================== WIP for AJAX =================================-->
     <!--<script>
-    //ajax script to add product on the list
-    //attached submit handler to the form
-      $("#addList").submit(function(event){
-    // Stop form from submitting normally
-    event.preventDefault();
-    //get the action attribute from the <form action=""> element
-      var $form = $( this ),
-          url = $form.attr( 'functions/incoming_so.php' );
-    //Send the data using post with element id name and name2*/
-      var posting = $.post( url, { scNum: $('#scNum').val(), customer_ID: $('#customer_ID').val(), warehouse_name:  $('#warehouse_name').val()} );
-    //Send form data using Ajax requests
-    //$.post("functions/incoming_so.php", $("#listForm").serialize());
-    //Alerts the results
-      posting.done(function( data ) {
-        alert('success');
-      });
-      });
-    </script>-->
+    $(document).ready(function(){
+    $('#submit').on('click', function(){
+      var scNum = $('#scNum').val();
+      var customer_ID = $('#customer_ID').val();
+      var wID = $('#warehouse_name').val();
+      var dataString = 'scNum='+scNum+'&customer_ID='+customer_ID+'&wID='+wID;
+
+      if(scNum=='' || customer_ID=='' || wID== ''){
+        alert('Must have data');
+      }else {
+        $.ajax({
+          type:'POST',
+          url: 'functions/incoming_so.php',
+          data: dataString,
+
+        });
+      }
+      return false;
+    });
+  });
+
+</script>-->
   </body>
   </html>
