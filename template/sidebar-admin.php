@@ -36,7 +36,9 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="category-add.php">Add Categories</a></li>
+                                <li><a href="category-sub-add.php">Add Sub-Categories</a></li>
                                 <li><a href="category-manage.php">Manage Categories</a></li>
+                                <li><a href="category-manage.php">Manage Sub-Categories</a></li>
                             </ul>
                         </li>
 
@@ -74,7 +76,9 @@
                             </a>
                             <ul class="treeview-menu">
                                 <!-- <li><a href="PO-add.php">Add PO</a></li> -->
-                                <li><a href="stock-manage.php">Manage Stocks</a></li>
+                                <li><a href="stock-manage.php">In-Stocks</a></li>
+                                <li><a href="stock-manage-sold.php">Sold</a></li>
+                                <li><a href="stock-manage-void.php">Void</a></li>
 
                             </ul>
                         </li>

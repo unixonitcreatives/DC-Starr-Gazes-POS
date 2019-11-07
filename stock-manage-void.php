@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Stock Manage (In-Stock)<br>
+         Stock Manage (Void)<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -68,7 +68,7 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM stock WHERE stock_status='In Stock' ORDER BY custID, warehouse_ID asc";
+                        $query = "SELECT * FROM stock WHERE stock_status='Void' ORDER BY custID, warehouse_ID asc";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
