@@ -11,7 +11,6 @@
 <?php
 // Define variables and initialize with empty values
 $product_description=$product_SKU=$product_category=$product_supplier=$supplier_price=$sell_price=$product_detail=$alertMessage="";
-
 require_once "config.php";
 
 //If the form is submitted or not.
@@ -21,9 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $product_description = test_input($_POST['product_description']);
     $product_SKU = test_input($_POST['product_SKU']);
     $product_category = test_input($_POST['product_category']);
+    $product_sub_category = test_input($_POST['product_sub_category']);
     $product_supplier = test_input($_POST['product_supplier']);
     $supplier_price = test_input($_POST['supplier_price']);
     $sell_price = test_input($_POST['sell_price']);
+    $SRP = test_input($_POST['SRP']);
     $product_detail = test_input($_POST['product_detail']);
 
 
@@ -75,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custID = str_pad($newID, 7, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
-                                    $query = "INSERT INTO product_model (custID, product_description, product_SKU, product_category, product_supplier, supplier_price, sell_price, product_detail) 
-                                    VALUES ('$custnewID', '$product_description', '$product_SKU', '$product_category', '$product_supplier', '$supplier_price', '$sell_price', '$product_detail')"; //Prepare insert query
+                                    $query = "INSERT INTO product_model (custID, product_description, product_SKU, product_category, product_sub_category, product_supplier, supplier_price, sell_price, suggested_retail_price, product_detail) 
+                                    VALUES ('$custnewID', '$product_description', '$product_SKU', '$product_category','$product_sub_category', '$product_supplier', '$supplier_price', '$sell_price', '$SRP', '$product_detail')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
                                     
@@ -200,6 +201,38 @@ function test_input($data) {
               </div>
 
               <div class="form-group">
+                <label>Sub-Category</label>
+                <select class="form-control select2" style="width: 100%;" name="product_sub_category" required>
+                        <?php
+                        // Include config file
+                        require_once "config.php";
+                        // Attempt select query execution
+                        $query = "";
+                        $query = "SELECT * FROM categories_sub ORDER BY sub_category_name asc";
+                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
+                        if($result = mysqli_query($link, $query)){
+                        if(mysqli_num_rows($result) > 0){
+
+                        while($row = mysqli_fetch_array($result)){
+
+                        echo "<option value='".$row['custID']."'>" . $row['sub_category_name'] .  "</option>";
+                        }
+
+                         // Free result set
+                        mysqli_free_result($result);
+                        } else{
+                        echo "<p class='lead'><em>No records were found.</em></p>";
+                        }
+                        } else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+
+
+                        ?>
+                </select>
+              </div>
+
+              <div class="form-group">
                 <label>Supplier</label>
                 <select class="form-control select2" style="width: 100%;" name="product_supplier" required>
                         <?php
@@ -242,6 +275,11 @@ function test_input($data) {
                 </div>
 
                 <div class="form-group">
+                  <label>Suggested Retail Price (SRP)</label>
+                  <input type="text" class="form-control" placeholder="SRP" name="SRP" oninput="upperCase(this)" maxlength="50" required>
+                </div>
+
+                <div class="form-group">
                   <label>Detail</label>
                   <textarea class="form-control" rows="3" maxlength="300" id="" oninput="upperCase(this)" placeholder="This text area has a limit of 300 char" name="product_detail"></textarea>
                 </div>
@@ -256,11 +294,11 @@ function test_input($data) {
           </div>
           <!-- /.box -->
 
-
         </div>
     </section>
   <!-- /.content-wrapper -->
 </div>
+
 
 
 
@@ -272,93 +310,6 @@ function test_input($data) {
 
 <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
-
-
-<!-- =========================== PAGE SCRIPT ======================== -->
-
-<!-- Alert animation -->
-<script type="text/javascript">
-$(document).ready(function () {
-
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
-
-});
-</script>
-
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-    $('.select3').select3()
-
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
-
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
-
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    })
-
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass   : 'iradio_minimal-blue'
-    })
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass   : 'iradio_minimal-red'
-    })
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass   : 'iradio_flat-green'
-    })
-
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
-
-    //Timepicker
-    $('.timepicker').timepicker({
-      showInputs: false
-    })
-  })
-
-
-</script>
 
 
 
