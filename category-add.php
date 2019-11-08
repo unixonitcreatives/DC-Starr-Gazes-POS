@@ -149,13 +149,10 @@ function test_input($data) {
   <!-- /.content-wrapper -->
 </div>
 
-
 <!-- =========================== FOOTER =========================== -->
   <footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
-
-
 
 
 </body>

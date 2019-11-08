@@ -7,8 +7,7 @@
   $Cashier_auth = 0;
  include('template/user_auth.php');
 ?>
-<!-- =========================== JAVASCRIPT ========================= -->
-<?php include('template/js.php'); ?>
+
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -104,6 +103,9 @@
   <footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
+
+  <!-- =========================== JAVASCRIPT ========================= -->
+<?php include('template/js.php'); ?>
 
 
 </body>

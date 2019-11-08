@@ -38,7 +38,7 @@
                                 <li><a href="category-add.php">Add Categories</a></li>
                                 <li><a href="category-sub-add.php">Add Sub-Categories</a></li>
                                 <li><a href="category-manage.php">Manage Categories</a></li>
-                                <li><a href="category-manage.php">Manage Sub-Categories</a></li>
+                                <li><a href="category-sub-manage.php">Manage Sub-Categories</a></li>
                             </ul>
                         </li>
 

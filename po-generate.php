@@ -7,6 +7,9 @@
   $Cashier_auth = 0;
  include('template/user_auth.php');
 ?>
+
+<!-- =========================== JAVASCRIPT ========================= -->
+<?php include('template/js.php'); ?>
 <!-- =======================   =================== -->
 <?php
 // Define variables and initialize with empty values
@@ -211,8 +214,6 @@ function test_input($data) {
                 </select>
               </div>
 
-
-              
                 <div class="form-group">
                   <label>Quantity</label>
                   <input type="text" class="form-control" placeholder="Quantity" name="qty" oninput="upperCase(this)" maxlength="50" required>
@@ -229,23 +230,8 @@ function test_input($data) {
                   </div>
                   <!-- /.input group -->
                 </div>
-                  <!--
-                <div class="form-group">
-                  <label>Sell Price</label>
-                  <input type="text" class="form-control" placeholder="Sell Price" name="sell_price" oninput="upperCase(this)" maxlength="50" required>
-                </div>
-
-                <div class="form-group">
-                  <label>Detail</label>
-                  <textarea class="form-control" rows="3" maxlength="300" id="" oninput="upperCase(this)" placeholder="This text area has a limit of 300 char" name="product_detail"></textarea>
-                </div>
-              -->
-
-
 
         </div>
-
-
               <!-- /.box-body -->
             </div>
               <div class="box-footer">
@@ -261,18 +247,10 @@ function test_input($data) {
   <!-- /.content-wrapper -->
 </div>
 
-
-
 <!-- =========================== FOOTER =========================== -->
   <footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
-
-
-<!-- =========================== JAVASCRIPT ========================= -->
-      <?php include('template/js.php'); ?>
-
-
 
 
 </body>
