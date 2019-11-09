@@ -24,6 +24,8 @@
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- InputMask -->
 <script src="plugins/input-mask/jquery.inputmask.js"></script>
 <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
@@ -151,7 +153,7 @@ $(document).ready(function () {
   function submit()
 
   {
-    $.notify("its asd","warn"); 
+    $.notify("its asd","warn");
   }
 
 </script>
@@ -168,7 +170,3 @@ $(document).ready(function () {
 
 });
 </script>
-
-
-
-
