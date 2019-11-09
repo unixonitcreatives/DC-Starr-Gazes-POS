@@ -8,8 +8,6 @@
  include('template/user_auth.php');
 ?>
 
-<!-- =========================== JAVASCRIPT ========================= -->
-<?php include('template/js.php'); ?>
 <!-- =======================   =================== -->
 <?php
 // Define variables and initialize with empty values
@@ -152,7 +150,7 @@ function test_input($data) {
               <div class="col-md-12">
                 <div class="form-group">
                 <label>Product SKU</label>
-                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" multiple="multiple" data-placeholder="Input SKU" name="product_SKU" required>
+                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)"  data-placeholder="Input SKU" name="product_SKU" required>
                         <?php
                         // Include config file
                         require_once "config.php";
@@ -255,8 +253,6 @@ function test_input($data) {
 
 <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
-
-
 
 </body>
 </html>

@@ -19,12 +19,12 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
-          
+
           </li>
 
           <li class="dropdown user user-menu">
             <a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default">
-              <span class="hidden-xs">Log out</span> 
+              <span class="hidden-xs">Log out</span>
             </a>
           </li>
 
@@ -47,7 +47,7 @@
               <div class="modal-footer">
                 <a href="login.php" class="btn btn-default btn" data-dismiss="modal">No</a>
                 <a href="logout.php" class="btn btn-danger btn">Yes</a>
-                
+
               </div>
             </div>
             <!-- /.modal-content -->

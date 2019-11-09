@@ -135,7 +135,6 @@
 
                         <li><a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default"><i class="fa fa-close"></i> <span>Logout</span></a>
                         </li>
-                    </ul>      
+                    </ul>
                 </section>
             </aside>
-
