@@ -242,7 +242,7 @@
 
                           while($row = mysqli_fetch_array($result)){
 
-                          echo "<option value='".$row['custID']."'>"
+                          echo "<option value='".$row['custID']."'>";
                           echo " - .$row['product_SKU'].";
                           echo " - .$row['product_SKU'].";
 
@@ -329,7 +329,7 @@
                 <a href="" class="btn btn-warning btn">Save</a>
                 <a href="" class="btn btn-success btn">Print &amp; Save</a>
 
-                
+
               </div>
 
 
@@ -340,4 +340,3 @@
     </div>
 </body>
 </html>
-

@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
@@ -66,14 +66,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custID = str_pad($newID, 7, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
-                                    $query = "INSERT INTO generate_po 
-                                    (custID, product_description, warehouse_name, qty, po_status, created_by) 
-                                    VALUES 
+                                    $query = "INSERT INTO generate_po
+                                    (custID, product_description, warehouse_name, qty, po_status, created_by)
+                                    VALUES
                                     ('$custnewID', '$product_SKU', '$warehouse_name', '$qty', 'Pending', 'Vince')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
-                                    
-                                    
+
+
                                     if($result){
                                     echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
@@ -136,7 +136,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          
+
           <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
@@ -148,15 +148,15 @@ function test_input($data) {
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
-                <?php echo $alertMessage ?></p>              
+                <?php echo $alertMessage ?></p>
               <div class="col-md-12">
                 <div class="form-group">
                 <label>Product SKU</label>
-                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="product_SKU" required>
+                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" multiple="multiple" data-placeholder="Input SKU" name="product_SKU" required>
                         <?php
                         // Include config file
                         require_once "config.php";
-                        // Attempt select query execution
+                        // Attempt select query executions
                         $query = "";
                         $query = "SELECT * FROM product_model ORDER BY product_SKU asc";
                         // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
@@ -226,7 +226,7 @@ function test_input($data) {
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
+                    <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -251,6 +251,11 @@ function test_input($data) {
   <footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
+
+
+<!-- =========================== JAVASCRIPT ========================= -->
+      <?php include('template/js.php'); ?>
+
 
 
 </body>

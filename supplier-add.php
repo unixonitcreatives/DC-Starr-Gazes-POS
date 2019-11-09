@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
@@ -61,12 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custID = str_pad($newID, 5, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                     $custnewID = $IDtype.$custID; //Prepare custom ID
 
-                                    $query = "INSERT INTO supplier (custID, supplier_name, supplier_contact_person, supplier_contact_no, supplier_email, supplier_address) 
+                                    $query = "INSERT INTO supplier (custID, supplier_name, supplier_contact_person, supplier_contact_no, supplier_email, supplier_address)
                                                    VALUES ('$custnewID', '$supplier_name', '$supplier_contact_person', '$supplier_contact_no', '$supplier_email', '$supplier_address')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
-                                    
-                                    
+
+
                                     if($result){
                                     echo "<script>Notify('new supplier added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
@@ -129,7 +129,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          
+
           <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
@@ -166,7 +166,7 @@ function test_input($data) {
                 <div class="form-group">
                   <label>Address</label> <code class="text-orange">Max. 100 characters</code>
                   <textarea class="form-control" rows="3" maxlength="100" id="" oninput="upperCase(this)" placeholder="Enter Address" name="supplier_address"></textarea>
-            
+
                 </div>
 
 
