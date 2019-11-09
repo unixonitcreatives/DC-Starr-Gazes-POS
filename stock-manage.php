@@ -79,6 +79,7 @@
                               echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['product_SKU'] . "</td>";
                               echo "<td>" . $row['PO_ID'] . "</td>";
+
                               echo "<td><a href='warehouse-view.php?WHid=".$row['warehouse_ID']."'>" . $row['warehouse_ID'] . "</a></td>";
 
                               if($row['stock_status']=="In Stock"){
@@ -99,7 +100,7 @@
 
                                 echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
 
-                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
+                                echo " &nbsp; <a href='generate-barcode.php?id=". $row['custID'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
 
                                 echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
