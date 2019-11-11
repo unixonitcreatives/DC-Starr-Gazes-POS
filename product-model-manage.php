@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     //If the username doesnt exist in the database
                                     //Proceed adding to database
                                     //Checking the values are existing in the database or not
-                                    $query = "INSERT INTO users (username, password, usertype) 
+                                    $query = "INSERT INTO users (username, password, usertype)
                                                    VALUES ('$username', '$password', '$usertype')"; //Prepare query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
@@ -166,7 +166,7 @@ function test_input($data) {
                               echo "<td><span data-toggle='tooltip' title=''>" . $row['product_sub_category'] . "</span></td>";
 
                               echo "<td>" . $row['product_supplier'] . "</td>";
-              
+
                               echo "<td>₱" . number_format($row['supplier_price'],2) . "</td>";
                               echo "<td>₱" . number_format($row['sell_price'],2) . "</td>";
                               echo "<td>₱" . number_format($row['suggested_retail_price'],2) . "</td>";

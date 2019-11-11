@@ -181,6 +181,7 @@ function test_input($data) {
 
 
         </div>
+      </div>
     </section>
   <!-- /.content-wrapper -->
 </div>

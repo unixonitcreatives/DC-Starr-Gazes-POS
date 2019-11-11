@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
@@ -12,14 +12,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>DC Starr Gazes</title>
-<!-- ======================= CSS ================================= -->
-<?php include('template/css.php'); ?>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DC Starr Gazes</title>
+  <!-- ======================= CSS ================================= -->
+  <?php include('template/css.php'); ?>
 </head>
 <body class="hold-transition skin-blue fixed sidebar-mini">
-<div class="wrapper">
+  <div class="wrapper">
 
   <!-- ======================= MENU BAR =========================== -->
   <?php include('template/menu-bar.php'); ?>
@@ -87,11 +87,11 @@
                           echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                         }
 
-                        // Close connection
-                        mysqli_close($link);
-                        ?>
-                      </tbody>
-                    </table>
+                  // Close connection
+                  mysqli_close($link);
+                  ?>
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -102,11 +102,11 @@
 <!-- =========================== FOOTER =========================== -->
   <footer class="main-footer">
       <?php include('template/footer.php'); ?>
-  </footer>
+    </footer>
 
   <!-- =========================== JAVASCRIPT ========================= -->
 <?php include('template/js.php'); ?>
 
 
-</body>
-</html>
+  </body>
+  </html>
