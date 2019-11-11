@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>DC Star Gazes | Dashboard</title>
+  <title> DC Star Gazes | Dashboard</title>
   <!-- ======================= CSS ================================= -->
   <?php include('template/css.php'); ?>
 </head>
@@ -38,22 +38,22 @@
               <br><a href="so-manage.php" class="text-center">Manage SO</a>
             </div>
             <!-- /.box-header -->
-            <!-- form start  method="POST" action="functions/incoming_so.php"-->
-            <form method="POST" action="functions/incoming_so.php">
+            <!-- form start   action="functions/incoming_so.php-->
+            <form action="functions/incoming_so.php">
               <div class="box-body">
 
-                <?php echo $alertMessage ?>
+                <!-- <?php echo $alertMessage; ?> -->
 
               <div class="col-md-6">
                 <div class="form-group">
-                <label>Customer</label>
-                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="product_SKU" required>
+                <label>Product</label>
+                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="product_SKU" id="product_SKU" required>
                         <?php
                         // Include config file
                         require_once "config.php";
                         // Attempt select query execution
                         $query = "";
-                        $query = "SELECT * FROM customers ORDER BY lastName, firstName asc";
+                        $query = "SELECT * FROM stock WHERE stock_status = 'In Stock' ";
                         // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
                         if($result = mysqli_query($link, $query)){
                         if(mysqli_num_rows($result) > 0){
@@ -93,7 +93,7 @@
 
                           while($row = mysqli_fetch_array($result)){
 
-                            echo "<option value='".$row['custID']."'>" . $row['lastName'] . ", " . $row['firstName'].  "</option>";
+                            echo "<option value='".$row['custID']."'>" . $row['lastName'] . "," . $row['firstName'].  "</option>";
                           }
 
                           // Free result set
@@ -147,65 +147,7 @@
                 </div>
               -->
         </div>
-        <div class="col-md-12">
-          <table id="example" class="table table-bordered table-striped dataTable">
-                      <thead>
-                        <tr>
-                          <th>Option</th>
-                          <th>No.</th>
-                          <th>Stock No.</th>
-                          <th>Description</th>
-                          <th>Qty</th>
-                          <th>Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td> <a href='#' methodtitle='Remove Item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a></td>
-                          <td>1</td>
-                           <td>SC1234567890</td>
-                            <td>GRN_APPLE</td>
-                             <td>1</td>
-                             <td>25</td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>DISCOUNT:</td>
-                          <td>0</td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>TAX:</td>
-                          <td>0</td>
-                        </tr>
 
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>GRANDTOTAL:</td>
-                          <td>25</td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-        </div>
-              <!-- /.box-body -->
-            </div>
-
-            <div class="form-group">
-            <label>Detail</label>
-            <textarea class="form-control" rows="3" maxlength="300" id="" oninput="upperCase(this)" placeholder="This text area has a limit of 300 char" name="product_detail"></textarea>
-          </div>-->
-
-        </div>
         <div class="col-md-6 ">
           <table class="table table-borderless ">
             <thead>
@@ -347,12 +289,9 @@
 
                           while($row = mysqli_fetch_array($result)){
 
-                          echo "<option value='".$row['custID']."'>";
-                          echo " - .$row['product_SKU'].";
-                          echo " - .$row['product_SKU'].";
+                          echo "<option value='".$row['custID']."'>" .$row['product_SKU']. "-" .$row['product_SKU']. "</option>";
 
 
-                          "</option>";
                           }
 
                            // Free result set
@@ -448,5 +387,37 @@
           </div>
           <!-- /.modal-dialog -->
     </div>
+
+
+    <!--========================== WIP for AJAX =================================-->
+    <script>
+    $(document).ready(function(){
+    $('#submit').on('click', function(){
+      var scNum = $('#product_SKU').val();
+      var customer_ID = $('#customer_ID').val();
+      var wID = $('#warehouse_name').val();
+      var dataString = 'product_SKU='+scNum+'&customer_ID='+customer_ID+'&wID='+wID;
+      if(scNum=='' || customer_ID=='' || wID== ''){
+        alert('Must have data');
+      }else {
+        $.ajax({
+          method:'POST',
+          url: 'functions/incoming_so.php',
+          data: dataString,
+          dataType: "html"
+        });
+
+        request.done(function( msg ) {
+  $( "#log" ).html( msg );
+});
+
+request.fail(function( jqXHR, textStatus ) {
+  alert( "Request failed: " + textStatus );
+});
+      }
+      return false;
+    });
+  });
+</script>
 </body>
 </html>

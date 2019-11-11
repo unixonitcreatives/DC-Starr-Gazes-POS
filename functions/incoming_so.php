@@ -5,7 +5,7 @@
 include '../config.php';
 
 
-$scID = $_POST['scNum'];
+$scID = $_POST['product_SKU'];
 $cID = $_POST['customer_ID'];
 $wID = $_POST['warehouse_name'];
 
