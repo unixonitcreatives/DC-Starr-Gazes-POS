@@ -37,7 +37,7 @@
               <br><a href="so-manage.php" class="text-center">Manage SO</a>
             </div>
             <!-- /.box-header -->
-            <!-- form start method="POST" action="functions/incoming_so.php" -->
+            <!-- form start  method="POST" action="functions/incoming_so.php"-->
             <form method="POST" action="functions/incoming_so.php">
               <div class="box-body">
                 <!--<?php echo $alertMessage ?>-->
@@ -359,7 +359,7 @@
     </div>
 
     <!--========================== WIP for AJAX =================================-->
-    <!--<script>
+    <script>
     $(document).ready(function(){
     $('#submit').on('click', function(){
       var scNum = $('#scNum').val();
@@ -373,7 +373,7 @@
         $.ajax({
           type:'POST',
           url: 'functions/incoming_so.php',
-          data: dataString,
+          data: dataString
 
         });
       }
@@ -381,6 +381,6 @@
     });
   });
 
-</script>-->
+</script>
   </body>
   </html>
