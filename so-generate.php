@@ -80,8 +80,10 @@
                   </div>
                   <div class="form-group">
                     <label>Product</label>
-                    <input type="text" id="asdscan_product" class="form-control scanner" onmouseover="this.focus();" placeholder="Product" name="scan_product" oninput="upperCase(this)" maxlength="50" required>
+                    <input type="text" id="scan_product" class="form-control scanner" placeholder="Product" name="scan_product" maxlength="50" required>
                   </div>
+
+
                   <div class="form-group">
                     <label>Customer</label>
                     <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" id="customer_ID" required>
@@ -217,10 +219,7 @@
                 <th>Description</th>
               </tr>
             </thead>
-            <tbody>
-             <tr class="objectWrapper">
-             
-             </tr>
+            <tbody  class="objectWrapper">
             </tbody>
       </table>
     </div>
@@ -419,9 +418,9 @@
 
   <script>
 
-    $(document).ready(function(){
 
-      var scNum = $('#scan_product').val();
+
+      var scNum = $('.scanner').val();
       var dataString = 'product_SKU='+scNum;
 
 
@@ -455,7 +454,7 @@
             });
         });
     });
-    });
+  
     </script>
 </body>
 </html>
