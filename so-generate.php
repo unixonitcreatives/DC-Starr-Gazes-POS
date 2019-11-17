@@ -80,7 +80,7 @@
                   </div>
                   <div class="form-group">
                     <label>Product</label>
-                    <input type="text" class="form-control scanner" onmouseover="this.focus();" placeholder="Product" name="product" oninput="upperCase(this)" maxlength="50" required>
+                    <input type="text" id="asdscan_product" class="form-control scanner" onmouseover="this.focus();" placeholder="Product" name="scan_product" oninput="upperCase(this)" maxlength="50" required>
                   </div>
                   <div class="form-group">
                     <label>Customer</label>
@@ -418,7 +418,13 @@
       -->
 
   <script>
+
     $(document).ready(function(){
+
+      var scNum = $('#scan_product').val();
+      var dataString = 'product_SKU='+scNum;
+
+
     $(function() {
     // Focus on load
     $('.scanner').focus();
@@ -432,16 +438,14 @@
             async: true,
             cache: false,
             type: 'post',
-            url: 'so-generate.php',
-            data: {
-                html: '<td>This is your object successfully loaded here.</td>'
-            },
+            url: 'hello.php?'+dataString,
+            data: dataString,
             dataType: 'html',
             beforeSend: function() {
-                window.alert('Scanning code');
+                //window.alert('Scanning code');
             },
             success: function(data) {
-                window.alert('Success');
+                //window.alert('Success');
                 $('.objectWrapper').append(data);
             },
             // Focus
