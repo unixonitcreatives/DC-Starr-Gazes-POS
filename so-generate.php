@@ -79,6 +79,10 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label>Product</label>
+                    <input type="text" class="form-control scanner" onmouseover="this.focus();" placeholder="Product" name="product" oninput="upperCase(this)" maxlength="50" required>
+                  </div>
+                  <div class="form-group">
                     <label>Customer</label>
                     <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" id="customer_ID" required>
                       <?php
@@ -187,27 +191,7 @@
               //mysqli_close($link);
 
               ?>
-              <!--  <td>1</td>
-              <td>SC1234567890</td>
-              <td>GRN_APPLE</td>
-              <td>1</td>
-              <td>25</td>
-            </tr>
-            <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>DISCOUNT:</td>
-            <td>0</td>
-          </tr>
-          <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>TAX:</td>
-          <td>0</td>-->
+
           <?php
           require_once 'config.php';
           $gTotal="";
@@ -225,6 +209,19 @@
             <td><?php echo $gTotal; ?></td>
           </tr>
         </tbody>
+      </table>
+
+      <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+             <tr class="objectWrapper">
+             
+             </tr>
+            </tbody>
       </table>
     </div>
     <!-- /.box-body -->
@@ -390,7 +387,7 @@
 
 
     <!--========================== WIP for AJAX =================================-->
-    <script>
+    <!--
     $(document).ready(function(){
     $('#submit').on('click', function(){
       var scNum = $('#product_SKU').val();
@@ -408,16 +405,53 @@
         });
 
         request.done(function( msg ) {
-  $( "#log" ).html( msg );
-});
+        $( "#log" ).html( msg );
+      });
 
-request.fail(function( jqXHR, textStatus ) {
-  alert( "Request failed: " + textStatus );
-});
-      }
-      return false;
+      request.fail(function( jqXHR, textStatus ) {
+        alert( "Request failed: " + textStatus );
+      });
+            }
+            return false;
+          });
+        });
+      -->
+
+  <script>
+    $(document).ready(function(){
+    $(function() {
+    // Focus on load
+    $('.scanner').focus();
+    // Force focus
+    $('.scanner').focusout(function(){
+        $('.scanner').focus();
     });
-  });
-</script>
+    // Ajax Stuff
+    $('.scanner').change(function() {
+        $.ajax({
+            async: true,
+            cache: false,
+            type: 'post',
+            url: 'so-generate.php',
+            data: {
+                html: '<td>This is your object successfully loaded here.</td>'
+            },
+            dataType: 'html',
+            beforeSend: function() {
+                window.alert('Scanning code');
+            },
+            success: function(data) {
+                window.alert('Success');
+                $('.objectWrapper').append(data);
+            },
+            // Focus
+            complete: function() {
+                $('.scanner').val('').focus();
+            }
+            });
+        });
+    });
+    });
+    </script>
 </body>
 </html>
