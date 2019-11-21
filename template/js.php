@@ -126,14 +126,15 @@ $(document).ready(function () {
 
 <script>
   $(function() {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
+    $('#example2').DataTable()
+    $('#example1').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : true
+      'autoWidth'   : true,
+      'scrollX'     : true
     })
   })
 </script>
