@@ -7,7 +7,10 @@
   $Cashier_auth = 0;
  include('template/user_auth.php');
 ?>
-
+<?php
+// Define variables and initialize with empty values
+$alertMessage="";
+?>
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -35,6 +38,16 @@
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
+  <?php
+  if(isset($_GET['alert']) == "success"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+  }else if(isset($_GET['alert']) == "deletesuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
+  }if(isset($_GET['alert']) == "addsuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  }
+   ?>
+   <?php echo $alertMessage; ?>
     <!-- Main content -->
     <section class="content">
 
@@ -73,7 +86,7 @@
                               echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['category_name'] . "</td>";
                               echo "<td>";
-                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                              echo "<a href='category-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                               echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                               echo "</td>";
                               echo "</tr>";

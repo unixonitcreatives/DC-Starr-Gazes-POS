@@ -1,7 +1,7 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
@@ -15,8 +15,6 @@
 $category=$alertMessage="";
 
 require_once "config.php";
-
-
 
 //If the form is submitted or not.
 //If the form is submitted
@@ -56,14 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custID = str_pad($newID, 4, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                     $custnewID = $IDtype.$custID; //Prepare custom ID
 
-                                    $query = "INSERT INTO categories (custID, category_name) 
+                                    $query = "INSERT INTO categories (custID, category_name)
                                                    VALUES ('$custnewID', '$category')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
-                                    
+
                                     if($result){
-                                    echo "<script>Notify('Category Added Succesfully','Success');</script>";
-                                    //header("Location: category-add.php?alert=1");
+                                    //echo "<script>Notify('Category Added Succesfully','Success');</script>";
+                                    header("Location: category-manage.php?alert=addsuccess");
                                     }else{
                                     echo "<script>Notify('Category Add Failed','Error');</script>";
                                     //header("Location: category-add.php?alert=3");
@@ -116,7 +114,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          
+
           <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
