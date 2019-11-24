@@ -48,7 +48,7 @@ require_once "config.php";
       $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
     }else if(isset($_GET['alert']) == "deletesuccess"){
       $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
-    }if(isset($_GET['alert']) == "addsuccess"){
+    }else if(isset($_GET['alert']) == "addsuccess"){
       $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
     }
      ?>
@@ -87,21 +87,42 @@ require_once "config.php";
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
                             while($row = mysqli_fetch_array($result)){
-                              $ctr++;
-                              echo "<tr>";
-                              echo "<td>" . $ctr . "</td>";
-                              echo "<td>" . $row['custID'] . "</td>";
-                              echo "<td>" . $row['supplier_name'] . "</td>";
-                              echo "<td>" . $row['supplier_contact_person'] . "</td>";
-                              echo "<td>" . $row['supplier_contact_no'] . "</td>";
-                              echo "<td>" . $row['supplier_email'] . "</td>";
-                              echo "<td>" . $row['supplier_address'] . "</td>";
-                              echo "<td>";
-                              echo "<a href='supplier-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='supplier-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                              echo "</td>";
-                              echo "</tr>";
-                            }
+                              $ctr++; ?>
+                              <tr>
+                              <td><?php echo $ctr; ?></td>
+                              <td><?php echo $row['custID'];?></td>
+                              <td><?php echo $row['supplier_name'];?></td>
+                              <td><?php echo $row['supplier_contact_person'];?></td>
+                              <td><?php echo $row['supplier_contact_no'];?></td>
+                              <td><?php echo $row['supplier_email'];?></td>
+                              <td><?php echo $row['supplier_address'];?></td>
+                              <td>
+                              <a href='supplier-update.php?id=<?php echo $row['id']; ?>"' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
+                              &nbsp; <a href='#' title='Delete Record' data-toggle='modal' data-target="#deleteModal<?php echo $row['id']; ?>"><span class='glyphicon glyphicon-trash'></span></a>
+                              </td>
+                              <!-- =========================== DELETE MODAL ====================== -->
+                              <div class="modal fade" id="deleteModal<?php echo $row['id']; ?>">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title">Delete Data</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Are you sure you want to delete this data?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                      <a class="btn btn-danger" href='supplier-delete.php?id=<?php echo $row['id'];?>'>Delete</a>
+                                    </div>
+                                  </div>
+                                  <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                              </div>
+                              <!-- /.modal -->
+                            <?php }
                             // Free result set
                             mysqli_free_result($result);
                           } else{
@@ -114,6 +135,8 @@ require_once "config.php";
                         // Close connection
                         mysqli_close($link);
                         ?>
+                              </tr>
+
                       </tbody>
                     </table>
             </div>

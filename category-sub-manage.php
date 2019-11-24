@@ -1,13 +1,13 @@
 <!-- ======================= SESSION =================== -->
 <?php include('template/session.php'); ?>
 <!-- ======================= USER AUTHENTICATION  =================== -->
-<?php 
+<?php
   $Admin_auth = 1;
   $Manager_auth = 0;
   $Cashier_auth = 0;
  include('template/user_auth.php');
 ?>
-
+<?php $alertMessage=""; ?>
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -35,6 +35,16 @@
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
+  <?php
+  if(isset($_GET['alert']) == "success"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+  }else if(isset($_GET['alert']) == "deletesuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
+  }else if(isset($_GET['alert']) == "addsuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  }
+   ?>
+   <?php echo $alertMessage; ?>
     <!-- Main content -->
     <section class="content">
 
@@ -68,14 +78,14 @@
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
                             while($row = mysqli_fetch_array($result)){
-                              $ctr++;
+                              $ctr++; 
                               echo "<tr>";
                               echo "<td>" . $ctr . "</td>";
                               echo "<td>" . $row['custID'] . "</td>";
                               echo "<td>" . $row['sub_category_name'] . "</td>";
                               echo "<td>" . $row['parent_category'] . "</td>";
                               echo "<td>";
-                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                              echo "<a href='category-sub-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                               echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                               echo "</td>";
                               echo "</tr>";
