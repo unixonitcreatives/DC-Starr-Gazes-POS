@@ -16,13 +16,14 @@ $category=$alertMessage="";
 require_once "config.php";
 
 
-$get_category_id = $_GET['id'];
+$get_subCategory_id = $_GET['id'];
 
-$query = "SELECT * from categories WHERE id='$get_category_id'";
+$query = "SELECT categories.category_name as parent_category, categories_sub.sub_category_name as sub_category_name from categories_sub, categories WHERE categories_sub.id= '$get_subCategory_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
   while ($row = mysqli_fetch_assoc($result)){
-    $row_category    =   $row['category_name'];
+    $row_sub_category_name    =   $row['sub_category_name'];
+    $row_parent_category_name =   $row['parent_category'];
   }
 }
 
@@ -65,14 +66,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custID = str_pad($newID, 5, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                     $custnewID = $IDtype.$custID; //Prepare custom ID
 
-                                    $query = "INSERT INTO categories_sub (custID, sub_category_name, parent_category)
-                                                   VALUES ('$custnewID', '$category', '$p_category')"; //Prepare insert query
-
+                                    $query = "UPDATE categories_sub SET sub_category_name='$category', parent_category='$p_category' WHERE id='$get_subCategory_id' ";
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 
                                     if($result){
                                     //echo "<script>Notify('Category Added Succesfully','Success');</script>";
-                                    header("Location: category-sub-manage.php?alert=addsuccess");
+                                    header("Location: category-sub-manage.php?alert=updatesuccess");
 
                                     }else{
                                     echo "<script>Notify('Category Add Failed','Error');</script>";
@@ -136,17 +135,18 @@ function test_input($data) {
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $get_subCategory_id; ?>">
               <div class="box-body">
                 <?php echo $alertMessage ?></p>
                 <div class="form-group">
                   <label>Sub-Category Name</label> <code class="text-orange">Max. 20 characters</code>
-                  <input type="text" class="form-control" placeholder="Category" name="category" oninput="upperCase(this)" maxlength="20" required>
+                  <input type="text" class="form-control" placeholder="Category" name="category" oninput="upperCase(this)" maxlength="20"  value="<?php echo $row_sub_category_name; ?>" required>
                 </div>
 
                  <div class="form-group">
                 <label>Parent Category</label>
                 <select class="form-control select2" style="width: 100%;" name="p_category" required>
+                    <option><?php echo $row_parent_category_name; ?></option>
                         <?php
                         // Include config file
                         require_once "config.php";

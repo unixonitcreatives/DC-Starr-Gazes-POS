@@ -15,6 +15,18 @@ $category=$alertMessage="";
 
 require_once "config.php";
 
+
+$get_category_id = $_GET['id'];
+
+$query = "SELECT * from categories WHERE id='$get_category_id'";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+  while ($row = mysqli_fetch_assoc($result)){
+    $row_category    =   $row['category_name'];
+  }
+}
+
+
 //If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
