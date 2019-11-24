@@ -7,7 +7,10 @@
   $Cashier_auth = 0;
  include('template/user_auth.php');
 ?>
-
+<?php
+// Define variables and initialize with empty values
+$alertMessage="";
+?>
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -35,6 +38,16 @@
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
+  <?php
+  if(isset($_GET['alert']) == "success"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+  }else if(isset($_GET['alert']) == "deletesuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
+  }else if(isset($_GET['alert']) == "addsuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  }
+   ?>
+   <?php echo $alertMessage; ?>
     <!-- Main content -->
     <section class="content">
 
@@ -67,17 +80,39 @@
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
                             while($row = mysqli_fetch_array($result)){
-                              $ctr++;
-                              echo "<tr>";
-                              echo "<td>" . $ctr . "</td>";
-                              echo "<td>" . $row['custID'] . "</td>";
-                              echo "<td>" . $row['category_name'] . "</td>";
-                              echo "<td>";
-                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                              echo "</td>";
-                              echo "</tr>";
-                            }
+                              $ctr++; ?>
+                              <tr>
+                              <td><?php echo $ctr; ?></td>
+                              <td><?php echo $row['custID']; ?></td>
+                              <td><?php echo $row['category_name']; ?></td>
+                              <td>
+                              <a href='category-update.php?id=<?php echo $row['id'];?>' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
+                              &nbsp; <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
+                              </td>
+
+                              <!-- =========================== DELETE MODAL ====================== -->
+                              <div class="modal fade" id="modal-delete<?php echo $row['id']; ?>">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title">Delete Data</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Are you sure you want to delete this data?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                      <a class="btn btn-danger" href='category-delete.php?id=<?php echo $row['id'];?>'>Delete</a>
+                                    </div>
+                                  </div>
+                                  <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                              </div>
+                              <!-- /.modal -->
+                            <?php }
                             // Free result set
                             mysqli_free_result($result);
                           } else{
@@ -90,6 +125,8 @@
                   // Close connection
                   mysqli_close($link);
                   ?>
+                            </tr>
+
                 </tbody>
               </table>
             </div>
@@ -98,6 +135,8 @@
     </section>
   <!-- /.content-wrapper -->
 </div>
+
+
 
 <!-- =========================== FOOTER =========================== -->
   <footer class="main-footer">

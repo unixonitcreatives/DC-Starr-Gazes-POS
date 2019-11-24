@@ -8,87 +8,11 @@
  include('template/user_auth.php');
 ?>
 <!-- =======================   =================== -->
+
 <?php
 // Define variables and initialize with empty values
 $username=$password=$usertype=$alertMessage="";
-
 require_once "config.php";
-
-//If the form is submitted or not.
-//If the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    //Assigning posted values to variables.
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
-    $usertype = test_input($_POST['usertype']);
-
-    // Validate username
-    if(empty($username)){
-        $alertMessage = "Please enter a username.";
-    }
-
-    // Validate password
-    if(empty($password)){
-        $alertMessage = "Please enter a password.";
-    }
-
-    // Validate user type
-    if(empty($usertype)){
-        $alertMessage = "Please enter a user type.";
-    }
-
-
-    // Check input errors before inserting in database
-    if(empty($alertMessage)){
-        //Check if the username is already in the database
-        $sql_check = "SELECT username FROM users WHERE username ='$username'";
-        if($result = mysqli_query($link, $sql_check)){ //Execute query
-                                 if(mysqli_num_rows($result) > 0){
-                                    //If the username already exists
-                                    //Try another username pop up
-                                    echo "<script> window.alert('Username already exist, Please try again a different name')</script>";
-
-                                     mysqli_free_result($result);
-                                 } else{
-                                    //If the username doesnt exist in the database
-                                    //Proceed adding to database
-                                    //Checking the values are existing in the database or not
-                                    $query = "INSERT INTO users (username, password, usertype)
-                                                   VALUES ('$username', '$password', '$usertype')"; //Prepare query
-
-                                    $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
-
-                                    if($result){
-                                      //If execution is completed
-
-                                      $alertMessage = "<div class='alert alert-success' role='alert'>
-                                      New user successfully added.
-                                      </div>";
-
-                                      header("location: user-add.php");
-                                    }else{
-                                      //If execution failed
-
-                                      $alertMessage = "<div class='alert alert-danger' role='alert'>
-                                      Error adding data.
-                                      </div>";}
-                                      mysqli_close($link);
-                                 }
-                             } else{
-                                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                             }
-
-                             mysqli_close($link);
-
-        }
-      }
-
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 ?>
 <!-- ================================================================ -->
@@ -119,6 +43,16 @@ function test_input($data) {
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
+    <?php
+    if(isset($_GET['alert']) == "success"){
+      $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+    }else if(isset($_GET['alert']) == "deletesuccess"){
+      $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
+    }else if(isset($_GET['alert']) == "addsuccess"){
+      $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+    }
+     ?>
+     <?php echo $alertMessage; ?>
     <section class="content">
           <div class="col-md-12">
           <!-- general form elements -->
@@ -153,21 +87,42 @@ function test_input($data) {
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
                             while($row = mysqli_fetch_array($result)){
-                              $ctr++;
-                              echo "<tr>";
-                              echo "<td>" . $ctr . "</td>";
-                              echo "<td>" . $row['custID'] . "</td>";
-                              echo "<td>" . $row['supplier_name'] . "</td>";
-                              echo "<td>" . $row['supplier_contact_person'] . "</td>";
-                              echo "<td>" . $row['supplier_contact_no'] . "</td>";
-                              echo "<td>" . $row['supplier_email'] . "</td>";
-                              echo "<td>" . $row['supplier_address'] . "</td>";
-                              echo "<td>";
-                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                              echo "</td>";
-                              echo "</tr>";
-                            }
+                              $ctr++; ?>
+                              <tr>
+                              <td><?php echo $ctr; ?></td>
+                              <td><?php echo $row['custID'];?></td>
+                              <td><?php echo $row['supplier_name'];?></td>
+                              <td><?php echo $row['supplier_contact_person'];?></td>
+                              <td><?php echo $row['supplier_contact_no'];?></td>
+                              <td><?php echo $row['supplier_email'];?></td>
+                              <td><?php echo $row['supplier_address'];?></td>
+                              <td>
+                              <a href='supplier-update.php?id=<?php echo $row['id']; ?>"' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
+                              &nbsp; <a href='#' title='Delete Record' data-toggle='modal' data-target="#deleteModal<?php echo $row['id']; ?>"><span class='glyphicon glyphicon-trash'></span></a>
+                              </td>
+                              <!-- =========================== DELETE MODAL ====================== -->
+                              <div class="modal fade" id="deleteModal<?php echo $row['id']; ?>">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title">Delete Data</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Are you sure you want to delete this data?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                      <a class="btn btn-danger" href='supplier-delete.php?id=<?php echo $row['id'];?>'>Delete</a>
+                                    </div>
+                                  </div>
+                                  <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                              </div>
+                              <!-- /.modal -->
+                            <?php }
                             // Free result set
                             mysqli_free_result($result);
                           } else{
@@ -180,6 +135,8 @@ function test_input($data) {
                         // Close connection
                         mysqli_close($link);
                         ?>
+                              </tr>
+
                       </tbody>
                     </table>
             </div>

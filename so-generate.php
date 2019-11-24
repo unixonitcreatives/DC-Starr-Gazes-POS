@@ -45,22 +45,27 @@
                 <!-- <?php echo $alertMessage; ?> -->
 
               <div class="col-md-6">
-                <div class="form-group">
+                <!-- <div class="form-group">
                 <label>Product</label>
+
+
                 <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="product_SKU" id="product_SKU" required>
                         <?php
                         // Include config file
                         require_once "config.php";
                         // Attempt select query execution
                         $query = "";
-                        $query = "SELECT * FROM stock WHERE stock_status = 'In Stock' ";
+                        // original query niyo $query = "SELECT * FROM stock WHERE stock_status = 'In Stock' ";
+                        $query="select product_description, product_sku from product_model order by product_description";
                         // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
                         if($result = mysqli_query($link, $query)){
                         if(mysqli_num_rows($result) > 0){
 
                           while($row = mysqli_fetch_array($result)){
 
-                            echo "<option value='".$row['custID']."'>" .$row['custID']. " | " .$row['PO_ID']. " | " .$row['stock_status']."</option>";
+                            // echo "<option value='".$row['custID']."'>" .$row['custID']. " | " .$row['PO_ID']. " | " .$row['stock_status']."</option>";
+
+                             echo "<option value='".$row['product_sku']."'>" .$row['product_description']."</option>";
 
                           }
 
@@ -77,7 +82,9 @@
 
                       ?>
                     </select>
-                  </div>
+                  </div> -->
+
+
                   <div class="form-group">
                     <label>Customer</label>
                     <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" id="customer_ID" required>
@@ -109,7 +116,7 @@
                     </select>
                   </div>
 
-                  <div class="form-group">
+                 <!--  <div class="form-group">
                     <label>Warehouse</label>
                     <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name" required>
                       <?php
@@ -140,38 +147,43 @@
                       ?>
                     </select>
                   </div>
-                  <!--
+
                   <div class="form-group">
                   <label>Quantity</label>
                   <input type="text" class="form-control" placeholder="Quantity" name="qty" oninput="upperCase(this)" maxlength="50" required>
-                </div>
-              -->
+                </div> -->
+
         </div>
 
         <div class="col-md-6 ">
-          <table class="table table-borderless ">
+          <table class="table table-borderless " id="tOrders">
             <thead>
               <tr>
                 <th>Description</th>
+                <th>Category</th>
                 <th>Qty</th>
-                <th>Price</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
 
-
+<!--
               <?php
               require_once ('config.php');
               $desc=$qty=$price="";
 
-              $query  = "SELECT so_desc AS DESCRIPTION, COUNT(so_qty) AS QTY, SUM(so_price) AS PRICE from sales_order GROUP BY so_desc";
+              $query  = "SELECT so_desc AS DESCRIPTION, so_cat as CATEGORY, COUNT(so_qty) AS QTY, COUNT(so_unit_price) AS UNITPRICE, SUM(so_price) AS PRICE  from sales_order GROUP BY so_desc";
               $result = mysqli_query($link, $query);
 
               if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
                   $desc = $row['DESCRIPTION'];
+                  $cat = $row['CATEGORY'];
                   $qty = $row['QTY'];
+                  $uprice = $row['UNITPRICE'];
                   $price = $row['PRICE'];
                   echo "<tr>";
                   echo "<td>" . $desc . "</td>";
@@ -187,27 +199,7 @@
               //mysqli_close($link);
 
               ?>
-              <!--  <td>1</td>
-              <td>SC1234567890</td>
-              <td>GRN_APPLE</td>
-              <td>1</td>
-              <td>25</td>
-            </tr>
-            <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>DISCOUNT:</td>
-            <td>0</td>
-          </tr>
-          <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>TAX:</td>
-          <td>0</td>-->
+
           <?php
           require_once 'config.php';
           $gTotal="";
@@ -218,28 +210,26 @@
             $gTotal = $row['totalAmount'];
 
           }
-          ?>
+          ?> -->
 
-          <tr>
-            <td colspan="2">GRANDTOTAL:</td>
-            <td><?php echo $gTotal; ?></td>
-          </tr>
+
         </tbody>
       </table>
+      <span>GRAND TOTAL: <label id="grand_total">0</label></span>
+
     </div>
     <!-- /.box-body -->
   </div>
-  <div class="box-footer">
-    <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product</a>
-    <button class="btn btn-primary" type="submit" name="addList" id="submit">List Product</button>
-    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
-    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
-    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
-    <a class="btn btn-default" data-toggle="modal" data-target="#" >Other</a>
+</form>
 
+  <div class="box-footer">
+
+  <input type="text" class="my-input" id="my-putin" autofocus style="width:0px;top:-100000px;height:0px;position:absolute;" />
+
+    <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product Manually</a>
     <a class="btn btn-success" data-toggle="modal" data-target="#modal-checkout" >Check out</a>
   </div>
-</form>
+
 
 </div>
 <!-- /.box -->
@@ -258,8 +248,326 @@
 
 
 <!-- =========================== JAVASCRIPT ========================= -->
-<?php include('template/js.php'); ?>
 
+<!-- jQuery 3 -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- Sparkline -->
+<script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap  -->
+<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+<!-- ChartJS -->
+<script src="bower_components/chart.js/Chart.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="dist/js/pages/dashboard2.js"></script>
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+
+<!-- =========================== PAGE SCRIPT ======================== -->
+
+<!-- Alert animation -->
+<script type="text/javascript">
+$(document).ready(function () {
+
+  window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+      $(this).remove();
+    });
+  }, 1000);
+
+});
+</script>
+<script type="text/javascript">
+ var orders=[];
+    var custID;
+
+  $(function () {
+
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+
+
+    // November 18, 2019
+    // codes begins here
+    document.addEventListener("keypress", function (e) {
+        if (e.target.tagName !== "INPUT") {
+            var input = document.querySelector("#my-putin");
+            input.focus();
+          if (e.key.charCodeAt() == 13) {
+              input.focus();
+          }
+          input.value = input.value + e.key;
+          e.preventDefault();
+        }
+       $('#my-putin').keypress(function (e) {
+            var d = new Date();
+            if (e.key == 'Enter') {
+                var id = $('#my-putin').val();
+                // lost focus on textbox
+                $(this).blur();
+                // check stock
+                check_stock(id);
+                // clear barcode scan text
+                e.key = '';
+            }
+        });
+
+        $('#my-putin').blur(function (e) {
+            $('#my-putin').val('');
+
+        });
+    });
+    // button save only. not save print
+    $('#btnsave').on('click',function(){
+        $.ajax({
+          type: 'POST',
+          url: 'so-checkout.php',
+          // need to stringify array object list
+          data: {'orders': JSON.stringify(orders)},
+          dataType: 'json',
+          success: function(data){
+            if(data.success===true) //if success close modal and reload page
+                {
+                    $('#modal-checkout').modal('hide');
+                    location.reload();
+                }
+          }
+        });
+    });
+    //manual data entry
+    $('#btnadd').on('click',function(){
+        check_stock($('#warehouse_name').val());
+         $('#modal-add-product').modal('hide');
+    });
+    //loop trough object in array
+    function findObjectByKey(array, key, value) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][key] === value) {
+                return array[i];
+            }
+        }
+        return null;
+    }
+
+    function check_stock(id){
+
+       $.ajax({
+          type: 'POST',
+          url: 'so-get_stocks.php',
+          data: {'custID':id},
+          dataType: 'json',
+          success: function(response){
+
+             if(response==null){
+                Notify("No stocks.","");
+             }else{
+                var obj = findObjectByKey(orders, 'custID', response.custID);
+                if(obj!=null){
+                  Notify("Product already exist.","");
+                  return;
+                }
+                var tmp={
+                  so_cust:$('#customer_ID').val(),
+                  custID:response.custID,
+                  warehouseID:response.warehouse_ID,
+                  product_SKU:response.product_SKU,
+                  Description:response.product_description,
+                  Category:response.category_name,
+                  Qty:1,
+                  UnitPrice:response.sell_price,
+                  TotalPrice:response.sell_price*1
+
+                }
+                orders.push(tmp);
+                get_orders();
+             }
+          }
+
+        });
+
+    }
+
+  });
+function get_orders(){
+       var indx = 0;
+       $('#tOrders').DataTable({
+            destroy: true,
+            paging: false,
+            searching:false,
+            lengthChange:false,
+            data: orders,
+            bInfo:false,
+            columns: [
+                { data: "Description" },
+                { data: "Category" },
+                { data: "Qty" },
+                { data: "UnitPrice" },
+                { data: "TotalPrice" },
+                {
+                    data: function (data) {
+                        indx++;
+                        return '<input id="' + indx + '"  type="button" class="btn btn-small btn-danger" value="-"  onclick="RemoveItem(\'' + data.custID + '\')" />';
+                    }
+                }
+            ]
+        });
+       //bibilangin nya ung sales order items
+       $('#num_items').text(orders.length);
+       //computation para sa grand total ng mga inorder
+       var grand_total=0;
+       for (var i = 0; i < orders.length; i++) {
+         grand_total=grand_total+orders[i].TotalPrice;
+       }
+        $('#grand_total').text(grand_total);
+        $('#grand_total1').text(grand_total);
+        $('#cust_name').text($('#customer_ID option:selected').text());
+        console.log(orders);
+    }
+  function RemoveItem(id){
+    var r = confirm("Are you sure you want to remove " + id + "?" );
+    if (r == true) {
+      for(var i=0 ; i<orders.length; i++)
+        {
+            if(orders[i].custID==id)
+                orders.splice(i);
+        }
+
+        get_orders();
+      }
+    }
+
+</script>
+
+
+  <!-- Notify -->
+<script src="dist/js/notify.js"></script>
+<!-- Notify -->
+<script src="dist/js/notify.min.js"></script>
+
+<script>
+
+  function upperCase(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+    }, 1);
+
+  }
+
+  //Notify
+  function Notify(msg,mode){
+    $.notify(msg,mode,{ position:"top left" });
+  }
+
+
+  function submit()
+
+  {
+    $.notify("its asd","warn");
+  }
+
+</script>
+
+<!-- Alert animation -->
+<script type="text/javascript">
+$(document).ready(function () {
+
+  window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+      $(this).remove();
+    });
+  }, 1000);
+
+});
+</script>
 
 
 <!-- =========================== MODAL ======================== -->
@@ -277,19 +585,24 @@
                   <label>Stock No. (SCxxxxxxxxx)</label>
 
                   <!--<input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required> -->
-                  <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" required>
+                  <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name"  required>
                           <?php
                           // Include config file
                           require_once "config.php";
                           // Attempt select query execution
                           $query = "";
-                          $query = "SELECT * FROM stock ORDER BY custID, stock_status asc";
+                          $query = "SELECT a.custID,a.warehouse_ID,b.product_description,
+                             b.product_SKU,b.sell_price,c.category_name
+                             FROM stock a
+                           INNER JOIN product_model b on b.product_SKU=a.PO_ID
+                           INNER JOIN  categories c on c.custID=b.product_category
+                           WHERE a.qty>0";
                           if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
 
                           while($row = mysqli_fetch_array($result)){
 
-                          echo "<option value='".$row['custID']."'>" .$row['product_SKU']. "-" .$row['product_SKU']. "</option>";
+                          echo "<option value='".$row['custID']."'>" .$row['custID']. "-" .$row['product_description']. "</option>";
 
 
                           }
@@ -311,23 +624,21 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <a href="" class="btn btn-default btn" data-dismiss="modal">No</a>
-                <a href="" class="btn btn-success btn">Add</a>
+                <button class="btn btn-default btn" data-dismiss="modal">No</button>
+                <button class="btn btn-success btn" id="btnadd">Add</button>
 
               </div>
             </div>
-
           </div>
-          <div class="modal-footer">
-            <a href="" class="btn btn-default btn" data-dismiss="modal">No</a>
-            <button class="btn btn-success btn" name="incoming_so_btn" value="incoming_so_btn" type="submit">Add</button>
-          </div>
-        </div>
         <!-- /.modal-content -->
       </form>
     </div>
 
-    <div class="modal modal-default fade" id="modal-checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+
+
+    <!-- MODAL CHECKOUT -->
+    <div class="modal modal-default fade" name="modal-checkout" id="modal-checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-l" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -340,7 +651,7 @@
                 <table class="table table-bordered table-striped">
                   <tr>
                     <td><label>Customer:</label></td>
-                    <td>CACHILA, VINCE</td>
+                    <td id="cust_name"></td>
                   </tr>
                   <tr>
                     <td><label>Warehouse:</label></td>
@@ -348,19 +659,15 @@
                   </tr>
                   <tr>
                     <td><label>No. of Items:</label></td>
-                    <td>1</td>
+                    <td id="num_items"></td>
                   </tr>
                   <tr>
                     <td><label>Discount:</label></td>
                     <td>0.00</td>
                   </tr>
                   <tr>
-                    <td><label>Tax:</label></td>
-                    <td>0.00</td>
-                  </tr>
-                  <tr>
                     <td><label>Grand Total:</label></td>
-                    <td>25</td>
+                    <td id="grand_total1">25</td>
                   </tr>
                 </table>
 
@@ -375,49 +682,15 @@
               </div>
               </div>
               <div class="modal-footer">
-                <a href="" class="btn btn-default btn" data-dismiss="modal">Close</a>
-                <a href="" class="btn btn-warning btn">Save</a>
-                <a href="" class="btn btn-success btn">Print &amp; Save</a>
-
-
+                <button class="btn btn-default btn" data-dismiss="modal">Close</button>
+                <button id="btnsave" class="btn btn-warning btn">Save</button>
+                <button id="btnsaveprint" class="btn btn-success btn">Print &amp; Save</button>
               </div>
-
-
             </div>
           </div>
           <!-- /.modal-dialog -->
     </div>
 
 
-    <!--========================== WIP for AJAX =================================-->
-    <script>
-    $(document).ready(function(){
-    $('#submit').on('click', function(){
-      var scNum = $('#product_SKU').val();
-      var customer_ID = $('#customer_ID').val();
-      var wID = $('#warehouse_name').val();
-      var dataString = 'product_SKU='+scNum+'&customer_ID='+customer_ID+'&wID='+wID;
-      if(scNum=='' || customer_ID=='' || wID== ''){
-        alert('Must have data');
-      }else {
-        $.ajax({
-          method:'POST',
-          url: 'functions/incoming_so.php',
-          data: dataString,
-          dataType: "html"
-        });
-
-        request.done(function( msg ) {
-  $( "#log" ).html( msg );
-});
-
-request.fail(function( jqXHR, textStatus ) {
-  alert( "Request failed: " + textStatus );
-});
-      }
-      return false;
-    });
-  });
-</script>
 </body>
 </html>

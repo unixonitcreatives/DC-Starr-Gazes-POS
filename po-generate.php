@@ -15,7 +15,8 @@ $product_SKU=
 $warehouse_name=
 $po_status=
 $created_by=
-$qty="";
+$qty=
+$expiry="";
 
 require_once "config.php";
 
@@ -26,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $product_SKU = test_input($_POST['product_SKU']);
     $warehouse_name = test_input($_POST['warehouse_name']);
     $qty = test_input($_POST['qty']);
+    $expiry = test_input($_POST['expiry']);
 
 
     if(empty($product_SKU)){
@@ -38,6 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(empty($qty)){
         $alertMessage = "Please enter product quantity.";
+    }
+
+    if(empty($expiry)){
+        $alertMessage = "Please enter expiry date.";
     }
 
 
@@ -65,9 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
                                     $query = "INSERT INTO generate_po
-                                    (custID, product_description, warehouse_name, qty, po_status, created_by)
+                                    (custID, product_description, warehouse_name, qty, expiry_date, po_status, created_by)
                                     VALUES
-                                    ('$custnewID', '$product_SKU', '$warehouse_name', '$qty', 'Pending', 'Vince')"; //Prepare insert query
+                                    ('$custnewID', '$product_SKU', '$warehouse_name', '$qty', '$expiry','Pending', 'Vince')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 
@@ -224,7 +230,7 @@ function test_input($data) {
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="date" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
+                    <input type="text" name="expiry" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
                   </div>
                   <!-- /.input group -->
                 </div>
