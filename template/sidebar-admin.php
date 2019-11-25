@@ -77,9 +77,7 @@
                             <ul class="treeview-menu">
                                 <!-- <li><a href="PO-add.php">Add PO</a></li> -->
                                 <li><a href="stock-manage.php">In-Stocks</a></li>
-                                <li><a href="stock-manage-sold.php">Sold</a></li>
-                                <li><a href="stock-manage-void.php">Void</a></li>
-
+                                <li><a href="stock-manage-sold.php">Expired</a></li>
                             </ul>
                         </li>
 
@@ -104,6 +102,7 @@
                             <ul class="treeview-menu">
                                 <li><a href="so-generate.php">Generate SO</a></li>
                                 <li><a href="so-manage.php">Manage SO</a></li>
+                                <li><a href="so-void.php">Void SO</a></li>
                             </ul>
                         </li>
                         <li class="treeview">

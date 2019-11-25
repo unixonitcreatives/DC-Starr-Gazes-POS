@@ -45,7 +45,7 @@
               $select_query = "SELECT warehouse_name FROM warehouse WHERE custID = '".$_GET['WHid']."'";
               $qry = mysqli_query($link,$select_query);
               $warehouse_name = mysqli_fetch_array($qry);
-              echo $warehouse_name[''];
+              //echo $warehouse_name[''];
 
               ?> </h3>
               <br><a href="warehouse-manage.php" class="text-center">Warehouse Menu</a>,

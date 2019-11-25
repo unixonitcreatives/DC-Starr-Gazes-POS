@@ -215,6 +215,7 @@
 
         </tbody>
       </table>
+      <span>Discount/s:  <input type="number" id="discount"/ placeholder="0"><br>
       <span>GRAND TOTAL: <label id="grand_total">0</label></span>
 
     </div>
@@ -663,11 +664,11 @@ $(document).ready(function () {
                   </tr>
                   <tr>
                     <td><label>Discount:</label></td>
-                    <td>0.00</td>
+                    <td id="discount"></td>
                   </tr>
                   <tr>
                     <td><label>Grand Total:</label></td>
-                    <td id="grand_total1">25</td>
+                    <td id="grand_total1"></td>
                   </tr>
                 </table>
 
