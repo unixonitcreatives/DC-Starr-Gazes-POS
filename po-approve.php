@@ -19,7 +19,7 @@ require_once "config.php";
       echo $_GET['custID'];  echo "<script>console.log('Test')</script>";
 
           if($result = mysqli_query($link, $query)){ // Execute Query
-              if(mysqli_num_rows($result) > 0){ 
+              if(mysqli_num_rows($result) > 0){
                             while($row = mysqli_fetch_array($result)){ // This is where the Magic Begins
 
                             $count = $row['qty']; //$count is equal to the quantity in the PO
@@ -30,7 +30,7 @@ require_once "config.php";
                             $approved_by = $_SESSION["username"]; //Kung sino nag pindot ng Approve (Check Button)
                             $sold_to = "";
                             $sold_by = "";
-                            
+
                                       if ($row['po_status'] == "Pending"){ //Check lang kung nka pending yung PO, if yes, proceed, if no -> di na pwede i process ang void or approved status
                                                       for ($j = 0; $j < $count; $j++) {//LOOP Start.
 
@@ -41,46 +41,46 @@ require_once "config.php";
                                                           $custID = str_pad($newID, 8, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                                           $custnewID = $IDtype.$custID; //Prepare $custom new ID
 
-                                                          $query = "INSERT INTO stock 
-                                                          (custID, product_SKU, PO_ID, warehouse_ID, stock_status, sold_to, sold_by, approved_by) 
-                                                          VALUES 
-                                                          ('$custnewID', '$PO', '$product_SKU', '$warehouse_ID', '$stock_status', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
+                                                          $query = "INSERT INTO stock
+                                                          (custID, product_SKU, PO_ID, warehouse_ID, stock_status, qty, sold_to, sold_by, approved_by)
+                                                          VALUES
+                                                          ('$custnewID', '$PO', '$product_SKU', '$warehouse_ID', '$stock_status', 1, '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
 
                                                           $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
-                                                                          
-                                                          if($result){ 
-                                                            
+
+                                                          if($result){
+
                                                               $query_update = "UPDATE generate_po SET po_status = 'Approved' WHERE custID = '$PO'";
                                                               $result_update = mysqli_query($link, $query_update) or die(mysqli_error($link));
                                                               if($result_update){
                                                                 //Update Query OK
                                                                 echo "<script>$.notify('success','success');</script>";
                                                                 header( "Location: po-manage.php" );
-                                                                
+
 
                                                               }else{
                                                                 //Update Query Fail
                                                               }
-                                                            
+
 
                                                           }else{
                                                           //Insert Query execution failed
                                                           }
-                                                      } //Loop End  
+                                                      } //Loop End
                                       }//If End (Check PO Status)
                                       else {
                                         echo "<script>alert('this PO is no longer available for approval.')</script>";
                                         echo "<script>$.notify('asd','warn');</script>";
                                         header( "Location: po-manage.php" );
                                       }
-                            
+
                                   mysqli_close($link);
-                            } //End Mysqli Fetch Array               
+                            } //End Mysqli Fetch Array
 
             }
           }
-        
-          
+
+
 
 
 
