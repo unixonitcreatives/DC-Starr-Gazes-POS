@@ -27,9 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $SRP = test_input($_POST['SRP']);
     $product_detail = test_input($_POST['product_detail']);
 
-
-
-
+    //validations
     if(empty($product_description)){
         $alertMessage = "Please enter product description.";
     }
@@ -83,8 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
                                     if($result){
-                                    echo "<script>Notify('new product model added succesfully','Success');</script>";
-                                    echo "<script>console.log('new user added');</script>";
+                                    //echo "<script>Notify('new product model added succesfully','Success');</script>";
+                                    //echo "<script>console.log('new user added');</script>";
+                                    header("Location: product-model-manage.php?alert=addsuccess");
                                     }else{
                                       //If execution failed
 
