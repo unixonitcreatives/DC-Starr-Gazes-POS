@@ -18,8 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
 
         $alertMessage = "Please enter a user type.";
 
-
-
     // Check input errors before inserting in database
     if(empty($alertMessage)){
       //=======================================================================================================
@@ -201,10 +199,31 @@ function test_input($data) {
 
                               if($row['po_status']=="Pending"){
                                 echo "<a href='po-approve.php?custID=". $row['custID'] ."' methodtitle='Approve' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                echo " &nbsp; <a  href='#' data-toggle='modal' data-target='#modal-delete".$row['id']." '><span class='glyphicon glyphicon-trash'></span></a>";
 
+                                echo "<!-- =========================== DELETE MODAL ====================== -->";
+                                echo "<div class='modal fade' id='modal-delete".$row['id']."'>";
+                                  echo "<div class='modal-dialog'>";
+                                    echo "<div class='modal-content'>";
+                                      echo "<div class='modal-header'>";
+                                        echo "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
+                                          echo "<span aria-hidden='true'>&times;</span></button>";
+                                        echo "<h4 class='modal-title'>Delete Data</h4>";
+                                      echo "</div>";
+                                      echo "<div class='modal-body'>";
+                                        echo "<p>Are you sure you want to delete this data?</p>";
+                                      echo "</div>";
+                                      echo "<div class='modal-footer'>";
+                                        echo "<button type='button' class='btn btn-default pull-left' data-dismiss='modal'>Close</button>";
+                                        echo "<a class='btn btn-danger' href='category-delete.php?id=". $row['id'] ." '>Delete</a>";
+                                      echo "</div>";
+                                    echo "</div>";
+                                    echo "<!-- /.modal-content -->";
+                                  echo "</div>";
+                                  echo "<!-- /.modal-dialog -->";
+                                echo "</div>";
+                                echo "<!-- /.modal -->";
                               } elseif ($row['po_status']=="Approved"){
-
 
                               } elseif ($row['po_status']=="Void"){
 
@@ -215,16 +234,14 @@ function test_input($data) {
 
                               echo "</td>";
                               echo "</tr>";
-                            }
+
                             // Free result set
                             mysqli_free_result($result);
-                          } else{
-                            echo "<p class='lead'><em>No records were found.</em></p>";
-                          }
-                        } else{
-                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                        }
+                          } else { echo "<p class='lead'><em>No records were found.</em></p>"; } // ./while
 
+                        } else{ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link); } // ./if
+
+                      }
                         // Close connection
                         mysqli_close($link);
                         ?>
@@ -236,6 +253,8 @@ function test_input($data) {
     </section>
   <!-- /.content-wrapper -->
 </div>
+
+
 
 
 <!-- =========================== FOOTER =========================== -->

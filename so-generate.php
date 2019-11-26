@@ -45,45 +45,6 @@
                 <!-- <?php echo $alertMessage; ?> -->
 
               <div class="col-md-6">
-                <!-- <div class="form-group">
-                <label>Product</label>
-
-
-                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="product_SKU" id="product_SKU" required>
-                        <?php
-                        // Include config file
-                        require_once "config.php";
-                        // Attempt select query execution
-                        $query = "";
-                        // original query niyo $query = "SELECT * FROM stock WHERE stock_status = 'In Stock' ";
-                        $query="select product_description, product_sku from product_model order by product_description";
-                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
-                        if($result = mysqli_query($link, $query)){
-                        if(mysqli_num_rows($result) > 0){
-
-                          while($row = mysqli_fetch_array($result)){
-
-                            // echo "<option value='".$row['custID']."'>" .$row['custID']. " | " .$row['PO_ID']. " | " .$row['stock_status']."</option>";
-
-                             echo "<option value='".$row['product_sku']."'>" .$row['product_description']."</option>";
-
-                          }
-
-                          // Free result set
-                          mysqli_free_result($result);
-                        } else{
-                          echo "<p class='lead'><em>No records were found.</em></p>";
-                        }
-                      } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                      }
-
-                      //mysqli_close($link);
-
-                      ?>
-                    </select>
-                  </div> -->
-
 
                   <div class="form-group">
                     <label>Customer</label>
@@ -100,7 +61,7 @@
 
                           while($row = mysqli_fetch_array($result)){
 
-                            echo "<option value='".$row['custID']."'>" . $row['lastName'] . "," . $row['firstName'].  "</option>";
+                            echo "<option value='".$row['custID']."'>" . $row['lastName'] . "," . $row['firstName'] .  "</option>";
                           }
 
                           // Free result set
@@ -215,7 +176,6 @@
 
         </tbody>
       </table>
-      <span>Discount/s:  <input type="number" id="discount"/ placeholder="0"><br>
       <span>GRAND TOTAL: <label id="grand_total">0</label></span>
 
     </div>
@@ -464,8 +424,8 @@ $(document).ready(function () {
                   Description:response.product_description,
                   Category:response.category_name,
                   Qty:1,
-                  UnitPrice:response.sell_price,
-                  TotalPrice:response.sell_price*1
+                  UnitPrice:response.suggested_retail_price,
+                  TotalPrice:response.suggested_retail_price*1
 
                 }
                 orders.push(tmp);
@@ -593,7 +553,7 @@ $(document).ready(function () {
                           // Attempt select query execution
                           $query = "";
                           $query = "SELECT a.custID,a.warehouse_ID,b.product_description,
-                             b.product_SKU,b.sell_price,c.category_name
+                             b.product_SKU,b.suggested_retail_price,c.category_name
                              FROM stock a
                            INNER JOIN product_model b on b.product_SKU=a.PO_ID
                            INNER JOIN  categories c on c.custID=b.product_category
@@ -677,15 +637,13 @@ $(document).ready(function () {
                 <label>Mode of Payment</label>
                 <select class="form-control" required>
                   <option>Cash</option>
-                  <option>Bank Deposit</option>
-                  <option>Card</option>
+                  <option>Installment</option>
                 </select>
               </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-default btn" data-dismiss="modal">Close</button>
                 <button id="btnsave" class="btn btn-warning btn">Save</button>
-                <button id="btnsaveprint" class="btn btn-success btn">Print &amp; Save</button>
               </div>
             </div>
           </div>
