@@ -45,7 +45,6 @@
                 <!-- <?php echo $alertMessage; ?> -->
 
               <div class="col-md-6">
-
                   <div class="form-group">
                     <label>Customer</label>
                     <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" id="customer_ID" required>
