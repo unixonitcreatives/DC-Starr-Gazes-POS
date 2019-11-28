@@ -69,19 +69,6 @@
                         </li>
 
                         <li class="treeview">
-                            <a href="#"><i class="fa fa-cubes"></i> <span>Stock</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <!-- <li><a href="PO-add.php">Add PO</a></li> -->
-                                <li><a href="stock-manage.php">In-Stocks</a></li>
-                                <li><a href="stock-manage-sold.php">Expired</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="treeview">
                             <a href="#"><i class="fa fa-cart-plus"></i> <span>Purchase Order</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
@@ -92,6 +79,20 @@
                                 <li><a href="po-manage.php">Manage PO</a></li>
                             </ul>
                         </li>
+
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-cubes"></i> <span>Stock</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <!-- <li><a href="PO-add.php">Add PO</a></li> -->
+                                <li><a href="stock-manage.php">In-Stocks</a></li>
+                                <li><a href="stock-manage-expired.php">Expired</a></li>
+                            </ul>
+                        </li>
+
 
                         <li class="treeview">
                             <a href="#"><i class="fa fa-shopping-cart"></i> <span>Sales Order</span>

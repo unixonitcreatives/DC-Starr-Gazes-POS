@@ -31,7 +31,7 @@
 
                             </ul>
                         </li>
-                        
+
                         <li class="treeview">
                             <a href="#"><i class="fa fa-th"></i> <span>Products</span>
                                 <span class="pull-right-container">
@@ -62,6 +62,6 @@
 
                         <li><a href="logout.php"><i class="fa fa-close"></i> <span>Logout</span></a>
                         </li>
-                    </ul>      
+                    </ul>
                 </section>
             </aside>

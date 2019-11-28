@@ -6,8 +6,9 @@
   $Manager_auth = 0;
   $Cashier_auth = 0;
  include('template/user_auth.php');
+ // Include config file
+ include ('config.php');
 ?>
-<!-- ========================================== -->
 
 <!-- ================================================================ -->
 <!DOCTYPE html>
@@ -48,6 +49,27 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
+                        <!-- ====================Expired Script====================== -->
+                        <?php
+
+
+                                $curdate=date("Y-m-d");
+
+                                //if the prod is already expired
+                                if($curdate){
+                                  //insert into expired product table
+                                  $insertToExpList = "INSERT INTO expired_stocks (custID, PO_ID, product_SKU, warehouse_ID, stock_status, approved_by, created_at) SELECT custID, PO_ID, product_SKU, warehouse_ID, stock_status, approved_by, created_at FROM stock WHERE created_at='$curdate'";
+                                  $insertResult = mysqli_query($link, $insertToExpList);
+
+                                  //if already inserted, delete from product list
+                                  if($insertResult){
+                                    $deleteFromList = "DELETE from stock WHERE created_at = '$curdate'";
+                                    $deleteResult = mysqli_query($link, $deleteFromList);
+                                  }
+                                }else {
+                                  echo "error updating data";
+                                }
+                                ?>
                         <tr>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SC No.</th>
@@ -64,9 +86,6 @@
                       </thead>
                       <tbody>
                         <?php
-                        // Include config file
-                        require_once 'config.php';
-
                         // Attempt select query execution
                         $query = "SELECT * FROM stock WHERE stock_status='In Stock' ORDER BY custID, warehouse_ID asc";
                         if($result = mysqli_query($link, $query)){
