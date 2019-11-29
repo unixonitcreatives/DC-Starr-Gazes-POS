@@ -12,7 +12,6 @@
   //   		echo "Error: " . $sql . "<br>" . $conn->error;
 		// }
 
-
 		$orders = $_POST['orders'];
 		$lo1 = json_decode(json_encode($orders),true);
 		$arr= json_decode($lo1,true);
