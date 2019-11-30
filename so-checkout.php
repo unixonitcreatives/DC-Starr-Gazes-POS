@@ -14,40 +14,38 @@
 		// }
 
 
-		/*eto gawa ko bro
-		$IDtype = "SI";
-        $m = date('m');
-        $y = date('y');
-        $d = date('d');
+												$orders = $_POST['orders'];
+												$lo1 = json_decode(json_encode($orders),true);
+												$arr= json_decode($lo1,true);
 
-        //$qry = mysqli_query($link,"SELECT MAX(id) FROM `sales_order`"); // Get the latest ID sa database ng sales_order
-        //$resulta = mysqli_fetch_array($qry);
+												//eto gawa ko bro
+												$IDtype = "SI";
+														$m = date('m');
+														$y = date('y');
+														$d = date('d');
 
-				// Attempt select query execution
-				$qry = "SELECT MAX(id) FROM sales_order";
-				if($resulta = mysqli_query($link, $qry)){
-        $newID = $resulta['MAX(id)'] + 1; //Get the latest ID then Add 1
-        $custID = str_pad($newID, 5, '0', STR_PAD_LEFT); //Prepare custom ID with 8 Paddings
-        $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
-        	//output nyan ay (ex: SI1129201900001)
-}*/
-							$orders = $_POST['orders'];
-							$lo1 = json_decode(json_encode($orders),true);
-							$arr= json_decode($lo1,true);
+														// Attempt select query execution
+														$qry = mysqli_query($link,"SELECT MAX(soID) FROM `sales_order`"); // Get the latest ID sa database ng sales_order
+														$resulta = mysqli_fetch_assoc($qry);
+														$newID = $resulta['MAX(soID)'] + 1; //Get the latest ID then Add 1
+														$custID = str_pad($newID, 5, '0', STR_PAD_LEFT); //Prepare custom ID with 8 Paddings
+														$custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
+															//output nyan ay (ex: SI1129201900001)
 
-							$p=0
-							foreach ($arr as $p) {
-								 $sql = 'INSERT INTO sales_order ( txtID, stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse, mop)
-							 		VALUES ("'. $custnewID . '","'.$p['custID'].'","'.$p['product_SKU'].'",1,'.$p['UnitPrice'].',"'.$p['so_cust'].'","'.$p['warehouseID'].'","'.$p['mop'].'")';
 
-								if ($link->query($sql) === TRUE) {
-						    		$validator['success'] = true;
-								} else {
-						    		echo "Error: " . $sql . "<br>" . $link->error;
-								}
-							}
+												foreach ($arr as $p) {
+													 $sql = 'INSERT INTO sales_order ( txID, stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse, mop)
+												 		VALUES ("'. $custnewID . '","'.$p['custID'].'","'.$p['product_SKU'].'",1,'.$p['UnitPrice'].',"'.$p['so_cust'].'","'.$p['warehouseID'].'","'.$p['mop'].'")';
 
-		$validator['success'] = true;
-		echo json_encode($validator);
+													if ($link->query($sql) === TRUE) {
+											    		$validator['success'] = true;
+													} else {
+											    		echo "Error: " . $sql . "<br>" . $link->error;
+													}
+												}
+
+$validator['success'] = true;
+echo json_encode($validator);
+
 	}
 ?>
