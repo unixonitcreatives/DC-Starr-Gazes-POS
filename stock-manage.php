@@ -12,8 +12,10 @@ include ('config.php');
 <!-- ====================Expired Script====================== -->
 <?php
 $alertMessage = "";
-//set date ex: 2019-01-31
-$curdate=date("Y-m-d");
+//set date ex: Year-Month-Date
+$setDate = mktime(0,0,0,date("m"),date("d"),date("Y"));
+$curdate = date("Y-m-d", $setDate);
+
 
 //echo $curdate;
 //if the prod is already expired
@@ -64,7 +66,7 @@ if($curdate){
       <section class="content-header">
         <h1>
           Stock Manage (In-Stock)<br>
-          <small>DC Starr Gazes Inventory Management System</small>
+          <small>DC Starr Gazes Inventory Management System <?php echo $curdate; ?></small>
         </h1>
       </section>
       <!-- ======================== MAIN CONTENT ======================= -->
