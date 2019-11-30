@@ -28,6 +28,7 @@ require_once "config.php";
                             $warehouse_ID = $row['warehouse_name']; //kukunin warehouse info ng PO
                             $stock_status = "In Stock"; //Automatic pag ka approve, In Stock na
                             $approved_by = $_SESSION["username"]; //Kung sino nag pindot ng Approve (Check Button)
+                            $expiry_date = $row['expiry_date'];
                             $sold_to = "";
                             $sold_by = "";
 
@@ -42,9 +43,9 @@ require_once "config.php";
                                                           $custnewID = $IDtype.$custID; //Prepare $custom new ID
 
                                                           $query = "INSERT INTO stock
-                                                          (custID, product_SKU, PO_ID, warehouse_ID, stock_status, qty, sold_to, sold_by, approved_by)
+                                                          (custID, product_SKU, PO_ID, warehouse_ID, stock_status, qty, expiry_date, sold_to, sold_by, approved_by)
                                                           VALUES
-                                                          ('$custnewID', '$PO', '$product_SKU', '$warehouse_ID', '$stock_status', 1, '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
+                                                          ('$custnewID', '$PO', '$product_SKU', '$warehouse_ID', '$stock_status', 1, '$expiry_date', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
 
                                                           $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 

@@ -424,7 +424,8 @@ $(document).ready(function () {
                   Category:response.category_name,
                   Qty:1,
                   UnitPrice:response.suggested_retail_price,
-                  TotalPrice:response.suggested_retail_price*1
+                  TotalPrice:response.suggested_retail_price*1,
+                  mop:$("#mop").val()
 
                 }
                 orders.push(tmp);
@@ -614,10 +615,6 @@ $(document).ready(function () {
                     <td id="cust_name"></td>
                   </tr>
                   <tr>
-                    <td><label>Warehouse:</label></td>
-                    <td>MAIN WAREHOUSE</td>
-                  </tr>
-                  <tr>
                     <td><label>No. of Items:</label></td>
                     <td id="num_items"></td>
                   </tr>
@@ -634,9 +631,9 @@ $(document).ready(function () {
 
                 <div class="form-group">
                 <label>Mode of Payment</label>
-                <select class="form-control" required>
-                  <option>Cash</option>
-                  <option>Installment</option>
+                <select class="form-control" id="mop" required>
+                  <option value="Cash">Cash</option>
+                  <option value="Installment">Installment</option>
                 </select>
               </div>
               </div>

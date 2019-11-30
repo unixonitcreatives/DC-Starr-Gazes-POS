@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Stock Manage (Sold)<br>
+         Stock Manage (Expired)<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -53,11 +53,9 @@
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SC No.</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO No.</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SKU</th>
-
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Warehouse</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
-
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Approved By</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Expiry Date</th>
 
                           <th>Action</th>
                         </tr>
@@ -68,7 +66,7 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM expired_stocks ORDER BY custID, warehouse_ID asc";
+                        $query = "SELECT * FROM expired_stocks ORDER BY created_at DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -87,11 +85,13 @@
                                 echo "<td><span class='badge bg-orange'>Sold</span></td>";
                               } elseif ($row['stock_status']=="Void"){
                                 echo "<td><span class='badge bg-red'>Void</span></td>";
+                              }elseif ($row['stock_status']=="Expired"){
+                                echo "<td><span class='badge bg-yellow'>Expired</span></td>";
                               } else {
                                 echo "<td><span class='badge bg-gray'>Error</span></td>";
                               }
 
-                              echo "<td>" . $row['approved_by']." on ". $row['created_at'] . "</td>";
+                              echo "<td>" . $row['expiry_date']. "</td>";
                               echo "<td>";
 
                               if($row['stock_status']=="In Stock"){
@@ -121,6 +121,14 @@
 
                                 echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
+                              } elseif ($row['stock_status']=="Expired"){
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
+
+                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
+
+                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                               } else {
 
                               }

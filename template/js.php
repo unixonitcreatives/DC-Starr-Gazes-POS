@@ -40,6 +40,10 @@
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
+<!-- Notify -->
+<script src="dist/js/notify.min.js"></script>
+<script src="dist/js/notify.js"></script>
+
 
 <!-- =========================== PAGE SCRIPT ======================== -->
 
@@ -139,12 +143,6 @@ $(document).ready(function () {
   })
 </script>
 
-
-
-  <!-- Notify -->
-<script src="dist/js/notify.js"></script>
-<!-- Notify -->
-<script src="dist/js/notify.min.js"></script>
 
 <script>
   //uppercase text box

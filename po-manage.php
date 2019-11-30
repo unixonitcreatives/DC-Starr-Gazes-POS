@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                 $approved_by = $_SESSION["username"]; //Kung sino nag pindot ng Approve (Check Button)
                 $sold_to = "";
                 $sold_by = "";
+                $created_at = $row['created_at'];
 
                 for ($j = 0; $j < $count; $j++) {//LOOP Start.
 
@@ -49,9 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                     $custnewID = $IDtype.$custID; //Prepare $custom new ID
 
                     $query = "INSERT INTO stock
-                    (custID, product_SKU, warehouse_ID, stock_status, approved_by, sold_to, sold_by, approved_by)
+                    (custID, product_SKU, warehouse_ID, stock_status, approved_by, sold_to, sold_by, created_at )
                     VALUES
-                    ('$custnewID', '$product_SKU', '$warehouse_ID', '$stock_status', '$sold_to', '$sold_by', '$approved_by')"; //Prepare insert query
+                    ('$custnewID', '$product_SKU', '$warehouse_ID', '$stock_status', '$approved_by','$sold_to', '$sold_by', '$created_at')"; //Prepare insert query
 
                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 
@@ -161,6 +162,7 @@ function test_input($data) {
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Warehouse</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Quantity</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Expiry Date</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Created by</th>
                           <th>Action</th>
                         </tr>
@@ -186,12 +188,16 @@ function test_input($data) {
 
                               if($row['po_status']=="Pending"){
                                 echo "<td><span class='badge bg-orange'>Pending</span></td>";
+                                echo "<td>" . $row['expiry_date'] . "</td>";
                               } elseif ($row['po_status']=="Approved"){
                                 echo "<td><span class='badge bg-green'>Approved</span></td>";
+                                echo "<td>" . $row['expiry_date'] . "</td>";
                               } elseif ($row['po_status']=="Void"){
                                 echo "<td><span class='badge bg-red'>Void</span></td>";
+                                echo "<td>" . $row['expiry_date'] . "</td>";
                               } else {
                                 echo "<td><span class='badge bg-gray'>Error</span></td>";
+                                echo "<td>" . $row['expiry_date'] . "</td>";
                               }
 
                               echo "<td>" . $row['created_by']." on ". $row['created_at'] . "</td>";

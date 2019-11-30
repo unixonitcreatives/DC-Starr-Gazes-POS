@@ -16,7 +16,8 @@ $warehouse_name=
 $po_status=
 $created_by=
 $qty=
-$expiry="";
+$expiry=
+$alertMessage="";
 
 require_once "config.php";
 
@@ -230,7 +231,7 @@ function test_input($data) {
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" name="expiry" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
+                    <input type="text" name="expiry" class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="">
                   </div>
                   <!-- /.input group -->
                 </div>
