@@ -2,6 +2,8 @@
 	include 'config.php';
 	$custnewID="";
 
+
+
 	if(isset($_POST['orders'])){
 
 		// $sql = "INSERT INTO sales_order (stock_ID, so_desc, so_qty,so_price,so_cust,so_warehouse)
@@ -17,6 +19,7 @@
 												$orders = $_POST['orders'];
 												$lo1 = json_decode(json_encode($orders),true);
 												$arr= json_decode($lo1,true);
+
 
 												//eto gawa ko bro
 												$IDtype = "SI";
