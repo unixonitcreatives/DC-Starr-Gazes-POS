@@ -8,6 +8,53 @@
  include('template/user_auth.php');
  $alertMessage="";
 ?>
+<!-- ================================================================ -->
+<?php 
+// Define variables and initialize with empty values
+$customer = $address = $item = $price = $date = $phone = $delivery = $status = "";
+
+require_once "config.php";
+
+$users_id = $_GET['id'];
+
+$query = "SELECT * from sales_order WHERE id=".$_GET['id']." ";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+
+  while ($row = mysqli_fetch_assoc($result)){
+      $id               = $row['id'];
+      $name             = $row['name'];
+      //$address          = $row['address'];
+      $item             = $row['item'];
+      $price            = $row['price'];
+      $order_date             = $row['order_date'];
+      //$phone            = $row['phone'];
+      //$delivery         = $row['delivery'];
+      $status           = $row['status'];
+      $notes           = $row['notes'];
+
+  }
+  $num_rows = mysqli_num_rows($result);
+} else{
+  echo "<p class='lead'><em>No records were found.</em></p>";
+}
+
+$query = "SELECT * from customers WHERE name ='$name' ";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+
+  while ($row = mysqli_fetch_assoc($result)){
+      $address          = $row['address'];
+      $phone            = $row['phone'];
+
+  }
+  $num_rows = mysqli_num_rows($result);
+} else{
+  echo "<p class='lead'><em>No records were found.</em></p>";
+}
+
+
+?>
 
 <!-- ================================================================ -->
 <!DOCTYPE html>
@@ -31,7 +78,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Sales Order Record<br>
+         Sales Invoice Record<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -52,16 +99,16 @@
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
-              <h3 class="box-title">Search for Sales Order Information</h3>
-              <br><a href="so-generate.php" class="text-center">+ Generate Sales Order</a>
+              <h3 class="box-title">Search for Sales Invoice Information</h3>
+              <br><a href="so-generate.php" class="text-center"></a>
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending"></th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Transaction ID</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Description</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" aria-label="Platform(s): activate to sort column ascending">No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" aria-label="Platform(s): activate to sort column ascending">Transaction ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" aria-label="Platform(s): activate to sort column ascending">Description</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Qty</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Price</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Customer</th>
@@ -93,9 +140,10 @@
                               <td><?php echo $row['mop'];?></td>
                               <td>
                               <a href='product-model-update.php?id=<?php echo $row['id'];?>' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
-                               &nbsp; <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
 
-                               &nbsp; <a href='si-view.php?id=<?php echo $row['soID']; ?>' title="Print SI" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
+                               &nbsp; <a href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
+
+                               &nbsp; <a href='si-view.php?id=<?php $row['txtID'];?>' title='Print SI' data-toggle='tooltip'><span class='glyphicon glyphicon-print'></span></a>
                               </td>
                               <!-- =========================== DELETE MODAL ====================== -->
                               <div class="modal fade" id="modal-delete<?php echo $row['id']; ?>">
