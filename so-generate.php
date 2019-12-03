@@ -1,5 +1,5 @@
 <!-- ======================= SESSION =================== -->
-<?php include('template/session.php'); ?>
+<?php include('template/session.php');?>
 <!-- =================================================== -->
 <!DOCTYPE html>
 <html>
@@ -75,6 +75,21 @@
                       ?>
                     </select>
                   </div>
+
+                  <div class="form-group">
+                    <label>Mode of Payment</label>
+                    <select class="form-control" id="mop_ID" required>
+                      <option value="Cash">Cash</option>
+                      <option value="Installment">Installment</option>
+                    </select>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="username_ID" name="username_ID" value=<?php echo $_SESSION['username']; ?> disabled>
+                  </div>
+
 
                   <!--  <div class="form-group">
                   <label>Warehouse</label>
@@ -378,7 +393,7 @@ $(function () {
       success: function(data){
         if(data.success===true) //if success close modal and reload page
         {
-
+          console.log('OK NAMAN!');
           $('#modal-checkout').modal('hide');
           location.reload();
         }
@@ -427,8 +442,8 @@ $(function () {
             Qty:1,
             UnitPrice:response.suggested_retail_price,
             TotalPrice:response.suggested_retail_price*1,
-            mop:$('#mop').val()
-
+            mop:$('#mop').val(),
+            username: $('#username_ID').val()
           }
           orders.push(tmp);
           get_orders();
@@ -473,6 +488,8 @@ function get_orders(){
   $('#grand_total').text(grand_total);
   $('#grand_total1').text(grand_total);
   $('#cust_name').text($('#customer_ID option:selected').text());
+  $('#mop').text($('#mop_ID option:selected').text());
+  $('#username_ID').text();
   console.log(orders);
 }
 function RemoveItem(id){
@@ -624,15 +641,18 @@ $(document).ready(function () {
               <td><label>Grand Total:</label></td>
               <td id="grand_total1"></td>
             </tr>
+
+            <tr>
+              <td><label>mop:</label></td>
+              <td id="mop"></td>
+            </tr>
+
+            <tr>
+              <td><label>username:</label></td>
+              <td id="username_ID"></td>
+            </tr>
           </table>
 
-          <div class="form-group">
-            <label>Mode of Payment</label>
-            <select class="form-control" id="mop" required>
-              <option value="Cash">Cash</option>
-              <option value="Installment">Installment</option>
-            </select>
-          </div>
 
 
         </div>

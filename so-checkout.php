@@ -1,6 +1,10 @@
+<!-- ======================= SESSION =================== -->
+<?php include('template/session.php'); ?>
+<!-- =================================================== -->
 <?php
 	include 'config.php';
 	$custnewID="";
+
 
 
 
@@ -35,10 +39,9 @@
 														$custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 															//output nyan ay (ex: SI1129201900001)
 
-
 												foreach ($arr as $p) {
-													 $sql = 'INSERT INTO sales_order ( txID, stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse, mop)
-												 		VALUES ("'. $custnewID . '","'.$p['custID'].'","'.$p['product_SKU'].'",1,'.$p['UnitPrice'].',"'.$p['so_cust'].'","'.$p['warehouseID'].'","'.$p['mop'].'")';
+													 $sql = 'INSERT INTO sales_order ( txID, stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse, mop, created_by)
+												 		VALUES ("'. $custnewID . '","'.$p['custID'].'","'.$p['product_SKU'].'",1,'.$p['UnitPrice'].',"'.$p['so_cust'].'","'.$p['warehouseID'].'","'.$p['mop'].'", "'.$p['username'].'")';
 
 													if ($link->query($sql) === TRUE) {
 											    		$validator['success'] = true;
