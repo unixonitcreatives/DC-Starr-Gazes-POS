@@ -18,157 +18,151 @@
     <!-- ======================= SIDEBAR ============================ -->
     <?php include('template/sidebar-manage.php'); ?>
     <!-- ======================== HEADER CONTENT ==================== -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>
-          Generate SO<br>
-          <small>DC Starr Gazes Inventory Management System</small>
-        </h1>
-      </section>
-      <!-- ======================== MAIN CONTENT ======================= -->
-      <!-- Main content -->
-      <section class="content">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+         Generate SO<br>
+        <small>POS</small>
+      </h1>
+    </section>
+    <!-- ======================== MAIN CONTENT ======================= -->
+    <!-- Main content -->
+    <section class="content">
 
-        <div class="col-md-12">
-          <!-- general form elements -->
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Sales Order's Details</h3>
-              <br><a href="so-manage.php" class="text-center">Manage SO</a>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start   action="functions/incoming_so.php-->
-            <form action="functions/incoming_so.php">
-              <div class="box-body">
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-default">
+          <div class="box-header with-border">
+            <h3 class="box-title">Sales Order's Details</h3>
+            <br><a href="so-manage.php" class="text-center">Manage SO</a>
+          </div>
+          <!-- /.box-header -->
+          <!-- form start   action="functions/incoming_so.php-->
+          <form action="functions/incoming_so.php">
+            <div class="box-body">
 
-                <!-- <?php echo $alertMessage; ?> -->
+              <!-- <?php echo $alertMessage; ?> -->
 
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Customer</label>
-                    <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" id="customer_ID" required>
-                      <?php
-                      // Include config file
-                      require_once "config.php";
-                      // Attempt select query execution
-                      $query = "";
-                      $query = "SELECT * FROM customers ORDER BY lastName, firstName asc";
-                      // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
-                      if($result = mysqli_query($link, $query)){
-                        if(mysqli_num_rows($result) > 0){
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Customer</label>
+                  <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="customer_ID" id="customer_ID" required>
+                    <?php
+                    // Include config file
+                    require_once "config.php";
+                    // Attempt select query execution
+                    $query = "";
+                    $query = "SELECT * FROM customers ORDER BY lastName, firstName asc";
+                    // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
+                    if($result = mysqli_query($link, $query)){
+                      if(mysqli_num_rows($result) > 0){
 
-                          while($row = mysqli_fetch_array($result)){
+                        while($row = mysqli_fetch_array($result)){
 
-                            echo "<option value='".$row['custID']."'>" . $row['lastName'] . "," . $row['firstName'] .  "</option>";
-                          }
-
-                          // Free result set
-                          mysqli_free_result($result);
-                        } else{
-                          echo "<p class='lead'><em>No records were found.</em></p>";
+                          echo "<option value='".$row['custID']."'>" . $row['lastName'] . "," . $row['firstName'] .  "</option>";
                         }
+
+                        // Free result set
+                        mysqli_free_result($result);
                       } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        echo "<p class='lead'><em>No records were found.</em></p>";
                       }
+                    } else{
+                      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
 
-                      ?>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Mode of Payment</label>
-                    <select class="form-control" id="mop_ID" required>
-                      <option value="Cash">Cash</option>
-                      <option value="Installment">Installment</option>
-                    </select>
-                  </div>
+                    ?>
+                  </select>
+                </div>
 
 
-                  <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control" id="username_ID" name="username_ID" value=<?php echo $_SESSION['username']; ?> disabled>
-                  </div>
 
 
-                  <!--  <div class="form-group">
-                  <label>Warehouse</label>
-                  <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name" required>
-                  <?php
-                  // Include config file
-                  require_once "config.php";
-                  // Attempt select query execution
-                  $query = "";
-                  $query = "SELECT * FROM warehouse ORDER BY warehouse_name asc";
-                  if($result = mysqli_query($link, $query)){
-                  if(mysqli_num_rows($result) > 0){
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" id="username_ID" name="username_ID" value=<?php echo $_SESSION['username']; ?> disabled>
+                </div>
 
-                  while($row = mysqli_fetch_array($result)){
 
-                  echo "<option value='".$row['custID']."'>" . $row['warehouse_name'] .  "</option>";
-                }
+                <!--  <div class="form-group">
+                <label>Warehouse</label>
+                <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name" required>
+                <?php
+                // Include config file
+                require_once "config.php";
+                // Attempt select query execution
+                $query = "";
+                $query = "SELECT * FROM warehouse ORDER BY warehouse_name asc";
+                if($result = mysqli_query($link, $query)){
+                if(mysqli_num_rows($result) > 0){
 
-                // Free result set
-                mysqli_free_result($result);
-              } else{
-              echo "<p class='lead'><em>No records were found.</em></p>";
-            }
-          } else{
-          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-        }
+                while($row = mysqli_fetch_array($result)){
 
-        //mysqli_close($link);
+                echo "<option value='".$row['custID']."'>" . $row['warehouse_name'] .  "</option>";
+              }
 
-        ?>
-      </select>
-    </div>
+              // Free result set
+              mysqli_free_result($result);
+            } else{
+            echo "<p class='lead'><em>No records were found.</em></p>";
+          }
+        } else{
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+      }
 
-    <div class="form-group">
-    <label>Quantity</label>
-    <input type="text" class="form-control" placeholder="Quantity" name="qty" oninput="upperCase(this)" maxlength="50" required>
-  </div> -->
+      //mysqli_close($link);
+
+      ?>
+    </select>
+  </div>
+
+  <div class="form-group">
+  <label>Quantity</label>
+  <input type="text" class="form-control" placeholder="Quantity" name="qty" oninput="upperCase(this)" maxlength="50" required>
+</div> -->
 
 </div>
 
 <div class="col-md-6 ">
-  <table class="table table-borderless " id="tOrders">
-    <thead>
-      <tr>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Qty</th>
-        <th>Unit Price</th>
-        <th>Total Price</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
+<table class="table table-borderless " id="tOrders">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Qty</th>
+      <th>Unit Price</th>
+      <th>Total Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
 
-      <!--
-      <?php
-      require_once ('config.php');
-      $desc=$qty=$price="";
+    <!--
+    <?php
+    require_once ('config.php');
+    $desc=$qty=$price="";
 
-      $query  = "SELECT so_desc AS DESCRIPTION, so_cat as CATEGORY, COUNT(so_qty) AS QTY, COUNT(so_unit_price) AS UNITPRICE, SUM(so_price) AS PRICE  from sales_order GROUP BY so_desc";
-      $result = mysqli_query($link, $query);
+    $query  = "SELECT so_desc AS DESCRIPTION, so_cat as CATEGORY, COUNT(so_qty) AS QTY, COUNT(so_unit_price) AS UNITPRICE, SUM(so_price) AS PRICE  from sales_order GROUP BY so_desc";
+    $result = mysqli_query($link, $query);
 
-      if (mysqli_num_rows($result) > 0) {
-      // output data of each row
-      while($row = mysqli_fetch_assoc($result)) {
-      $desc = $row['DESCRIPTION'];
-      $cat = $row['CATEGORY'];
-      $qty = $row['QTY'];
-      $uprice = $row['UNITPRICE'];
-      $price = $row['PRICE'];
-      echo "<tr>";
-      echo "<td>" . $desc . "</td>";
-      echo "<td>" . $qty . "</td>";
-      echo "<td>" . $price . "</td>";
-      echo "</tr>";
+    if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+    $desc = $row['DESCRIPTION'];
+    $cat = $row['CATEGORY'];
+    $qty = $row['QTY'];
+    $uprice = $row['UNITPRICE'];
+    $price = $row['PRICE'];
+    echo "<tr>";
+    echo "<td>" . $desc . "</td>";
+    echo "<td>" . $qty . "</td>";
+    echo "<td>" . $price . "</td>";
+    echo "</tr>";
 
-    }
-  } else {
-  echo "<center>0 results on database</center>";
+  }
+} else {
+echo "<center>0 results on database</center>";
 }
 
 //mysqli_close($link);
@@ -199,10 +193,10 @@ $gTotal = $row['totalAmount'];
 
 <div class="box-footer">
 
-  <input type="text" class="my-input" id="my-putin" autofocus style="width:0px;top:-100000px;height:0px;position:absolute;" />
+<input type="text" class="my-input" id="my-putin" autofocus /><!--  style="width:0px;top:-100000px;height:0px;position:absolute;" /> -->
 
-  <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product Manually</a>
-  <a class="btn btn-success" data-toggle="modal" data-target="#modal-checkout" >Check out</a>
+<a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product Manually</a>
+<a class="btn btn-success" data-toggle="modal" data-target="#modal-checkout" >Check out</a>
 </div>
 
 
@@ -218,7 +212,7 @@ $gTotal = $row['totalAmount'];
 
 <!-- =========================== FOOTER =========================== -->
 <footer class="main-footer">
-  <?php include('template/footer.php'); ?>
+<?php include('template/footer.php'); ?>
 </footer>
 
 
@@ -272,11 +266,11 @@ $gTotal = $row['totalAmount'];
 <script type="text/javascript">
 $(document).ready(function () {
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
+window.setTimeout(function() {
+  $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+    $(this).remove();
+  });
+}, 1000);
 
 });
 </script>
@@ -287,222 +281,234 @@ var custID;
 
 $(function () {
 
-  //Initialize Select2 Elements
-  $('.select2').select2()
+//Initialize Select2 Elements
+$('.select2').select2()
 
-  //Datemask dd/mm/yyyy
-  $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-  //Datemask2 mm/dd/yyyy
-  $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-  //Money Euro
-  $('[data-mask]').inputmask()
+//Datemask dd/mm/yyyy
+$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+//Datemask2 mm/dd/yyyy
+$('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+//Money Euro
+$('[data-mask]').inputmask()
 
-  //Date range picker
-  $('#reservation').daterangepicker()
-  //Date range picker with time picker
-  $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-  //Date range as a button
-  $('#daterange-btn').daterangepicker(
-    {
-      ranges   : {
-        'Today'       : [moment(), moment()],
-        'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-        'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-      },
-      startDate: moment().subtract(29, 'days'),
-      endDate  : moment()
+//Date range picker
+$('#reservation').daterangepicker()
+//Date range picker with time picker
+$('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+//Date range as a button
+$('#daterange-btn').daterangepicker(
+  {
+    ranges   : {
+      'Today'       : [moment(), moment()],
+      'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+      'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+      'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+      'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
     },
-    function (start, end) {
-      $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-    }
-  )
-
-  //Date picker
-  $('#datepicker').datepicker({
-    autoclose: true
-  })
-
-  //iCheck for checkbox and radio inputs
-  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-    checkboxClass: 'icheckbox_minimal-blue',
-    radioClass   : 'iradio_minimal-blue'
-  })
-  //Red color scheme for iCheck
-  $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-    checkboxClass: 'icheckbox_minimal-red',
-    radioClass   : 'iradio_minimal-red'
-  })
-  //Flat red color scheme for iCheck
-  $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-    checkboxClass: 'icheckbox_flat-green',
-    radioClass   : 'iradio_flat-green'
-  })
-
-  //Colorpicker
-  $('.my-colorpicker1').colorpicker()
-  //color picker with addon
-  $('.my-colorpicker2').colorpicker()
-
-  //Timepicker
-  $('.timepicker').timepicker({
-    showInputs: false
-  })
-
-
-  // November 18, 2019
-  // codes begins here
-  document.addEventListener("keypress", function (e) {
-    if (e.target.tagName !== "INPUT") {
-      var input = document.querySelector("#my-putin");
-      input.focus();
-      if (e.key.charCodeAt() == 13) {
-        input.focus();
-      }
-      input.value = input.value + e.key;
-      e.preventDefault();
-    }
-    $('#my-putin').keypress(function (e) {
-      var d = new Date();
-      if (e.key == 'Enter') {
-        var id = $('#my-putin').val();
-        // lost focus on textbox
-        $(this).blur();
-        // check stock
-        check_stock(id);
-        // clear barcode scan text
-        e.key = '';
-      }
-    });
-
-    $('#my-putin').blur(function (e) {
-      $('#my-putin').val('');
-
-    });
-  });
-  // button save only. not save print
-  $('#btnsave').on('click',function(){
-    $.ajax({
-      type: 'POST',
-      url: 'so-checkout.php',
-      // need to stringify array object list
-      data: {'orders': JSON.stringify(orders)},
-      dataType: 'json',
-      success: function(data){
-        if(data.success===true) //if success close modal and reload page
-        {
-          console.log('OK NAMAN!');
-          $('#modal-checkout').modal('hide');
-          location.reload();
-        }
-      }
-    });
-  });
-  //manual data entry
-  $('#btnadd').on('click',function(){
-    check_stock($('#warehouse_name').val());
-    $('#modal-add-product').modal('hide');
-  });
-  //loop trough object in array
-  function findObjectByKey(array, key, value) {
-    for (var i = 0; i < array.length; i++) {
-      if (array[i][key] === value) {
-        return array[i];
-      }
-    }
-    return null;
+    startDate: moment().subtract(29, 'days'),
+    endDate  : moment()
+  },
+  function (start, end) {
+    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
   }
+)
 
-  function check_stock(id){
+//Date picker
+$('#datepicker').datepicker({
+  autoclose: true
+})
 
-    $.ajax({
-      type: 'POST',
-      url: 'so-get_stocks.php',
-      data: {'custID':id},
-      dataType: 'json',
-      success: function(response){
+//iCheck for checkbox and radio inputs
+$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+  checkboxClass: 'icheckbox_minimal-blue',
+  radioClass   : 'iradio_minimal-blue'
+})
+//Red color scheme for iCheck
+$('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+  checkboxClass: 'icheckbox_minimal-red',
+  radioClass   : 'iradio_minimal-red'
+})
+//Flat red color scheme for iCheck
+$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+  checkboxClass: 'icheckbox_flat-green',
+  radioClass   : 'iradio_flat-green'
+})
 
-        if(response==null){
-          Notify("No stocks.","");
-        }else{
-          var obj = findObjectByKey(orders, 'custID', response.custID);
-          if(obj!=null){
-            Notify("Product already exist.","");
-            return;
-          }
-          var tmp={
-            so_cust:$('#customer_ID').val(),
-            custID:response.custID,
-            warehouseID:response.warehouse_ID,
-            product_SKU:response.product_SKU,
-            Description:response.product_description,
-            Category:response.category_name,
-            Qty:1,
-            UnitPrice:response.suggested_retail_price,
-            TotalPrice:response.suggested_retail_price*1,
-            mop:$('#mop').val(),
-            username: $('#username_ID').val()
-          }
-          orders.push(tmp);
-          get_orders();
-        }
+//Colorpicker
+$('.my-colorpicker1').colorpicker()
+//color picker with addon
+$('.my-colorpicker2').colorpicker()
+
+//Timepicker
+$('.timepicker').timepicker({
+  showInputs: false
+})
+
+
+// November 18, 2019
+// codes begins here
+document.onkeydown = TabDetection;
+
+    function TabDetection(evt) {
+      var evt = (evt) ? evt : ((event) ? event : null);
+      var tabKey = 9;
+
+      if(evt.keyCode == tabKey) {
+          var barcode=$('#my-putin').val();
+          check_stock(barcode);
+          $(this).blur();
+
       }
+    }
+    document.addEventListener("keypress", function (e) {
+        if (e.target.tagName !== "INPUT") {
+            var input = document.querySelector("#my-putin");
+            input.focus();
+          if (e.key.charCodeAt() == 13) {
+              input.focus();
+          }
+          input.value = input.value + e.key;
+          e.preventDefault();
+        }
 
+
+        $('#my-putin').blur(function (e) {
+
+            $('#my-putin').val('');
+
+        });
     });
-
+// button save only. not save print
+$('#btnsave').on('click',function(){
+  changeModeOfPayment();
+  $.ajax({
+    type: 'POST',
+    url: 'so-checkout.php',
+    // need to stringify array object list
+    data: {'orders': JSON.stringify(orders)},
+    dataType: 'json',
+    success: function(data){
+      if(data.success===true) //if success close modal and reload page
+      {
+        $('#modal-checkout').modal('hide');
+        location.reload();
+      }
+    }
+  });
+});
+//manual data entry
+$('#btnadd').on('click',function(){
+  check_stock($('#warehouse_name').val());
+  $('#modal-add-product').modal('hide');
+});
+//loop trough object in array
+function findObjectByKey(array, key, value) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i][key] === value) {
+      return array[i];
+    }
   }
+  return null;
+}
+
+function changeModeOfPayment() {
+   for (var i in orders) {
+        orders[i].mop = $('#mop_ID').val();
+        orders[i].discount= $('#discount').val();
+     }
+   }
+
+function check_stock(id){
+
+  $.ajax({
+    type: 'POST',
+    url: 'so-get_stocks.php',
+    data: {'custID':id},
+    dataType: 'json',
+    success: function(response){
+
+      if(response==null){
+        Notify("No stocks.","");
+      }else{
+        var obj = findObjectByKey(orders, 'custID', response.custID);
+        if(obj!=null){
+          Notify("Product already exist.","");
+          return;
+        }
+        var tmp={
+          so_cust:$('#customer_ID').val(),
+          custID:response.custID,
+          warehouseID:response.warehouse_ID,
+          product_SKU:response.product_SKU,
+          Description:response.product_description,
+          Category:response.category_name,
+          Qty:1,
+          UnitPrice:response.sell_price,
+          TotalPrice:response.sell_price*1,
+          mop:'',
+          discount:0,
+          username: $('#username_ID').val()
+        }
+        orders.push(tmp);
+        console.table(orders);
+        get_orders();
+      }
+    }
+
+  });
+
+}
 
 });
 function get_orders(){
-  var indx = 0;
-  $('#tOrders').DataTable({
-    destroy: true,
-    paging: false,
-    searching:false,
-    lengthChange:false,
-    data: orders,
-    bInfo:false,
-    columns: [
-      { data: "Description" },
-      { data: "Category" },
-      { data: "Qty" },
-      { data: "UnitPrice" },
-      { data: "TotalPrice" },
-      {
-        data: function (data) {
-          indx++;
-          return '<input id="' + indx + '"  type="button" class="btn btn-small btn-danger" value="-"  onclick="RemoveItem(\'' + data.custID + '\')" />';
-        }
+var indx = 0;
+$('#tOrders').DataTable({
+  destroy: true,
+  paging: false,
+  searching:false,
+  lengthChange:false,
+  data: orders,
+  bInfo:false,
+  columns: [
+    { data: "Description" },
+    { data: "Category" },
+    { data: "Qty" },
+    { data: "UnitPrice" },
+    { data: "TotalPrice" },
+    {
+      data: function (data) {
+        indx++;
+        return '<input id="' + indx + '"  type="button" class="btn btn-small btn-danger" value="-"  onclick="RemoveItem(\'' + data.custID + '\')" />';
       }
-    ]
-  });
-  //bibilangin nya ung sales order items
-  $('#num_items').text(orders.length);
-  //computation para sa grand total ng mga inorder
-  var grand_total=0;
-  for (var i = 0; i < orders.length; i++) {
-    grand_total=grand_total+orders[i].TotalPrice;
-  }
-  $('#grand_total').text(grand_total);
-  $('#grand_total1').text(grand_total);
-  $('#cust_name').text($('#customer_ID option:selected').text());
-  $('#mop').text($('#mop_ID option:selected').text());
-  $('#username_ID').text();
-  console.log(orders);
+    }
+  ]
+});
+//bibilangin nya ung sales order items
+$('#num_items').text(orders.length);
+//computation para sa grand total ng mga inorder
+var grand_total=0;
+for (var i = 0; i < orders.length; i++) {
+  grand_total=grand_total+orders[i].TotalPrice;
+}
+$('#grand_total').text(grand_total);
+$('#grand_total1').text(grand_total);
+$('#cust_name').text($('#customer_ID option:selected').text());
+$('#mop').text($('#mop_ID option:selected').text());
+$('#username_ID').text();
+console.log(orders);
 }
 function RemoveItem(id){
-  var r = confirm("Are you sure you want to remove " + id + "?" );
-  if (r == true) {
-    for(var i=0 ; i<orders.length; i++)
-    {
-      if(orders[i].custID==id)
-      orders.splice(i);
-    }
-
-    get_orders();
+var r = confirm("Are you sure you want to remove " + id + "?" );
+if (r == true) {
+  for(var i=0 ; i<orders.length; i++)
+  {
+    if(orders[i].custID==id)
+    orders.splice(i);
   }
+
+  get_orders();
+}
 }
 
 </script>
@@ -516,22 +522,22 @@ function RemoveItem(id){
 <script>
 
 function upperCase(a){
-  setTimeout(function(){
-    a.value = a.value.toUpperCase();
-  }, 1);
+setTimeout(function(){
+  a.value = a.value.toUpperCase();
+}, 1);
 
 }
 
 //Notify
 function Notify(msg,mode){
-  $.notify(msg,mode,{ position:"top left" });
+$.notify(msg,mode,{ position:"top left" });
 }
 
 
 function submit()
 
 {
-  $.notify("its asd","warn");
+$.notify("its asd","warn");
 }
 
 </script>
@@ -540,11 +546,11 @@ function submit()
 <script type="text/javascript">
 $(document).ready(function () {
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
+window.setTimeout(function() {
+  $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+    $(this).remove();
+  });
+}, 1000);
 
 });
 </script>
@@ -553,65 +559,65 @@ $(document).ready(function () {
 <!-- =========================== MODAL ======================== -->
 
 <div class="modal modal-default fade" id="modal-add-product" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-l" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">TYPE STOCK COUNT NUMBER</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Stock No. (SCxxxxxxxxx)</label>
+<div class="modal-dialog modal-dialog-centered modal-l" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">TYPE STOCK COUNT NUMBER</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Stock No. (SCxxxxxxxxx)</label>
 
-            <!--<input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required> -->
-            <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name"  required>
-              <?php
-              // Include config file
-              require_once "config.php";
-              // Attempt select query execution
-              $query = "";
-              $query = "SELECT a.custID,a.warehouse_ID,b.product_description,
-              b.product_SKU,b.suggested_retail_price,c.category_name
-              FROM stock a
-              INNER JOIN product_model b on b.product_SKU=a.PO_ID
-              INNER JOIN  categories c on c.custID=b.product_category
-              WHERE a.qty>0";
-              if($result = mysqli_query($link, $query)){
-                if(mysqli_num_rows($result) > 0){
+          <!--<input type="text" class="form-control" placeholder="SC No." name="SC_no" oninput="upperCase(this)" maxlength="50" required> -->
+          <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name"  required>
+            <?php
+            // Include config file
+            require_once "config.php";
+            // Attempt select query execution
+            $query = "";
+            $query = "SELECT a.custID,a.warehouse_ID,b.product_description,
+            b.product_SKU,b.suggested_retail_price,c.category_name
+            FROM stock a
+            INNER JOIN product_model b on b.product_SKU=a.PO_ID
+            INNER JOIN  categories c on c.custID=b.product_category
+            WHERE a.qty>0";
+            if($result = mysqli_query($link, $query)){
+              if(mysqli_num_rows($result) > 0){
 
-                  while($row = mysqli_fetch_array($result)){
+                while($row = mysqli_fetch_array($result)){
 
-                    echo "<option value='".$row['custID']."'>" .$row['custID']. "-" .$row['product_description']. "</option>";
+                  echo "<option value='".$row['custID']."'>" .$row['custID']. "-" .$row['product_description']. "</option>";
 
 
-                  }
-
-                  // Free result set
-                  mysqli_free_result($result);
-                } else{
-                  echo "<p class='lead'><em>No records were found.</em></p>";
                 }
+
+                // Free result set
+                mysqli_free_result($result);
               } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                echo "<p class='lead'><em>No records were found.</em></p>";
               }
+            } else{
+              echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+            }
 
-              mysqli_close($link);
+            mysqli_close($link);
 
-              ?>
-            </select>
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-default btn" data-dismiss="modal">No</button>
-          <button class="btn btn-success btn" id="btnadd">Add</button>
+            ?>
+          </select>
 
         </div>
       </div>
+      <div class="modal-footer">
+        <button class="btn btn-default btn" data-dismiss="modal">No</button>
+        <button class="btn btn-success btn" id="btnadd">Add</button>
+
+      </div>
     </div>
-    <!-- /.modal-content -->
-  </form>
+  </div>
+  <!-- /.modal-content -->
+</form>
 </div>
 
 
@@ -619,51 +625,57 @@ $(document).ready(function () {
 
 <!-- MODAL CHECKOUT -->
 <div class="modal modal-default fade" name="modal-checkout" id="modal-checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-l" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">ORDER SUMMARY</h4>
-        </div>
-        <div class="modal-body">
+<div class="modal-dialog modal-dialog-centered modal-l" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">ORDER SUMMARY</h4>
+      </div>
+      <div class="modal-body">
 
-          <table class="table table-bordered table-striped">
-            <tr>
-              <td><label>Customer:</label></td>
-              <td id="cust_name"></td>
-            </tr>
-            <tr>
-              <td><label>No. of Items:</label></td>
-              <td id="num_items"></td>
-            </tr>
-            <tr>
-              <td><label>Grand Total:</label></td>
-              <td id="grand_total1"></td>
-            </tr>
+        <table class="table table-bordered table-striped">
+          <tr>
+            <td><label>Customer:</label></td>
+            <td id="cust_name"></td>
+          </tr>
+          <tr>
+            <td><label>No. of Items:</label></td>
+            <td id="num_items"></td>
+          </tr>
+          <tr>
+            <td><label>Grand Total:</label></td>
+            <td id="grand_total1"></td>
+          </tr>
 
-            <tr>
-              <td><label>mop:</label></td>
-              <td id="mop"></td>
-            </tr>
+          <tr>
+            <td><label>Mode of Payment</label></td>
+            <td>
 
-            <tr>
-              <td><label>username:</label></td>
-              <td id="username_ID"></td>
-            </tr>
-          </table>
+                  <select class="form-control" id="mop_ID" required>
+                    <option value="Cash">Cash</option>
+                    <option value="Installment">Installment</option>
+                  </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label>Discount:</label></td>
+            <td><input type="text" name="discount" id="discount" class="form-control"></td>
+          </tr>
+        </table>
 
 
 
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-default btn" data-dismiss="modal">Close</button>
-          <button id="btnsave" class="btn btn-warning btn">Save</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default btn" data-dismiss="modal">Close</button>
+        <button id="btnsave" class="btn btn-warning btn">Save</button>
       </div>
     </div>
-    <!-- /.modal-dialog -->
   </div>
+  <!-- /.modal-dialog -->
+</div>
 
 
 </body>

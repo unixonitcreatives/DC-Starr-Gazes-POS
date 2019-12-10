@@ -1,9 +1,7 @@
-<!-- ======================= SESSION =================== -->
-<?php include('template/session.php'); ?>
-<!-- =================================================== -->
+
 <?php
 	include 'config.php';
-	$custnewID="";
+
 
 
 
@@ -25,7 +23,7 @@
 												$arr= json_decode($lo1,true);
 
 
-												//eto gawa ko bro
+												//start
 												$IDtype = "SI";
 														$m = date('m');
 														$y = date('y');
@@ -40,8 +38,8 @@
 															//output nyan ay (ex: SI1129201900001)
 
 												foreach ($arr as $p) {
-													 $sql = 'INSERT INTO sales_order ( txID, stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse, mop, created_by)
-												 		VALUES ("'. $custnewID . '","'.$p['custID'].'","'.$p['product_SKU'].'",1,'.$p['UnitPrice'].',"'.$p['so_cust'].'","'.$p['warehouseID'].'","'.$p['mop'].'", "'.$p['username'].'")';
+													 $sql = 'INSERT INTO sales_order ( txID, stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse, mop,discount, created_by)
+												 		VALUES ("'. $custnewID . '","'.$p['custID'].'","'.$p['product_SKU'].'",1,'.$p['UnitPrice'].',"'.$p['so_cust'].'","'.$p['warehouseID'].'","'.$p['mop'].'","'.$p['discount'].'", "'.$p['username'].'")';
 
 													if ($link->query($sql) === TRUE) {
 											    		$validator['success'] = true;
