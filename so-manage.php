@@ -61,12 +61,7 @@
                         <tr>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending"></th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Transaction ID</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Description</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Qty</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Price</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Customer</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Warehouse</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">MOD</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">MOP</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -76,7 +71,7 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM sales_order ORDER BY soID desc";
+                        $query = "SELECT txID, mop FROM sales_order GROUP BY txID ORDER BY soID desc";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -84,16 +79,10 @@
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><?php echo $row['txID']; ?></td>
-                              <td><?php echo $row['so_desc'];?></td>
-                              <td><?php echo $row['so_qty'];?></td>
-                              <td><?php echo $row['so_price'];?></td>
-                              <td><?php echo $row['so_cust'];?></td>
-                              <td><?php echo $row['so_warehouse'];?></td>
+                              <td><a href="si-info.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['mop'];?></td>
                               <td>
-                              <a href='product-model-update.php?id=<?php echo $row['id'];?>' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
-                               &nbsp; <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
+                                <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
 
                                &nbsp; <a href='si-view.php?id=<?php echo $row['soID']; ?>' title="Print SI" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
                               </td>

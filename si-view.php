@@ -6,17 +6,17 @@
   $Manager_auth = 0;
   $Cashier_auth = 0;
  include('template/user_auth.php');
- $alertMessage="";
+ $alertMessage=$firstname=$lastname=$address=$phone=$name="";
 ?>
 <!-- ================================================================ -->
-<?php 
+<?php
 // Define variables and initialize with empty values
 
 require_once "config.php";
 
-$users_id = $_GET['id'];
+$trans_id = $_GET['txID'];
 
-$query = "SELECT * from sales_order WHERE soID=".$_GET['id']." ";
+$query = "SELECT * from sales_order WHERE soID='$trans_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
@@ -43,8 +43,8 @@ $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
   while ($row = mysqli_fetch_assoc($result)){
-      $firstname = $row['firstName'];
-      $lastname = $row['lastName'];
+      $firstname        = $row['firstName'];
+      $lastname         = $row['lastName'];
       $address          = $row['address'];
       $phone            = $row['contact'];
 
@@ -104,7 +104,7 @@ if (mysqli_num_rows($result) > 0) {
                 </strong>
                 <br>Contact No:
                   <?php echo $phone; ?>
-                <br>Address: 
+                <br>Address:
                 <?php echo $address; ?>
 
               </address>
@@ -119,7 +119,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
             <!-- /.col -->
             <div class="col-sm-3 invoice-col">
-            
+
                 <b>Invoice &nbsp;</b>#
                   <?php
                   echo $SI;
@@ -127,20 +127,20 @@ if (mysqli_num_rows($result) > 0) {
 
                 <br>
 
-                <b>Date:</b> 
+                <b>Date:</b>
                   <?php
                   echo $order_date;
                   ?>
 
                 <br>
 
-                <b>Mode of Payment:</b> 
+                <b>Mode of Payment:</b>
                   <?php
                   echo $mop;
                   ?>
-          
 
-              
+
+
             </div>
             <!-- /.col -->
           </div>
