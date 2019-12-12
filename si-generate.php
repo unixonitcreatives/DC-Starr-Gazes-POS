@@ -22,7 +22,7 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-           Generate SO<br>
+           Generate Sales Invoice<br>
           <small>DC Starr Gazes Inventory Management System</small>
         </h1>
       </section>
@@ -34,12 +34,12 @@
         <!-- general form elements -->
         <div class="box box-default">
           <div class="box-header with-border">
-            <h3 class="box-title">Sales Order's Details</h3>
-            <br><a href="so-manage.php" class="text-center">Manage SO</a>
+            <h3 class="box-title">Sales Invoice's Details</h3>
+            <br><a href="si-manage.php" class="text-center">Manage Sales Invoice</a>
           </div>
           <!-- /.box-header -->
           <!-- form start   action="functions/incoming_so.php-->
-          <form action="functions/incoming_so.php">
+          <form action="functions/incoming_si.php">
             <div class="box-body">
 
               <!-- <?php echo $alertMessage; ?> -->

@@ -16,7 +16,7 @@ require_once "config.php";
 
 $trans_id = $_GET['txID'];
 
-$query = "SELECT * from sales_order WHERE soID='$trans_id' ";
+$query = "SELECT * from sales_order WHERE txID='$trans_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
@@ -29,6 +29,7 @@ if (mysqli_num_rows($result) > 0) {
       $price = $row['so_price'];
       $mop = $row['mop'];
       $name = $row['so_cust'];
+      $order_date = $row['created_at'];
       //$row['so_warehouse'];
       //$row['mop'];
 
@@ -96,9 +97,9 @@ if (mysqli_num_rows($result) > 0) {
           </div>
           <!-- info row -->
           <div class="row invoice-info">
-            <div class="col-sm-3 invoice-col">
-              To
-              <address>
+            <div class="col-sm-4 invoice-col">
+
+              <address>To:
                 <strong>
                   <?php echo $firstname." ".$lastname; ?>
                 </strong>
@@ -110,15 +111,15 @@ if (mysqli_num_rows($result) > 0) {
               </address>
             </div>
             <!-- /.col -->
-            <div class="col-sm-3 invoice-col">
-              From
-              <address>
-                <strong>DC Starr Gazes</strong><br>
-                Address Here
+            <div class="col-sm-4 invoice-col">
+              
+              <address>From:
+                <strong>DC Starr Gasez</strong><br>
+                Cavite City, Cavite
               </address>
             </div>
             <!-- /.col -->
-            <div class="col-sm-3 invoice-col">
+            <div class="col-sm-4 invoice-col">
 
                 <b>Invoice &nbsp;</b>#
                   <?php
@@ -127,7 +128,7 @@ if (mysqli_num_rows($result) > 0) {
 
                 <br>
 
-                <b>Date:</b>
+                <b>Invoice Date &amp; Time:</b>
                   <?php
                   echo $order_date;
                   ?>
@@ -152,6 +153,7 @@ if (mysqli_num_rows($result) > 0) {
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>Product Serial No.</th>
                     <th>Product Description</th>
                     <th>qty</th>
                     <th>Price</th>
@@ -171,11 +173,11 @@ if (mysqli_num_rows($result) > 0) {
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
+                      echo "<td>" . $row['stock_ID'] . "</td>";
                       echo "<td>" . $row['so_desc'] . "</td>";
                       echo "<td>" . $row['so_qty'] . "</td>";
-                      echo "<td>" . $row['so_price'] . "</td>";
 
-                      echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
+                      echo "<td>₱ " . number_format($row['so_price'],2) . "</td>";
 
                       echo "</tr>";
 
@@ -202,10 +204,9 @@ if (mysqli_num_rows($result) > 0) {
   <!-- this row will not appear when printing -->
   <div class="row no-print">
     <div class="col-xs-12">
-
-
-        <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-            <button type='submit' class='btn btn-success pull-right' name='Approved'><i class='fa fa-thumbs-o-up'></i> Function Here</button>
+        <form  method="POST"  class="pull-right" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
+            <button onclick="Print()" target="_blank" class='btn btn-primary' name='Approved'> Print</button>
+            <button onclick="Print()" target="_blank" class='btn btn-secondary' name='Approved'> Void</button>
         </form>
 
         </div>

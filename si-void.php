@@ -35,7 +35,7 @@
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
-  <!-- ======================== MAIN CONTENT ======================= -->
+  <!-- ======================== ALERT ======================= -->
   <?php
   if(isset($_GET['alert']) == "updatesuccess"){
     $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
@@ -46,23 +46,24 @@
   }
    ?>
    <?php echo $alertMessage; ?>
-    <!-- Main content -->
-    <section class="content">
-          <div class="col-md-12">
+   <!-- ======================== MAIN CONTENT ======================= -->
+
+  <section class="content">
+
           <!-- general form elements -->
           <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Search for Sales Order Information</h3>
-              <br><a href="so-generate.php" class="text-center">+ Generate Sales Order</a>
-            </div>
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+              <div class="box-header with-border">
+                <h3 class="box-title">Search for Void SI data</h3><br>
+                <a href="si-generate.php" class="text-center">+ Generate new SI</a>
+              </div>
+              <div class="box-body">
+                    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending"></th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Transaction ID</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">MOP</th>
-                          <th>Action</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%"></th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
+                          <th >Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -71,7 +72,7 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT txID, mop FROM sales_order GROUP BY txID ORDER BY soID desc";
+                        $query = "SELECT txID, mop FROM sales_order WHERE so_status = 'Void' GROUP BY txID ORDER BY soID desc";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -79,7 +80,7 @@
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><a href="si-info.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
+                              <td><a href="si-view.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['mop'];?></td>
                               <td>
                                 <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
@@ -125,12 +126,14 @@
                         </tr>
                       </tbody>
                     </table>
-            </div>
+              </div>
           </div>
-      </div>
-    </section>
-  <!-- /.content-wrapper -->
-</div>
+
+
+  </section>
+
+
+  </div>
 
 <!-- =========================== FOOTER =========================== -->
   <footer class="main-footer">

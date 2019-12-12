@@ -32,7 +32,7 @@ $updateResult = mysqli_query($link, $updateQuery);
 $insertQuery = "INSERT INTO sales_order (stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse) VALUES ('$scID', '$po_desc', 1, $price, '$cID', '$wID')";
 $insertResult = mysqli_query($link, $insertQuery);
 
-header("location:../so-generate.php");
+header("location:../si-generate.php");
 
 
 

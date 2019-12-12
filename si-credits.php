@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Sales Invoice Record<br>
+         Sales Invoice Credit Record<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -53,7 +53,7 @@
           <!-- general form elements -->
           <div class="box box-default">
               <div class="box-header with-border">
-                <h3 class="box-title">Search for Sales Invoice data</h3><br>
+                <h3 class="box-title">Search for Sales Invoice Credit Data</h3><br>
                 <a href="so-generate.php" class="text-center">+ Generate new Sales Invoice</a>
               </div>
               <div class="box-body">
@@ -61,8 +61,13 @@
                       <thead>
                         <tr>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%"></th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Sales Invoice No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer</th>
+                          <th>Paid</th>
+                          <th>Credits</th>
+                          <th>Total Amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Credit Status</th>
+                  
                           <th >Action</th>
                         </tr>
                       </thead>
@@ -72,7 +77,7 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT txID, mop FROM sales_order GROUP BY txID ORDER BY soID desc";
+                        $query = "SELECT * FROM sales_order WHERE mop ='installment' GROUP BY txID ORDER BY soID desc";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -81,35 +86,16 @@
                               <tr>
                               <td><?php echo $ctr; ?></td>
                               <td><a href="si-view.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
-                              <td><?php echo $row['mop'];?></td>
+                              <td><?php echo $row['so_cust'];?></td>
+                              <td>400.00</td>
+                              <td>600.00</td>
+                              <td>1,000.00</td>
+                              <td>Pending</td>
                               <td>
-                                <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
+                               <a href='si-view.php?id=<?php echo $row['soID']; ?>' title="Print" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
 
-                               &nbsp; <a href='si-view.php?id=<?php echo $row['soID']; ?>' title="Print SI" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
+                               <a href='si-view-credits.php?txID=<?php echo $row['txID']; ?>' title="Update Payment" data-toggle="tooltip"><span class="glyphicon glyphicon-th-list"></span></a>
                               </td>
-                              <!-- =========================== DELETE MODAL ====================== -->
-                              <div class="modal fade" id="modal-delete<?php echo $row['id']; ?>">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                      <h4 class="modal-title">Delete Data</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p>Are you sure you want to delete this data?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                      <a class="btn btn-danger" href='product-model-delete.php?id=<?php echo $row['id'] ?>'>Delete</a>
-                                    </div>
-                                  </div>
-                                  <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                              </div>
-                              <!-- /.modal -->
-
                             <?php }
                             // Free result set
                             mysqli_free_result($result);

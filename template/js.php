@@ -343,25 +343,6 @@ if (r == true) {
   }
 </script>
 
-function upperCase(a){
-setTimeout(function(){
-  a.value = a.value.toUpperCase();
-}, 1);
-
-}
-
-//Notify
-function Notify(msg,mode){
-$.notify(msg,mode,{ position:"top left" });
-}
-
-
-function submit()
-
-{
-$.notify("its asd","warn");
-}
-
 </script>
 
 <!-- Alert animation -->

@@ -95,28 +95,19 @@
 
 
                         <li class="treeview">
-                            <a href="#"><i class="fa fa-shopping-cart"></i> <span>Sales Order</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="so-generate.php">Generate SO</a></li>
-                                <li><a href="so-manage.php">Manage SO</a></li>
-                                <li><a href="so-void.php">Void SO</a></li>
-                            </ul>
-                        </li>
-
-                         <li class="treeview">
                             <a href="#"><i class="fa fa-shopping-cart"></i> <span>Sales Invoice</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="si-manage.php">Manage SI</a></li>
+                                <li><a href="si-generate.php">Generate SI</a></li>
+                                <li><a href="so-manage.php">Manage SI</a></li>
+                                <li><a href="si-void.php">Void SI</a></li>
+                                <li><a href="si-credits.php">Manage Credits</a></li>
                             </ul>
                         </li>
+
                         <li class="treeview">
                             <a href="#"><i class="fa fa-users"></i> <span>Customer</span>
                                 <span class="pull-right-container">
@@ -126,6 +117,7 @@
                             <ul class="treeview-menu">
                                 <li><a href="customer-add.php">Add Customer</a></li>
                                 <li><a href="customer-manage.php">Manage Customers</a></li>
+                                <li><a href="si-credits.php">Manage Credits</a></li>
                             </ul>
                         </li>
 
