@@ -208,14 +208,7 @@ $gTotal = $row['totalAmount'];
 <!-- /.content-wrapper -->
 </div>
 
-<!-- =========================== FOOTER =========================== -->
-<footer class="main-footer">
-<?php include('template/footer.php'); ?>
-</footer>
 
-
-<!-- =========================== JAVASCRIPT ========================= -->
-<?php include('template/js.php'); ?>
 
 <!-- =========================== MODAL ======================== -->
 
@@ -338,6 +331,10 @@ $gTotal = $row['totalAmount'];
   <!-- /.modal-dialog -->
 </div>
 
+<!-- =========================== JAVASCRIPT ========================= -->
+<?php include('template/js.php'); ?>
 
-</body>
-</html>
+<!-- =========================== FOOTER =========================== -->
+<footer class="main-footer">
+<?php include('template/footer.php'); ?>
+</footer>

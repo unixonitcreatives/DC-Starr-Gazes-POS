@@ -52,7 +52,7 @@
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 
-  <!-- Notify -->
+<!-- Notify -->
 
 <!-- =========================== PAGE SCRIPT ======================== -->
 
@@ -60,11 +60,11 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-window.setTimeout(function() {
-  $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-    $(this).remove();
-  });
-}, 1000);
+  window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+      $(this).remove();
+    });
+  }, 1000);
 
 });
 </script>
@@ -75,251 +75,251 @@ var custID;
 
 $(function () {
 
-//Initialize Select2 Elements
-$('.select2').select2()
+  //Initialize Select2 Elements
+  $('.select2').select2()
 
-//Datemask dd/mm/yyyy
-$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-//Datemask2 mm/dd/yyyy
-$('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-//Money Euro
-$('[data-mask]').inputmask()
+  //Datemask dd/mm/yyyy
+  $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+  //Datemask2 mm/dd/yyyy
+  $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+  //Money Euro
+  $('[data-mask]').inputmask()
 
-//Date range picker
-$('#reservation').daterangepicker()
-//Date range picker with time picker
-$('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-//Date range as a button
-$('#daterange-btn').daterangepicker(
-  {
-    ranges   : {
-      'Today'       : [moment(), moment()],
-      'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-      'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-      'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-      'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+  //Date range picker
+  $('#reservation').daterangepicker()
+  //Date range picker with time picker
+  $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+  //Date range as a button
+  $('#daterange-btn').daterangepicker(
+    {
+      ranges   : {
+        'Today'       : [moment(), moment()],
+        'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+        'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      },
+      startDate: moment().subtract(29, 'days'),
+      endDate  : moment()
     },
-    startDate: moment().subtract(29, 'days'),
-    endDate  : moment()
-  },
-  function (start, end) {
-    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-  }
-)
-
-//Date picker
-$('#datepicker').datepicker({
-  autoclose: true
-})
-
-//iCheck for checkbox and radio inputs
-$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-  checkboxClass: 'icheckbox_minimal-blue',
-  radioClass   : 'iradio_minimal-blue'
-})
-//Red color scheme for iCheck
-$('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-  checkboxClass: 'icheckbox_minimal-red',
-  radioClass   : 'iradio_minimal-red'
-})
-//Flat red color scheme for iCheck
-$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-  checkboxClass: 'icheckbox_flat-green',
-  radioClass   : 'iradio_flat-green'
-})
-
-//Colorpicker
-$('.my-colorpicker1').colorpicker()
-//color picker with addon
-$('.my-colorpicker2').colorpicker()
-
-//Timepicker
-$('.timepicker').timepicker({
-  showInputs: false
-})
-
-
-// November 18, 2019
-// codes begins here
-document.onkeydown = TabDetection;
-
-    function TabDetection(evt) {
-      var evt = (evt) ? evt : ((event) ? event : null);
-      var tabKey = 9;
-
-      if(evt.keyCode == tabKey) {
-          var barcode=$('#my-putin').val();
-          check_stock(barcode);
-          $(this).blur();
-
-      }
+    function (start, end) {
+      $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
     }
-    document.addEventListener("keypress", function (e) {
-        if (e.target.tagName !== "INPUT") {
-            var input = document.querySelector("#my-putin");
-            input.focus();
-          if (e.key.charCodeAt() == 13) {
-              input.focus();
-          }
-          input.value = input.value + e.key;
-          e.preventDefault();
-        }
+  )
+
+  //Date picker
+  $('#datepicker').datepicker({
+    autoclose: true
+  })
+
+  //iCheck for checkbox and radio inputs
+  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+    checkboxClass: 'icheckbox_minimal-blue',
+    radioClass   : 'iradio_minimal-blue'
+  })
+  //Red color scheme for iCheck
+  $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+    checkboxClass: 'icheckbox_minimal-red',
+    radioClass   : 'iradio_minimal-red'
+  })
+  //Flat red color scheme for iCheck
+  $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+    checkboxClass: 'icheckbox_flat-green',
+    radioClass   : 'iradio_flat-green'
+  })
+
+  //Colorpicker
+  $('.my-colorpicker1').colorpicker()
+  //color picker with addon
+  $('.my-colorpicker2').colorpicker()
+
+  //Timepicker
+  $('.timepicker').timepicker({
+    showInputs: false
+  })
 
 
-        $('#my-putin').blur(function (e) {
+  // November 18, 2019
+  // codes begins here
+  document.onkeydown = TabDetection;
 
-            $('#my-putin').val('');
+  function TabDetection(evt) {
+    var evt = (evt) ? evt : ((event) ? event : null);
+    var tabKey = 9;
 
-        });
+    if(evt.keyCode == tabKey) {
+      var barcode=$('#my-putin').val();
+      check_stock(barcode);
+      $(this).blur();
+
+    }
+  }
+  document.addEventListener("keypress", function (e) {
+    if (e.target.tagName !== "INPUT") {
+      var input = document.querySelector("#my-putin");
+      input.focus();
+      if (e.key.charCodeAt() == 13) {
+        input.focus();
+      }
+      input.value = input.value + e.key;
+      e.preventDefault();
+    }
+
+
+    $('#my-putin').blur(function (e) {
+
+      $('#my-putin').val('');
+
     });
-// button save only. not save print
-$('#btnsave').on('click',function(){
-  changeModeOfPayment();
-  $.ajax({
-    type: 'POST',
-    url: 'so-checkout.php',
-    // need to stringify array object list
-    data: {'orders': JSON.stringify(orders)},
-    dataType: 'json',
-    success: function(data){
-      if(data.success===true) //if success close modal and reload page
-      {
-        $('#modal-checkout').modal('hide');
-        location.reload();
+  });
+  // button save only. not save print
+  $('#btnsave').on('click',function(){
+    changeModeOfPayment();
+    $.ajax({
+      type: 'POST',
+      url: 'si-checkout.php',
+      // need to stringify array object list
+      data: {'orders': JSON.stringify(orders)},
+      dataType: 'json',
+      success: function(data){
+        if(data.success===true) //if success close modal and reload page
+        {
+          $('#modal-checkout').modal('hide');
+          location.reload();
+        }
+      }
+    });
+  });
+  //manual data entry
+  $('#btnadd').on('click',function(){
+    check_stock($('#warehouse_name').val());
+    $('#modal-add-product').modal('hide');
+  });
+  //loop trough object in array
+  function findObjectByKey(array, key, value) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i][key] === value) {
+        return array[i];
       }
     }
-  });
-});
-//manual data entry
-$('#btnadd').on('click',function(){
-  check_stock($('#warehouse_name').val());
-  $('#modal-add-product').modal('hide');
-});
-//loop trough object in array
-function findObjectByKey(array, key, value) {
-  for (var i = 0; i < array.length; i++) {
-    if (array[i][key] === value) {
-      return array[i];
+    return null;
+  }
+
+  function changeModeOfPayment() {
+    for (var i in orders) {
+      orders[i].mop = $('#mop_ID').val();
+      orders[i].discount= $('#discount').val();
     }
   }
-  return null;
-}
 
-function changeModeOfPayment() {
-   for (var i in orders) {
-        orders[i].mop = $('#mop_ID').val();
-        orders[i].discount= $('#discount').val();
-     }
-   }
+  function check_stock(id){
 
-function check_stock(id){
+    $.ajax({
+      type: 'POST',
+      url: 'si-get_stocks.php',
+      data: {'custID':id},
+      dataType: 'json',
+      success: function(response){
 
-  $.ajax({
-    type: 'POST',
-    url: 'so-get_stocks.php',
-    data: {'custID':id},
-    dataType: 'json',
-    success: function(response){
-
-      if(response==null){
-        Notify("No stocks.","");
-      }else{
-        var obj = findObjectByKey(orders, 'custID', response.custID);
-        if(obj!=null){
-          Notify("Product already exist.","");
-          return;
+        if(response==null){
+          Notify("No stocks.","");
+        }else{
+          var obj = findObjectByKey(orders, 'custID', response.custID);
+          if(obj!=null){
+            Notify("Product already exist.","");
+            return;
+          }
+          var tmp={
+            so_cust:$('#customer_ID').val(),
+            custID:response.custID,
+            warehouseID:response.warehouse_ID,
+            product_SKU:response.product_SKU,
+            Description:response.product_description,
+            Category:response.category_name,
+            Qty:1,
+            UnitPrice:response.sell_price,
+            TotalPrice:response.sell_price*1,
+            mop:'',
+            discount:0,
+            username: $('#username_ID').val()
+          }
+          orders.push(tmp);
+          console.table(orders);
+          get_orders();
         }
-        var tmp={
-          so_cust:$('#customer_ID').val(),
-          custID:response.custID,
-          warehouseID:response.warehouse_ID,
-          product_SKU:response.product_SKU,
-          Description:response.product_description,
-          Category:response.category_name,
-          Qty:1,
-          UnitPrice:response.sell_price,
-          TotalPrice:response.sell_price*1,
-          mop:'',
-          discount:0,
-          username: $('#username_ID').val()
-        }
-        orders.push(tmp);
-        console.table(orders);
-        get_orders();
       }
-    }
 
-  });
+    });
 
-}
+  }
 
 });
 function get_orders(){
-var indx = 0;
-$('#tOrders').DataTable({
-  destroy: true,
-  paging: false,
-  searching:false,
-  lengthChange:false,
-  data: orders,
-  bInfo:false,
-  columns: [
-    { data: "Description" },
-    { data: "Category" },
-    { data: "Qty" },
-    { data: "UnitPrice" },
-    { data: "TotalPrice" },
-    {
-      data: function (data) {
-        indx++;
-        return '<input id="' + indx + '"  type="button" class="btn btn-small btn-danger" value="-"  onclick="RemoveItem(\'' + data.custID + '\')" />';
+  var indx = 0;
+  $('#tOrders').DataTable({
+    destroy: true,
+    paging: false,
+    searching:false,
+    lengthChange:false,
+    data: orders,
+    bInfo:false,
+    columns: [
+      { data: "Description" },
+      { data: "Category" },
+      { data: "Qty" },
+      { data: "UnitPrice" },
+      { data: "TotalPrice" },
+      {
+        data: function (data) {
+          indx++;
+          return '<input id="' + indx + '"  type="button" class="btn btn-small btn-danger" value="-"  onclick="RemoveItem(\'' + data.custID + '\')" />';
+        }
       }
-    }
-  ]
-});
-//bibilangin nya ung sales order items
-$('#num_items').text(orders.length);
-//computation para sa grand total ng mga inorder
-var grand_total=0;
-for (var i = 0; i < orders.length; i++) {
-  grand_total=grand_total+orders[i].TotalPrice;
-}
-$('#grand_total').text(grand_total);
-$('#grand_total1').text(grand_total);
-$('#cust_name').text($('#customer_ID option:selected').text());
-$('#mop').text($('#mop_ID option:selected').text());
-$('#username_ID').text();
-console.log(orders);
+    ]
+  });
+  //bibilangin nya ung sales order items
+  $('#num_items').text(orders.length);
+  //computation para sa grand total ng mga inorder
+  var grand_total=0;
+  for (var i = 0; i < orders.length; i++) {
+    grand_total=grand_total+orders[i].TotalPrice;
+  }
+  $('#grand_total').text(grand_total);
+  $('#grand_total1').text(grand_total);
+  $('#cust_name').text($('#customer_ID option:selected').text());
+  $('#mop').text($('#mop_ID option:selected').text());
+  $('#username_ID').text();
+  console.log(orders);
 }
 function RemoveItem(id){
-var r = confirm("Are you sure you want to remove " + id + "?" );
-if (r == true) {
-  for(var i=0 ; i<orders.length; i++)
-  {
-    if(orders[i].custID==id)
-    orders.splice(i);
-  }
+  var r = confirm("Are you sure you want to remove " + id + "?" );
+  if (r == true) {
+    for(var i=0 ; i<orders.length; i++)
+    {
+      if(orders[i].custID==id)
+      orders.splice(i);
+    }
 
-  get_orders();
-}
+    get_orders();
+  }
 }
 
 </script>
 
 <script>
-  $(function() {
-    $('#example2').DataTable()
-    $('#example1').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true,
-      'scrollX'     : true
-    })
+$(function() {
+  $('#example2').DataTable()
+  $('#example1').DataTable({
+    'paging'      : true,
+    'lengthChange': true,
+    'searching'   : true,
+    'ordering'    : true,
+    'info'        : true,
+    'autoWidth'   : true,
+    'scrollX'     : true
   })
+})
 </script>
 
 
@@ -329,18 +329,18 @@ if (r == true) {
 <script src="dist/js/notify.min.js"></script>
 
 <script>
-  //uppercase text box
-  function upperCase(a){
-    setTimeout(function(){
-        a.value = a.value.toUpperCase();
-        $.notify("its woooorking","warn");
-    }, 1);
+//uppercase text box
+function upperCase(a){
+  setTimeout(function(){
+    a.value = a.value.toUpperCase();
+    $.notify("its woooorking","warn");
+  }, 1);
 
-  }
+}
 
-  function Notify(msg,mode){
-    $.notify(msg,mode);
-  }
+function Notify(msg,mode){
+  $.notify(msg,mode);
+}
 </script>
 
 </script>
@@ -349,11 +349,11 @@ if (r == true) {
 <script type="text/javascript">
 $(document).ready(function () {
 
-window.setTimeout(function() {
-  $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-    $(this).remove();
-  });
-}, 1000);
+  window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+      $(this).remove();
+    });
+  }, 1000);
 
 });
 </script>
