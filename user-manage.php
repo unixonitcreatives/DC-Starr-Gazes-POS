@@ -128,7 +128,7 @@ function test_input($data) {
               <br><a href="user-add.php" class="text-center">+ add new user</a>
             </div>
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover dataTable">
+              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
                           <th>No.</th>
@@ -136,6 +136,11 @@ function test_input($data) {
                           <th>Username</th>
                           <th>User Type</th>
                           <th>Time Created</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">ACC No.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Username</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">User Type</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Time Created</th>
                           <th>Action</th>
                         </tr>
                       </thead>

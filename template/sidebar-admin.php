@@ -36,7 +36,9 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="category-add.php">Add Categories</a></li>
+                                <li><a href="category-sub-add.php">Add Sub-Categories</a></li>
                                 <li><a href="category-manage.php">Manage Categories</a></li>
+                                <li><a href="category-sub-manage.php">Manage Sub-Categories</a></li>
                             </ul>
                         </li>
 
@@ -47,8 +49,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="branch-add.php">Add Warehouse</a></li>
-                                <li><a href="branch-manage.php">Manage Warehouse</a></li>
+                                <li><a href="warehouse-add.php">Add Warehouse</a></li>
+                                <li><a href="warehouse-manage.php">Manage Warehouse</a></li>
                             </ul>
                         </li>
 
@@ -60,9 +62,21 @@
                             </a>
                             <ul class="treeview-menu">
                                 <!-- <li><a href="PO-add.php">Add PO</a></li> -->
-                                <li><a href="PO-request.php">Add Product Model</a></li>
-                                <li><a href="PO-manage.php">Manage Product Models</a></li>
+                                <li><a href="product-model-add.php">Add Product Model</a></li>
+                                <li><a href="product-model-manage.php">Manage Product Models</a></li>
 
+                            </ul>
+                        </li>
+
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-cart-plus"></i> <span>Purchase Order</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="po-generate.php">Generate PO</a></li>
+                                <li><a href="po-manage.php">Manage PO</a></li>
                             </ul>
                         </li>
 
@@ -74,32 +88,33 @@
                             </a>
                             <ul class="treeview-menu">
                                 <!-- <li><a href="PO-add.php">Add PO</a></li> -->
-                                <li><a href="SO-manage.php">Manage Stocks</a></li>
-
+                                <li><a href="stock-manage.php">In-Stocks</a></li>
+                                <li><a href="stock-manage-expired.php">Expired</a></li>
                             </ul>
                         </li>
 
+
                         <li class="treeview">
-                            <a href="#"><i class="fa fa-shopping-cart"></i> <span>Purchase Order</span>
+                            <a href="#"><i class="fa fa-shopping-cart"></i> <span>Sales Order</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="product-add.php">Request PO</a></li>
-                                <li><a href="product-manage.php">Manage PO</a></li>
+                                <li><a href="so-generate.php">Generate SO</a></li>
+                                <li><a href="so-manage.php">Manage SO</a></li>
+                                <li><a href="so-void.php">Void SO</a></li>
                             </ul>
                         </li>
 
-                        <li class="treeview">
-                            <a href="#"><i class="fa fa-cart-plus"></i> <span>Sales Order</span>
+                         <li class="treeview">
+                            <a href="#"><i class="fa fa-shopping-cart"></i> <span>Sales Invoice</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="customer-add.php">Add SO</a></li>
-                                <li><a href="customer-manage.php">Manage SO</a></li>
+                                <li><a href="si-manage.php">Manage SI</a></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -109,8 +124,8 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="user-add.php">Add Customer</a></li>
-                                <li><a href="user-manage.php">Manage Customers</a></li>
+                                <li><a href="customer-add.php">Add Customer</a></li>
+                                <li><a href="customer-manage.php">Manage Customers</a></li>
                             </ul>
                         </li>
 
@@ -131,7 +146,6 @@
 
                         <li><a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default"><i class="fa fa-close"></i> <span>Logout</span></a>
                         </li>
-                    </ul>      
+                    </ul>
                 </section>
             </aside>
-
