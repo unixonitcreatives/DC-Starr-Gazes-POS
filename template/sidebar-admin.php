@@ -102,7 +102,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="si-generate.php">Generate SI</a></li>
-                                <li><a href="so-manage.php">Manage SI</a></li>
+                                <li><a href="si-manage.php">Manage SI</a></li>
                                 <li><a href="si-void.php">Void SI</a></li>
                                 <li><a href="si-credits.php">Manage Credits</a></li>
                             </ul>
