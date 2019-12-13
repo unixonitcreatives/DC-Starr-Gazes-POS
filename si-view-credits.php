@@ -6,9 +6,9 @@
   $Manager_auth = 0;
   $Cashier_auth = 0;
  include('template/user_auth.php');
- $alertMessage=$firstname=$lastname=$address=$phone=$name="";
+ $alertMessage="";
 ?>
-<!-- ================================================================ -->
+
 <?php
 // Define variables and initialize with empty values
 
@@ -16,7 +16,7 @@ require_once "config.php";
 
 $trans_id = $_GET['txID'];
 
-$query = "SELECT * from sales_order WHERE soID='$trans_id' ";
+$query = "SELECT * from sales_order WHERE txID='$trans_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
@@ -29,6 +29,7 @@ if (mysqli_num_rows($result) > 0) {
       $price = $row['so_price'];
       $mop = $row['mop'];
       $name = $row['so_cust'];
+      $order_date = $row['created_at'];
       //$row['so_warehouse'];
       //$row['mop'];
 
@@ -74,160 +75,199 @@ if (mysqli_num_rows($result) > 0) {
   <!-- ======================= SIDEBAR ============================ -->
   <?php include('template/sidebar-manage.php'); ?>
   <!-- ======================== HEADER CONTENT ==================== -->
-        <div class="content-wrapper">
-        <!-- Main content -->
-        <section class="invoice">
-          <!-- title row -->
-          <div class="row">
-            <div class="col-xs-12">
-              <h2 class="header">
-                <div class="col-xs-3">
-                  <img class="img-responsive" src="dist/logo-01.png">
-                  <br>
-                </div>
-                <small class="pull-right">
-                    <button onclick="window.history.back()" target="_blank" class="btn btn-default no-print" ><i class="fa fa-arrow-left">&nbsp;Back</i></button>
-                    <button onclick="Print()" target="_blank" class="btn btn-default no-print" ><i class="fa fa-print">&nbsp;Print</i></button>
-                </small>
-
-              </h2>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- info row -->
-          <div class="row invoice-info">
-            <div class="col-sm-3 invoice-col">
-              To
-              <address>
-                <strong>
-                  <?php echo $firstname." ".$lastname; ?>
-                </strong>
-                <br>Contact No:
-                  <?php echo $phone; ?>
-                <br>Address:
-                <?php echo $address; ?>
-
-              </address>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-3 invoice-col">
-              From
-              <address>
-                <strong>DC Starr Gazes</strong><br>
-                Address Here
-              </address>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-3 invoice-col">
-
-                <b>Invoice &nbsp;</b>#
-                  <?php
-                  echo $SI;
-                  ?>
-
-                <br>
-
-                <b>Date:</b>
-                  <?php
-                  echo $order_date;
-                  ?>
-
-                <br>
-
-                <b>Mode of Payment:</b>
-                  <?php
-                  echo $mop;
-                  ?>
-
-
-
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-
-          <!-- Table row -->
-          <div class="row">
-            <div class="col-xs-12 table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Product Description</th>
-                    <th>qty</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <?php
-                  require_once "config.php";
-                  $query = "SELECT * from sales_order WHERE txID = '$SI'";
-                  $result = mysqli_query($link, $query) or die(mysqli_error($link));
-                  if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)){
-
-                      $totalPrice  =  $row['price'];
-
-                      echo "<tr>";
-                      //echo "<td>" .$row['po_trans_id'] . "</td>";
-                      //echo "<td>" . $row['delivery'] . "</td>";
-                      echo "<td>" . $row['so_desc'] . "</td>";
-                      echo "<td>" . $row['so_qty'] . "</td>";
-                      echo "<td>" . $row['so_price'] . "</td>";
-
-                      echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
-
-                      echo "</tr>";
-
-                    }
-
-
-                    // Free result set
-                    mysqli_free_result($result);
-                  } else{
-                    echo "<p class='lead'><em>No records were found.</em></p>";
-                  }
-
-                  ?>
-
-
-                </tbody>
-              </table>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-  <!-- /.row -->
-
-  <!-- this row will not appear when printing -->
-  <div class="row no-print">
-    <div class="col-xs-12">
-
-
-        <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-            <button type='submit' class='btn btn-success pull-right' name='Approved'><i class='fa fa-thumbs-o-up'></i> Function Here</button>
-        </form>
-
-        </div>
-      </div>
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+         Sales Invoice Credits Record<br>
+        <small>DC Starr Gazes Inventory Management System</small>
+      </h1>
     </section>
-    <!-- /.content -->
-    <div class="clearfix"></div>
+  <!-- ======================== ALERT ======================= -->
+  <?php
+  if(isset($_GET['alert']) == "updatesuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+  }else if(isset($_GET['alert']) == "deletesuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
+  }else if(isset($_GET['alert']) == "addsuccess"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  }
+   ?>
+   <?php echo $alertMessage; ?>
+   <!-- ======================== MAIN CONTENT ======================= -->
+
+  <section class="content">
+
+          <!-- general form elements -->
+          <div class="box box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">Credit Information</h3>
+              </div>
+
+              <div class="box-body">
+                <table class="table table-bordered">
+                  <tr>
+                  <td align="right" width="15%">Sales Invoice No:</td>
+                  <td><?php echo $_GET['txID']; ?></td>
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Customer ID:</td>
+                  <td><?php echo $name; ?></td>
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Customer Name:</td>
+                  <td><?php echo $lastname." ".$firstname; ?></td>
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Paid:</td>
+                  <td>400.00</td>
+                  </tr>
+
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Credits:</td>
+                  <td>600.00</td>
+                  </tr>
+
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Total Amount:</td>
+                  <td>1,000.00</td>
+                  </tr>
+
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Status:</td>
+                  <td>Pending Payment</td>
+                  </tr>
+
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Mode of Payment:</td>
+                  <td>Installment</td>
+                  </tr>
+
+                  </tr>
+                  <tr>
+                  <td align="right" width="15%">Action:</td>
+                  <td>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#updatePayment" >Update Payment</button>
+                    <button class="btn btn-warning" >Some Function</button>
+                    <button class="btn btn-success" >Full Payment</button>
+
+                  </td>
+                  </tr>
+
+                </table>
+
+                <!-- Modal -->
+              <div class="modal fade" id="updatePayment" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Payment</h4>
+                      </div>
+                      <div class="modal-body">
+                          <p><strong>Paid:</strong> 400</p>
+                          <p><strong>Credits:</strong> 600</p>
+                          <p><strong>Total:</strong> 1,000</p>
+                          <div class="form-group">
+                              <p>Amount Paid:</p><input type="text" placeholder="0.00" class="form-control" required/>
+                          </div>
+                          <div class="form-group">
+                              <p>Mode of Payment:</p><select class="form-control select2" style="width: 100%;" required>
+                                <option>Cash</option>
+                                <option>Card</option>
+                                <option>Cheque</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <br>
+                    Dito Transaction History
+                    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                      <thead>
+                        <tr>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Installment Transaction ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created at:</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by:</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        // Include config file
+                        require_once 'config.php';
+
+                        // Attempt select query execution
+                        $query = "SELECT txID, mop FROM sales_order GROUP BY txID ORDER BY soID desc";
+                        if($result = mysqli_query($link, $query)){
+                          if(mysqli_num_rows($result) > 0){
+                            $ctr = 0;
+                            while($row = mysqli_fetch_array($result)){
+                              $ctr++;?>
+                              <tr>
+                              <td><a href="si-view.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
+                              <td><?php echo $row['mop'];?></td>
+                              <td></td>
+                              <td>Cashier</td>
+
+                            <?php }
+                            // Free result set
+                            mysqli_free_result($result);
+                          } else{
+                            echo "<p class='lead'><em>No records were found.</em></p>";
+                          }
+                        } else{
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                        }
+
+                        // Close connection
+                        mysqli_close($link);
+                        ?>
+                        </tr>
+                      </tbody>
+                    </table>
+              </div>
+          </div>
+
+
+  </section>
+
+
   </div>
 
 <!-- =========================== FOOTER =========================== -->
-  <footer class="main-footer no-print">
+  <footer class="main-footer">
       <?php include('template/footer.php'); ?>
   </footer>
 
 
 <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
-<script>
-function Print() {
-  window.print();
-}
-</script>
+
 
 
 </body>
