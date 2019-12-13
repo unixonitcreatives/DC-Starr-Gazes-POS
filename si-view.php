@@ -23,7 +23,7 @@ if (mysqli_num_rows($result) > 0) {
   while ($row = mysqli_fetch_assoc($result)){
       $row['soID'];
       $SI = $row['txID'];
-      $scID = $row['stockID'];
+      $scID = $row['stock_ID'];
       $desc = $row['so_desc'];
       $qty = $row['so_qty'];
       $price = $row['so_price'];
@@ -112,7 +112,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-              
+
               <address>From:
                 <strong>DC Starr Gasez</strong><br>
                 Cavite City, Cavite
@@ -168,7 +168,7 @@ if (mysqli_num_rows($result) > 0) {
                   if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)){
 
-                      $totalPrice  =  $row['price'];
+                      $totalPrice  =  $row['so_price'];
 
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
@@ -180,10 +180,9 @@ if (mysqli_num_rows($result) > 0) {
                       echo "<td>₱ " . number_format($row['so_price'],2) . "</td>";
 
                       echo "</tr>";
-
                     }
 
-
+                    $num_rows = mysqli_num_rows($result);
                     // Free result set
                     mysqli_free_result($result);
                   } else{
@@ -194,6 +193,40 @@ if (mysqli_num_rows($result) > 0) {
 
 
                 </tbody>
+
+
+
+                <?php
+                require_once "config.php";
+                $query = "SELECT SUM(so_price)as totalPrice, SUM(discount) as Discount  from sales_order WHERE txID = '$SI'";
+                $result = mysqli_query($link, $query) or die(mysqli_error($link));
+                if (mysqli_num_rows($result) > 0) {
+                  while ($row = mysqli_fetch_assoc($result)){
+
+                    $gDiscount = $row['Discount'];
+                    $Total = $row['totalPrice'];
+
+                  }
+
+                  $gTotal = $Total-$gDiscount;
+
+                }
+
+
+                  ?>
+
+                <tfooter>
+                  <td>No of Items : <?php echo $num_rows; ?></td>
+                    <td></td>
+                    <td align="right">
+                      <h4>Discount: &nbsp;</h4>
+                      <h4>Grand Total: &nbsp;</h4>
+                    </td>
+                    <td>
+                      <h4> ₱ <?php echo number_format((float)$gDiscount,2);?></h4>
+                      <h4> ₱ <?php echo number_format((float)$gTotal,2);?></h4>
+                    </td>
+                </tfooter>
               </table>
             </div>
             <!-- /.col -->
