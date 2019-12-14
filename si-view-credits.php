@@ -6,7 +6,7 @@
   $Manager_auth = 0;
   $Cashier_auth = 0;
  include('template/user_auth.php');
- $alertMessage="";
+ $alertMessage=$firstname=$lastname="";
 ?>
 
 <?php
@@ -16,22 +16,23 @@ require_once "config.php";
 
 $trans_id = $_GET['txID'];
 
-$query = "SELECT * from sales_order WHERE txID='$trans_id' ";
+$query = "SELECT soID,txID,stock_ID,so_desc,SUM(so_qty) as Qty,discount,SUM(so_price) as Price,so_cust,so_warehouse,mop,created_by FROM sales_order WHERE txID = '$trans_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
   while ($row = mysqli_fetch_assoc($result)){
+      $tPrice = $row['Price'];
+      $discount = $row['discount'];
+      $gTotal = $tPrice - $discount;
+
       $row['soID'];
       $SI = $row['txID'];
-      $scID = $row['stockID'];
+      $scID = $row['stock_ID'];
       $desc = $row['so_desc'];
-      $qty = $row['so_qty'];
-      $price = $row['so_price'];
+      $qty = $row['Qty'];
       $mop = $row['mop'];
       $name = $row['so_cust'];
       $order_date = $row['created_at'];
-      //$row['so_warehouse'];
-      //$row['mop'];
 
   }
   $num_rows = mysqli_num_rows($result);
@@ -118,27 +119,11 @@ if (mysqli_num_rows($result) > 0) {
                   <td align="right" width="15%">Customer Name:</td>
                   <td><?php echo $lastname." ".$firstname; ?></td>
                   </tr>
-                  <tr>
-                  <td align="right" width="15%">Paid:</td>
-                  <td>400.00</td>
-                  </tr>
 
                   </tr>
                   <tr>
-                  <td align="right" width="15%">Credits:</td>
-                  <td>600.00</td>
-                  </tr>
-
-                  </tr>
-                  <tr>
-                  <td align="right" width="15%">Total Amount:</td>
-                  <td>1,000.00</td>
-                  </tr>
-
-                  </tr>
-                  <tr>
-                  <td align="right" width="15%">Status:</td>
-                  <td>Pending Payment</td>
+                  <td align="right" width="15%">Credit Total Amount:</td>
+                  <td><?php echo $gTotal; ?></td>
                   </tr>
 
                   </tr>
@@ -152,15 +137,21 @@ if (mysqli_num_rows($result) > 0) {
                   <td align="right" width="15%">Action:</td>
                   <td>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#updatePayment" >Update Payment</button>
-                    <button class="btn btn-warning" >Some Function</button>
-                    <button class="btn btn-success" >Full Payment</button>
 
+                    <?php
+                    if($gTotal === 0) {
+                      echo "<button class='btn btn-success'>Full Payment</button>";
+                    }else {
+                      echo "<button type='button' class='btn btn-default disabled'>Full Payment</button>";
+                    }
+
+                    ?>
                   </td>
                   </tr>
 
                 </table>
 
-                <!-- Modal -->
+                <!-- Modal Update Payment-->
               <div class="modal fade" id="updatePayment" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -169,9 +160,9 @@ if (mysqli_num_rows($result) > 0) {
                         <h4 class="modal-title">Update Payment</h4>
                       </div>
                       <div class="modal-body">
-                          <p><strong>Paid:</strong> 400</p>
-                          <p><strong>Credits:</strong> 600</p>
-                          <p><strong>Total:</strong> 1,000</p>
+                        <div class="form-group">
+                            <p>Transaction No:</p><input type="text" value="<?php echo $trans_id; ?>" class="form-control" disabled/>
+                        </div>
                           <div class="form-group">
                               <p>Amount Paid:</p><input type="text" placeholder="0.00" class="form-control" required/>
                           </div>
@@ -181,6 +172,9 @@ if (mysqli_num_rows($result) > 0) {
                                 <option>Card</option>
                                 <option>Cheque</option>
                               </select>
+                          </div>
+                          <div class="form-group">
+                              <p>Reference No:</p><input type="text" Placeholder="Reference No" class="form-control" />
                           </div>
                       </div>
 
@@ -205,15 +199,18 @@ if (mysqli_num_rows($result) > 0) {
 
 
 
+
                 <br>
                     Dito Transaction History
-                    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                    <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Installment Transaction ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Amount</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created at:</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Ref. No.</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by:</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Action/s</th>
                         </tr>
                       </thead>
                       <tbody>

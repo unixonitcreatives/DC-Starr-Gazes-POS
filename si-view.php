@@ -30,7 +30,6 @@ if (mysqli_num_rows($result) > 0) {
       $mop = $row['mop'];
       $name = $row['so_cust'];
       $order_date = $row['created_at'];
-      //$row['so_warehouse'];
       //$row['mop'];
 
   }
@@ -153,31 +152,30 @@ if (mysqli_num_rows($result) > 0) {
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Product Serial No.</th>
                     <th>Product Description</th>
                     <th>qty</th>
-                    <th>Price</th>
+                    <th class='pull-right'>Total Price</th>
                   </tr>
                 </thead>
 
                 <tbody>
                   <?php
                   require_once "config.php";
-                  $query = "SELECT * from sales_order WHERE txID = '$SI'";
+                  $query = "SELECT so_desc, SUM(so_qty) as Qty, SUM(so_price) as Price from sales_order WHERE txID = '$SI' GROUP BY so_desc ";
                   $result = mysqli_query($link, $query) or die(mysqli_error($link));
                   if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)){
 
-                      $totalPrice  =  $row['so_price'];
+                      $totalPrice  =  $row['Price'];
 
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
-                      echo "<td>" . $row['stock_ID'] . "</td>";
+                      //echo "<td>" . $row['stock_ID'] . "</td>";
                       echo "<td>" . $row['so_desc'] . "</td>";
-                      echo "<td>" . $row['so_qty'] . "</td>";
+                      echo "<td>" . $row['Qty'] . "</td>";
 
-                      echo "<td>₱ " . number_format($row['so_price'],2) . "</td>";
+                      echo "<td class='pull-right'>₱ " . number_format($row['Price'],2) . "</td>";
 
                       echo "</tr>";
                     }
@@ -219,10 +217,12 @@ if (mysqli_num_rows($result) > 0) {
                   <td>No of Items : <?php echo $num_rows; ?></td>
                     <td></td>
                     <td align="right">
+                      <h4>Sub-total: &nbsp;</h4>
                       <h4>Discount: &nbsp;</h4>
                       <h4>Grand Total: &nbsp;</h4>
                     </td>
                     <td>
+                      <h4> ₱ <?php echo number_format((float)$totalPrice,2);?></h4>
                       <h4> ₱ <?php echo number_format((float)$gDiscount,2);?></h4>
                       <h4> ₱ <?php echo number_format((float)$gTotal,2);?></h4>
                     </td>
