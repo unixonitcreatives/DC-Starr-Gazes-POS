@@ -165,14 +165,14 @@ if (mysqli_num_rows($result) > 0) {
                               <p>Amount Paid:</p><input type="text" placeholder="0.00" class="form-control" required/>
                           </div>
                           <div class="form-group">
-                              <p>Mode of Payment:</p><select class="form-control select2" style="width: 100%;" required>
-                                <option>Cash</option>
-                                <option>Card</option>
-                                <option>Cheque</option>
+                              <p>Mode of Payment:</p><select id="mop" onChange="changetextbox();" class="form-control select2" style="width: 100%;" required>
+                                <option value="Cash">Cash</option>
+                                <option value="Card">Card</option>
+                                <option value="Cheque">Cheque</option>
                               </select>
                           </div>
                           <div class="form-group">
-                              <p>Reference No:</p><input type="text" Placeholder="Reference No" class="form-control" />
+                              <p>Reference No:</p><input id="ref" type="text" Placeholder="Reference No" class="form-control" disabled />
                           </div>
                       </div>
 
@@ -265,5 +265,19 @@ if (mysqli_num_rows($result) > 0) {
 
 
 
+
+
 </body>
+
+<script type="text/javascript">
+function changetextbox()
+{
+    if (document.getElementById("mop").value === "Cash") {
+        document.getElementById("ref").disabled='true';
+        document.getElementById("ref").value='';
+    } else {
+        document.getElementById("ref").disabled='';
+    }
+}
+</script>
 </html>
