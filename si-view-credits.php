@@ -96,9 +96,7 @@ if (mysqli_num_rows($result) > 0) {
    ?>
    <?php echo $alertMessage; ?>
    <!-- ======================== MAIN CONTENT ======================= -->
-
   <section class="content">
-
           <!-- general form elements -->
           <div class="box box-default">
               <div class="box-header with-border">
