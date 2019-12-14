@@ -357,3 +357,15 @@ $(document).ready(function () {
 
 });
 </script>
+
+<script type="text/javascript">
+function changetextbox()
+{
+    if (document.getElementById("mop").value === "Cash") {
+        document.getElementById("ref").disabled='true';
+        document.getElementById("ref").value='';
+    } else {
+        document.getElementById("ref").disabled='';
+    }
+}
+</script>
