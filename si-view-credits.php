@@ -77,6 +77,7 @@ if (mysqli_num_rows($result) > 0) {
     <?php include('template/sidebar-manage.php'); ?>
     <!-- ======================== HEADER CONTENT ==================== -->
     <div class="content-wrapper">
+
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
@@ -86,15 +87,15 @@ if (mysqli_num_rows($result) > 0) {
       </section>
       <!-- ======================== ALERT ======================= -->
       <?php
-      if(isset($_GET['alert']) == "updatesuccess"){
-        $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+      if(isset($_GET['alert']) == "success"){
+        $alertMessage = "<script>Notify('New payment added','Success');</script>";
       }else if(isset($_GET['alert']) == "deletesuccess"){
         $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
-      }else if(isset($_GET['alert']) == "addsuccess"){
-        $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+      }else if(isset($_GET['alert']) == "error"){
+        $$alertMessage = "<script>Notify('error','Success');</script>";
       }
-      ?>
-      <?php echo $alertMessage; ?>
+       ?>
+       <?php echo $alertMessage; ?>
       <!-- ======================== MAIN CONTENT ======================= -->
       <section class="content">
         <!-- general form elements -->
@@ -213,6 +214,11 @@ if (mysqli_num_rows($result) > 0) {
                 $ctr++;?>
                 <tr>
                   <td><?php echo $in_tx_id; ?></td>
+                  <td><?php echo $ins_amount; ?></td>
+                  <td><?php echo $ins_mop; ?></td>
+                  <td><?php echo $ins_ref_no; ?></td>
+                  <td><?php echo $created_by; ?></td>
+                  <td></td>
 
                   <?php }
                   // Free result set
