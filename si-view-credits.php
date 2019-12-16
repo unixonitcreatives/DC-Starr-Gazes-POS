@@ -152,20 +152,23 @@ if (mysqli_num_rows($result) > 0) {
             <div class="modal-body">
               <form action="functions/insert_installment_payment.php" method="POST">
                 <div class="form-group">
-                  <p>Transaction No:</p><input type="text" value="<?php echo $trans_id; ?>" class="form-control" disabled/>
+                  <input type="hidden" value="<?php echo $trans_id; ?>" name="txNum" class="form-control"/>
                 </div>
                 <div class="form-group">
-                  <p>Amount Paid:</p><input type="text" placeholder="0.00" class="form-control" required/>
+                  <p>Amount Paid:</p><input type="number" name="amount_paid" placeholder="0.00" class="form-control" required/>
                 </div>
                 <div class="form-group">
-                  <p>Mode of Payment:</p><select id="mop" onChange="changetextbox();" class="form-control select2" style="width: 100%;" required>
+                  <p>Mode of Payment:</p><select id="mop" name="mop" onChange="changetextbox();" class="form-control select2" style="width: 100%;" required>
                     <option value="Cash">Cash</option>
                     <option value="Card">Card</option>
                     <option value="Cheque">Cheque</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <p>Reference No:</p><input id="ref" type="text" Placeholder="Reference No" class="form-control" disabled />
+                  <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                  <p>Payment Date:</p><input type="date" name="paymentDate" class="form-control" />
                 </div>
               </div>
 
@@ -198,7 +201,7 @@ if (mysqli_num_rows($result) > 0) {
           require_once 'config.php';
 
           // Attempt select query execution
-          $query = "SELECT * FROM installment_history";
+          $query = "SELECT * FROM installment_history WHERE si_id = '$trans_id' ";
           if($result = mysqli_query($link, $query)){
             if(mysqli_num_rows($result) > 0){
               $ctr = 0;
