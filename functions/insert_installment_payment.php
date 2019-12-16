@@ -25,7 +25,7 @@ if(isset($_POST['paymentBtn'])){
   if(empty($alertMessage)){
 
   //Prepare Date for custom ID
-    $IDtype = "IN";
+    $IDtype = "SITX";
     $m = date('m');
     $y = date('y');
     $d = date('d');
@@ -33,9 +33,10 @@ if(isset($_POST['paymentBtn'])){
     $qry = mysqli_query($link,"SELECT MAX(id) FROM `installment_history`"); // Get the latest ID
     $resulta = mysqli_fetch_array($qry);
     $newID = $resulta['MAX(id)'] + 1; //Get the latest ID then Add 1
-    $custID = str_pad($newID, 4, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
-    $custnewID = $IDtype.$custID; //Prepare custom ID
+    $custID = str_pad($newID, 6, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
+    $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
+    $in_tx_id = $custnewID; //eto bro SITXmmddyy000001 or SITX121619000001
     $query = "INSERT INTO installment_history(insID, in_tx_id, si_id, ins_amount, ins_mop, ins_ref_no, ins_tx_date, created_by)
     VALUES ('$insID','$in_tx_id','$si_id','$ins_amount','$ins_mop','$ins_ref_no','$ins_tx_date','$loginUSer')"; //Prepare insert query
 
