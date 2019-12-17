@@ -168,7 +168,14 @@ if (mysqli_num_rows($result) > 0) {
                   <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control" disabled />
                 </div>
                 <div class="form-group">
-                  <p>Payment Date:</p><input type="date" name="paymentDate" class="form-control" />
+                  <p>Payment Date:</p>
+                  <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" name="paymentDate" class="form-control" id="datepicker"  placeholder="yyyy-mm-dd"/>
+                </div>
+
                 </div>
               </div>
 
