@@ -16,7 +16,7 @@ if(isset($_POST['paymentBtn'])){
   $ins_amount = test_input($_POST['amount_paid']);
   $ins_mop = test_input($_POST['mop']);
   $ins_ref_no = test_input($_POST['refNum']);
-  $in_tx_date = test_input($_POST['paymentDate']);
+  $ins_tx_date = test_input($_POST['paymentDate']);
 
 
   // Check input errors before inserting in database

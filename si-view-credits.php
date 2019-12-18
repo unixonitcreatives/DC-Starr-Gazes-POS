@@ -167,13 +167,14 @@ if (mysqli_num_rows($result) > 0) {
                 <div class="form-group">
                   <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control" disabled />
                 </div>
+
                 <div class="form-group">
                   <p>Payment Date:</p>
                   <div class="input-group date">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" name="paymentDate" class="form-control" id="datepicker"  placeholder="yyyy-mm-dd"/>
+                  <input type="text" name="paymentDate" class="form-control" id="datepicker"  placeholder="mm-dd-yyyy"/>
                 </div>
 
                 </div>
@@ -191,68 +192,122 @@ if (mysqli_num_rows($result) > 0) {
 
       <!-- == Transaction history table == -->
       <br>
-      <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-        <thead>
-          <tr>
-            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
-            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Amount</th>
-            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
-            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Ref. No.</th>
-            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date Receive:</th>
-            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by:</th>
-            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Action/s</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          // Include config file
-          require_once 'config.php';
+<!-- dito table -->
 
-          // Attempt select query execution
-          $query = "SELECT * FROM installment_history WHERE si_id = '$trans_id' ";
-          if($result = mysqli_query($link, $query)){
-            if(mysqli_num_rows($result) > 0){
-              $ctr = 0;
-              while($row = mysqli_fetch_array($result)){
-                $insID = $row['insID'];
-                $in_tx_id = $row['in_tx_id'];
-                $si_id = $row['si_id'];
-                $ins_amount = $row['ins_amount'];
-                $ins_mop = $row['ins_mop'];
-                $ins_ref_no = $row['ins_ref_no'];
-                $ins_tx_date = $row['ins_tx_date'];
-                $created_by = $row['created_by'];
-                $ctr++;?>
-                <tr>
-                  <td><?php echo $in_tx_id; ?></td>
-                  <td><?php echo $ins_amount; ?></td>
-                  <td><?php echo $ins_mop; ?></td>
-                  <td><?php echo $ins_ref_no; ?></td>
-                  <td><?php echo $ins_tx_date; ?></td>
-                  <td><?php echo $created_by; ?></td>
-                  <td></td>
+      
 
-                  <?php }
-                  // Free result set
-                  mysqli_free_result($result);
-                } else{
-                  echo "<tr>
-                  <td><p class='lead'><em>No records were found.</em></p></td>
-                  </tr>";
 
-                }
-              } else{
-                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-              }
 
-              // Close connection
-              mysqli_close($link);
-              ?>
-            </tr>
-          </tbody>
-        </table>
       </div>
+
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+          <!-- The time line -->
+          <ul class="timeline">
+                           
+            <!-- timeline time label -->
+            <li class="time-label">
+                  <span class="bg-green">
+                    Payment Update
+                  </span>
+            </li>
+             <?php
+                            // Include config file
+                            require_once 'config.php';
+
+                            // Attempt select query execution
+                            $query = "SELECT * FROM installment_history WHERE si_id = '$trans_id' ORDER BY ins_tx_date desc";
+                            if($result = mysqli_query($link, $query)){
+                              if(mysqli_num_rows($result) > 0){
+                                $ctr = 0;
+                                while($row = mysqli_fetch_array($result)){
+                                  $insID = $row['insID'];
+                                  $in_tx_id = $row['in_tx_id'];
+                                  $si_id = $row['si_id'];
+                                  $ins_amount = $row['ins_amount'];
+                                  $ins_mop = $row['ins_mop'];
+                                  $ins_ref_no = $row['ins_ref_no'];
+                                  $ins_tx_date = $row['ins_tx_date'];
+                                  $created_by = $row['created_by'];
+                                  $ctr++;?>
+                            
+            <!-- /.timeline-label -->
+            <!-- timeline item -->
+            <li>
+              <?php
+              if($row['ins_mop'] == "Cash"){
+              echo "<i class='fa fa-money bg-green'></i>";
+              } else {
+              echo "<i class='fa fa-credit-card bg-green'></i>";
+              }
+              ?>
+
+              <div class="timeline-item">
+                          
+
+                                  <span class="time"><h5><i class="fa fa-clock-o"></i> <?php echo $row['ins_tx_date']; ?></h5></span>
+
+                                  <h3 class="timeline-header"><a href="#">Transaction ID: <?php echo $row['in_tx_id']; ?></a></h3>
+
+                                  <div class="timeline-body">
+                                    <table class="table">
+                                      <tr>
+                                      <td width="20%" align="right"><strong>Paid:</strong></td>
+                                      <td>₱<?php echo number_format($row['ins_amount'],2); ?></td>
+                                      </tr>
+
+                                      <tr>
+                                      <td width="20%" align="right"><strong>Mode:</strong></td>
+                                      <td><?php echo $row['ins_mop']; ?></td>
+                                      </tr>
+
+                                      <tr>
+                                      <td width="20%" align="right"><strong>Ref No:</strong></td>
+                                      <td><?php echo $row['ins_ref_no']; ?></td>
+                                      </tr>
+
+                                      <tr>
+                                        <td width="20%" align="right"><strong>Actions:</strong></td>
+                                        <td>
+
+                                          <a class="btn btn-primary btn-xs">Some Function</a>
+                                          <a class="btn btn-success btn-xs">Some Function</a>
+                                          <a class="btn btn-warning btn-xs">Some Function</a>
+                                          <a class="btn btn-danger btn-xs">Some Funtions</a>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  
+                                  
+                                
+
+                                                      <?php }
+                                      // Free result set
+                                      mysqli_free_result($result);
+                                    } else{
+                                      echo "<tr>
+                                      <td><p class='lead'><em>No records were found.</em></p></td>
+                                      </tr>";
+
+                                    }
+                                  } else{
+                                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                  }
+
+                                  // Close connection
+                                  mysqli_close($link);
+                                  ?>
+              </div>
+            </li>
+            <!-- END timeline item -->
+          </ul>
+        </div>
+        <!-- /.col -->
+      </div>
+
 
 
   </section>
