@@ -63,11 +63,11 @@
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%"></th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Sales Invoice No.</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer</th>
-                          <th>Paid</th>
-                          <th>Credits</th>
-                          <th>Total Amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Amount Paid</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Total Credit/s</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Total Amount</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Credit Status</th>
-                  
+
                           <th >Action</th>
                         </tr>
                       </thead>
@@ -77,7 +77,9 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM sales_order WHERE mop ='installment' GROUP BY txID ORDER BY soID desc";
+                        $query = "SELECT sales_order.txID AS SI_Number, SUM(installment_history.ins_amount) AS Amount_Paid, customers.firstName AS Customer_Name, SUM(sales_order.so_price) AS Price, SUM(sales_order.discount) AS Discount, SUM(sales_order.so_price)-SUM(sales_order.discount) AS Total_Price from customers
+                        INNER JOIN sales_order ON customers.custID = sales_order.so_cust
+                        INNER JOIN installment_history ON sales_order.txID = installment_history.si_id WHERE sales_order.mop = 'Installment' ";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -85,16 +87,16 @@
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><a href="si-view.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
-                              <td><?php echo $row['so_cust'];?></td>
-                              <td>400.00</td>
-                              <td>600.00</td>
-                              <td>1,000.00</td>
+                              <td><a href="si-view-in-rows.php?txID=<?php echo $row['SI_Number']; ?>"><?php echo $row['SI_Number']; ?></td>
+                              <td><?php echo $row['Customer_Name'];?></td>
+                              <td><?php echo $row['Amount_Paid'];?></td>
+                              <td><?php echo $row['Price'];?></td>
+                              <td><?php echo $row['Total_Price'];?></td>
                               <td>Pending</td>
                               <td>
-                               <a href='si-view.php?id=<?php echo $row['soID']; ?>' title="Print" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
+                               <a href='si-print-data.php?id=<?php echo $row['SI_Number']; ?>' title="Print" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
 
-                               <a href='si-view-credits.php?txID=<?php echo $row['txID']; ?>' title="Update Payment" data-toggle="tooltip"><span class="glyphicon glyphicon-th-list"></span></a>
+                               <a href='si-view-credits.php?txID=<?php echo $row['SI_Number']; ?>' title="Update Payment" data-toggle="tooltip"><span class="glyphicon glyphicon-th-list"></span></a>
                               </td>
                             <?php }
                             // Free result set

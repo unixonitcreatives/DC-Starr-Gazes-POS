@@ -80,12 +80,12 @@
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><a href="si-view.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
+                              <td><a href="si-view-in-rows.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['mop'];?></td>
                               <td>
                                 <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
 
-                               &nbsp; <a href='si-view.php?id=<?php echo $row['soID']; ?>' title="Print SI" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
+                               &nbsp; <a href='si-print-data.php?id=<?php echo $row['txID']; ?>' title="Print SI" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
                               </td>
                               <!-- =========================== DELETE MODAL ====================== -->
                               <div class="modal fade" id="modal-delete<?php echo $row['id']; ?>">

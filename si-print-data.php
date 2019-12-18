@@ -149,19 +149,20 @@ if (mysqli_num_rows($result) > 0) {
           <!-- Table row -->
           <div class="row">
             <div class="col-xs-12 table-responsive">
-              <table class="table table-striped">
+              <table class="table table-striped center">
                 <thead>
                   <tr>
                     <th>Product Description</th>
+                    <th>Unit Price</th>
                     <th>qty</th>
-                    <th class='pull-right'>Total Price</th>
+                    <th>Total Price</th>
                   </tr>
                 </thead>
 
                 <tbody>
                   <?php
                   require_once "config.php";
-                  $query = "SELECT so_desc, SUM(so_qty) as Qty, SUM(so_price) as Price from sales_order WHERE txID = '$SI' GROUP BY so_desc ";
+                  $query = "SELECT so_desc, SUM(so_qty) as Qty, so_price, SUM(so_price) as Price from sales_order WHERE txID = '$SI' GROUP BY so_desc ";
                   $result = mysqli_query($link, $query) or die(mysqli_error($link));
                   if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)){
@@ -173,9 +174,10 @@ if (mysqli_num_rows($result) > 0) {
                       //echo "<td>" . $row['delivery'] . "</td>";
                       //echo "<td>" . $row['stock_ID'] . "</td>";
                       echo "<td>" . $row['so_desc'] . "</td>";
+                      echo "<td>" . $row['so_price'] . "</td>";
                       echo "<td>" . $row['Qty'] . "</td>";
 
-                      echo "<td class='pull-right'>₱ " . number_format($row['Price'],2) . "</td>";
+                      echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
 
                       echo "</tr>";
                     }

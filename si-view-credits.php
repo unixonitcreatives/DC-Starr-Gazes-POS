@@ -226,13 +226,13 @@ if (mysqli_num_rows($result) > 0) {
                 $ins_tx_date = $row['ins_tx_date'];
                 $created_by = $row['created_by'];
                 $ctr++;?>
-                <tr> 
+                <tr>
                   <td><?php echo $ctr;?></td>
                   <td><?php echo $in_tx_id; ?></td>
                   <td><?php echo $ins_amount; ?></td>
                   <td><?php echo $ins_mop; ?></td>
                   <td><?php echo $ins_ref_no; ?></td>
-                  <td><?php echo $row['ins_tx_date']; ?></td>
+                  <td><?php echo $ins_tx_date; ?></td>
                   <td><?php echo $created_by; ?></td>
                   <td></td>
 
@@ -255,7 +255,7 @@ if (mysqli_num_rows($result) > 0) {
             </tr>
           </tbody>
         </table>
-      
+
 
 
 
@@ -263,7 +263,7 @@ if (mysqli_num_rows($result) > 0) {
 
     </div>
 
-   
+
 
 
 
