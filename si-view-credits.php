@@ -198,6 +198,7 @@ if (mysqli_num_rows($result) > 0) {
             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Amount</th>
             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Ref. No.</th>
+            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date Receive:</th>
             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by:</th>
             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Action/s</th>
           </tr>
@@ -227,6 +228,7 @@ if (mysqli_num_rows($result) > 0) {
                   <td><?php echo $ins_amount; ?></td>
                   <td><?php echo $ins_mop; ?></td>
                   <td><?php echo $ins_ref_no; ?></td>
+                  <td><?php echo $ins_tx_date; ?></td>
                   <td><?php echo $created_by; ?></td>
                   <td></td>
 
