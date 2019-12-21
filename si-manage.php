@@ -85,7 +85,7 @@
                               <td>
                                 <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
 
-                               &nbsp; <a href='si-print-data.php?id=<?php echo $row['txID']; ?>' title="Print SI" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
+                               &nbsp; <a href='si-print-data.php?txID=<?php echo $row['txID']; ?>' title="Print SI" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
                               </td>
                               <!-- =========================== DELETE MODAL ====================== -->
                               <div class="modal fade" id="modal-delete<?php echo $row['id']; ?>">

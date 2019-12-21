@@ -15,6 +15,7 @@ $alertMessage=$firstname=$lastname="";
 require_once "config.php";
 
 $trans_id = $_GET['txID'];
+$custName = $_GET['so_cust'];
 
 $query = "SELECT soID,txID,stock_ID,so_desc,SUM(so_qty) as Qty,discount,SUM(so_price) as Price,so_cust,so_warehouse,mop,created_by FROM sales_order WHERE txID = '$trans_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -40,7 +41,7 @@ if (mysqli_num_rows($result) > 0) {
   echo "<p class='lead'><em>No records were found.</em></p>";
 }
 
-$query = "SELECT * from customers WHERE custID ='$name' ";
+$query = "SELECT * from customers WHERE custID ='$custName' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
