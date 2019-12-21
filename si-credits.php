@@ -83,7 +83,7 @@
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><?php echo $row['txID']; ?></td>
+                              <td><a href="si-view-in-rows.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['so_cust'];?></td>
                               <td><?php echo $row['TPrice'];?></td>
                               <td>Pending</td>
