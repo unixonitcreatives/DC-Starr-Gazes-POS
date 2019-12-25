@@ -142,8 +142,12 @@ if (mysqli_num_rows($result) > 0) {
                   <td>
                     <?php
                     if($amountPaid == $gTotal) {
-                      echo "<button type='button' class='btn btn-primary disabled'>Update Payment</button> ";
-                      echo "<button class='btn btn-success'>Full Payment</button>";
+                      echo "
+                      <form action='#' method='POST'>
+                      <button type='button' class='btn btn-primary disabled'>Update Payment</button>
+                      <button class='btn btn-success' name='fullyPaid'>Full Payment</button>
+                      </form>";
+
                     }else {
                       echo "<button class='btn btn-primary' data-toggle='modal' data-target='#updatePayment' >Update Payment</button>";
                       echo "<button type='button' class='btn btn-default disabled'>Full Payment</button>";
@@ -180,7 +184,6 @@ if (mysqli_num_rows($result) > 0) {
                         <div class="form-group">
                           <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control" disabled />
                         </div>
-
                         <div class="form-group">
                           <p>Payment Date:</p>
                           <div class="input-group date">
@@ -189,7 +192,6 @@ if (mysqli_num_rows($result) > 0) {
                             </div>
                             <input type="text" name="paymentDate" class="form-control" id="datepicker"  placeholder="mm-dd-yyyy"/>
                           </div>
-
                         </div>
                       </div>
 
@@ -214,8 +216,8 @@ if (mysqli_num_rows($result) > 0) {
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Amount</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Ref. No.</th>
-                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date Receive:</th>
-                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by:</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date Receive</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Action/s</th>
                   </tr>
                 </thead>

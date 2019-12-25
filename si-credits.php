@@ -73,20 +73,28 @@
                         <?php
                         // Include config file
                         require_once 'config.php';
-
+                        $mop="";
                         // Attempt select query execution
-                        $query = "SELECT txID, so_cust, SUM(so_price)-SUM(discount) AS TPrice FROM sales_order WHERE mop='Installment' GROUP BY txID";
+                        $query = "SELECT txID, so_cust, SUM(so_price)-SUM(discount) AS TPrice, mop FROM sales_order WHERE mop='Installment' GROUP BY txID";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
+
                             $ctr = 0;
                             while($row = mysqli_fetch_array($result)){
+                              $mop = $row['mop'];
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
                               <td><a href="si-view-in-rows.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['so_cust'];?></td>
                               <td><?php echo $row['TPrice'];?></td>
-                              <td>Pending</td>
+                              <?php
+                              if ($mop == 'Installment'){
+                              echo "<td>Unpaid</td>";
+                            }else if ($mop == 'Paid'){
+                              echo "<td>Paid</td>";
+                            }
+                              ?>
                               <td>
                                <a href='si-print-data.php?id=<?php echo $row['txID']; ?>' title="Print" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
                                <a href='si-view-credits.php?txID=<?php echo $row['txID']; ?>&&so_cust=<?php echo $row['so_cust']; ?>' title="Update Payment" data-toggle="tooltip"><span class="glyphicon glyphicon-th-list"></span></a>
