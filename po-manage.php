@@ -173,7 +173,7 @@ function test_input($data) {
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM generate_po ORDER BY custID DESC";
+                        $query = "SELECT * FROM generate_po ORDER BY created_at DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
