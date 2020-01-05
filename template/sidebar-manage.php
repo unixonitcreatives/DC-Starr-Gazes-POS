@@ -9,6 +9,9 @@
   else if($_SESSION["usertype"] == "Accounting"){
     include ('template/sidebar-accounting.php');
   }
+  else if($_SESSION["usertype"] == "Cashier"){
+    include ('template/sidebar-cashier.php');
+  }
   else {
     header('location: logout.php');
     exit;
