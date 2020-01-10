@@ -119,11 +119,10 @@ if (mysqli_num_rows($result) > 0) {
           </div>
 
           <div class="box-body">
-            <div id='result2'></div>
             <table class="table table-bordered">
               <tr>
                 <td align="right" width="15%">Sales Invoice No:</td>
-                <td><a href="si-view-in-rows.php?txID=<?php echo $_GET['txID']; ?>"><?php echo $trans_id; ?><a/></td>
+                <td><a href="si-view-in-rows.php?txID=<?php echo $_GET['txID']; ?>"><?php echo $_GET['txID']; ?><a/></td>
                 </tr>
                 <tr>
                   <td align="right" width="15%">Customer Name:</td>
@@ -135,7 +134,7 @@ if (mysqli_num_rows($result) > 0) {
                 </tr>
                 <tr>
                   <td align="right" width="15%">Total Amount Paid:</td>
-                  <td id='amountP'><?php echo $amountPaid; ?></td>
+                  <td><?php echo $amountPaid; ?></td>
                 </tr>
 
                 <tr>
@@ -150,11 +149,10 @@ if (mysqli_num_rows($result) > 0) {
                       </form>";
 
                     }else {
+                      echo "<button class='btn btn-primary' data-toggle='modal' data-target='#updatePayment' >Update Payment</button>";
+                      echo "<button type='button' class='btn btn-default disabled'>Full Payment</button>";
+                    }
                     ?>
-                       <button class='btn btn-primary' data-toggle='modal' data-target='#updatePayment' id="<?php echo $trans_id; ?>">Update Payment</button>
-                       <button type='button' class='btn btn-default disabled'>Full Payment</button>
-                    <?php } ?>
-
                   </td>
                 </tr>
 
@@ -169,22 +167,22 @@ if (mysqli_num_rows($result) > 0) {
                       <h4 class="modal-title">Update Payment</h4>
                     </div>
                     <div class="modal-body">
-                      <form action="action.php" method="POST">
+                      <form action="functions/insert_installment_payment.php" method="POST">
                         <div class="form-group">
-                          <input type="hidden" id="t_id" value="<?php echo $trans_id; ?>" name="txNum" class="form-control"/>
+                          <input type="hidden" value="<?php echo $trans_id; ?>" name="txNum" class="form-control"/>
                         </div>
                         <div class="form-group">
-                          <p>Amount Paid:</p><input type="number" name="amount_paid" placeholder="0.00" id='amount_p' class="form-control" required/>
+                          <p>Amount Paid:</p><input type="number" name="amount_paid" placeholder="0.00" class="form-control" required/>
                         </div>
                         <div class="form-group">
                           <p>Mode of Payment:</p><select id="mop" name="mop" onChange="changetextbox();" class="form-control select2" style="width: 100%;" required>
                             <option value="Cash">Cash</option>
-                            <option value="Card" name="card">Card</option>
-                            <option value="Cheque" name="cheque">Cheque</option>
+                            <option value="Card">Card</option>
+                            <option value="Cheque">Cheque</option>
                           </select>
                         </div>
                         <div class="form-group">
-                          <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control"  disabled/>
+                          <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control" disabled />
                         </div>
                         <div class="form-group">
                           <p>Payment Date:</p>
@@ -198,7 +196,7 @@ if (mysqli_num_rows($result) > 0) {
                       </div>
 
                       <div class="modal-footer">
-                        <button type="button" class="update btn btn-primary" name="paymentBtn" id="action">Submit</a>
+                        <button type="submit" class="btn btn-primary" name="paymentBtn">Submit</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
                     </form>
@@ -210,15 +208,94 @@ if (mysqli_num_rows($result) > 0) {
               <!-- == Transaction history table == -->
               <br>
               <!-- dito table -->
-              <div id='result'>
+              <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Amount</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Ref. No.</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date Receive</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Action/s</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  // Include config file
+                  require_once 'config.php';
 
-              </div>
+                  // Attempt select query execution
+                  $query = "SELECT * FROM installment_history WHERE si_id = '$trans_id' ";
+                  if($result = mysqli_query($link, $query)){
+                    if(mysqli_num_rows($result) > 0){
+                      $ctr = 0;
+                      while($row = mysqli_fetch_array($result)){
+                        $insID = $row['insID'];
+                        $in_tx_id = $row['in_tx_id'];
+                        $si_id = $row['si_id'];
+                        $ins_amount = $row['ins_amount'];
+                        $ins_mop = $row['ins_mop'];
+                        $ins_ref_no = $row['ins_ref_no'];
+                        $ins_tx_date = $row['ins_tx_date'];
+                        $created_by = $row['created_by'];
+                        $ctr++;?>
+                        <tr>
+                          <td><?php echo $ctr;?></td>
+                          <td><?php echo $in_tx_id; ?></td>
+                          <td><?php echo $ins_amount; ?></td>
+                          <td><?php echo $ins_mop; ?></td>
+                          <td><?php echo $ins_ref_no; ?></td>
+                          <td><?php echo $ins_tx_date; ?></td>
+                          <td><?php echo $created_by; ?></td>
+                          <td></td>
+
+                        <?php }
+                        // Free result set
+                        mysqli_free_result($result);
+                      } else{
+                        echo "<tr>
+                        <td><p class='lead'><em>No records were found.</em></p></td>
+                        </tr>";
+
+                      }
+                    } else{
+                      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                    }
+
+                    // Close connection
+                    mysqli_close($link);
+                    ?>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>No.</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Amount</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >MOP</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Ref. No.</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date Receive:</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Created by:</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Action/s</th>
+                  </tr>
+                </tfoot>
+              </table>
+
+
+
 
             </div>
 
           </div>
 
+
+
+
+
         </section>
+
 
       </div>
 
@@ -232,46 +309,7 @@ if (mysqli_num_rows($result) > 0) {
       <?php include('template/js.php'); ?>
 
       <script>
-        $(document).ready(function(){
-          fetch();
-          function fetch(){
-            var action = 'select';
-            //var amountP = $('#amountP').val();
-            $.ajax({
-              url: "select2.php",
-              method: "POST",
-              data:{action:action},
-              success:function(data){
-                $('#amount_p').val();
-                $('#mop').val();
-                $('#ref').val();
-                $('#datepicker').val();
-                $('#result').html(data);
-              }
-            })
-          }
 
-          $('#action').click(function(){
-
-            var amount_paid = $('#amount_p').val();
-            var mop = $('#mop').val();
-            var reference_num = $('#ref').val();
-            var payment_date = $('#datepicker').val();
-            var action = $('#action').text();
-
-            if(amount_paid != "" || mop != "" || reference_num != "" || payment_date != ""){
-              $.ajax({
-                url: "action.php",
-                method: "POST",
-                data:{amountPaid:amount_paid,mop:mop,refNum:reference_num,payment_date:payment_date,action:action},
-                success:function(response){
-                  Notify("INSERTED", "success");
-                  fetch();
-                }
-              })
-            }
-          });
-        });
       </script>
 
 
