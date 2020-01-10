@@ -3,6 +3,10 @@
 
 <?php
 
+
+$txtID = $_GET['txID'];
+$so_cust = $_GET['so_cust'];
+
 require_once "../config.php";
 
 // Define variables and initialize with empty values
@@ -10,7 +14,7 @@ $in_tx_id=$si_id=$ins_amount=$ins_mop=$ins_ref_no=$in_tx_date=$created_by=$alert
 
 $loginUSer = $_SESSION['username'];
 
-if(isset($_POST['paymentBtn'])){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
   //Assigning posted values to variables.
   $si_id = test_input($_POST['txNum']);
   $ins_amount = test_input($_POST['amount_paid']);
@@ -34,15 +38,18 @@ if(isset($_POST['paymentBtn'])){
     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
     $in_tx_id = $custnewID; //eto bro SITXmmddyy000001 or SITX121619000001
-    $query = "INSERT INTO installment_history(insID, in_tx_id, si_id, ins_amount, ins_mop, ins_ref_no, ins_tx_date, created_by)
-    VALUES ('$insID','$in_tx_id','$si_id','$ins_amount','$ins_mop','$ins_ref_no','$ins_tx_date','$loginUSer')"; //Prepare insert query
+    $query = "INSERT INTO installment_history(in_tx_id, si_id, ins_amount, ins_mop, ins_ref_no, ins_tx_date, created_by)
+    VALUES ('$in_tx_id','$si_id','$ins_amount','$ins_mop','$ins_ref_no','$ins_tx_date','$loginUSer')"; //Prepare insert query
 
     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 
     if($result){
+      // Set a 200 (okay) response code.
+      http_response_code(200);
       //echo "<script>Notify('Category Added Succesfully','Success');</script>";
-      header("Location: ../si-view-credits.php?alert=addsuccess");
+      header("Location: ../si-credits.php");
     }else{
+       http_response_code(500);
       header("Location: ../si-view-credits.php?alert=error");
       //header("Location: category-add.php?alert=3");
     }
@@ -59,4 +66,8 @@ function test_input($data) {
 }
 
 
+
+
 ?>
+$txtID = $_GET['txID'];
+$so_cust = $_GET['so_cust'];

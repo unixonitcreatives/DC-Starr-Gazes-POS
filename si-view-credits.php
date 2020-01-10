@@ -142,7 +142,7 @@ if (mysqli_num_rows($result) > 0) {
                   <td align="right" width="15%">Action:</td>
                   <td>
                     <?php
-                    if($amountPaid == $gTotal) {
+                    if($amountPaid >= $gTotal) {
                       echo "
                       <form action='#' method='POST'>
                       <button type='button' class='btn btn-primary disabled'>Update Payment</button>
@@ -169,12 +169,12 @@ if (mysqli_num_rows($result) > 0) {
                       <h4 class="modal-title">Update Payment</h4>
                     </div>
                     <div class="modal-body">
-                      <form action="action.php" method="POST">
+                      <form id="add-user" action="action.php" method="POST">
                         <div class="form-group">
-                          <input type="hidden" id="t_id" value="<?php echo $trans_id; ?>" name="txNum" class="form-control"/>
+                          <input type="hidden" value="<?php echo $trans_id; ?>" name="txNum" id="txNum" class="form-control"/>
                         </div>
                         <div class="form-group">
-                          <p>Amount Paid:</p><input type="number" name="amount_paid" placeholder="0.00" id='amount_p' class="form-control" required/>
+                          <p>Amount Paid:</p><input type="number" name="amount_paid" id="amount_paid" placeholder="0.00" class="form-control" required/>
                         </div>
                         <div class="form-group">
                           <p>Mode of Payment:</p><select id="mop" name="mop" onChange="changetextbox();" class="form-control select2" style="width: 100%;" required>
@@ -273,6 +273,73 @@ if (mysqli_num_rows($result) > 0) {
           });
         });
       </script>
+
+
+      <script>
+  $(function() {
+    // Get the form.
+    var form = $('#ajax-contact');
+
+    // Get the messages div.
+    var formMessages = $('#form-messages');
+
+   // Set up an event listener for the contact form.
+$(form).submit(function(event) {
+    // Stop the browser from submitting the form.
+    event.preventDefault();
+
+    // TODO
+});
+
+// Set up an event listener for the contact form.
+$(form).submit(function(event) {
+    // Stop the browser from submitting the form.
+    event.preventDefault();
+
+    // TODO
+});
+
+// Serialize the form data.
+var formData = $(form).serialize();
+
+// Submit the form using AJAX.
+$.ajax({
+    type: 'POST',
+    url: $(form).attr('action'),
+    data: formData
+})
+
+.done(function(response) {
+    // Make sure that the formMessages div has the 'success' class.
+    $(formMessages).removeClass('error');
+    $(formMessages).addClass('success');
+
+    // Set the message text.
+    $(formMessages).text(response);
+
+    // Clear the form.
+    $('#txNum').val('');
+    $('#amount_paid').val('');
+    $('#mop').val('');
+    $('#ref').val('');
+
+})
+
+.fail(function(data) {
+    // Make sure that the formMessages div has the 'error' class.
+    $(formMessages).removeClass('success');
+    $(formMessages).addClass('error');
+
+    // Set the message text.
+    if (data.responseText !== '') {
+        $(formMessages).text(data.responseText);
+    } else {
+        $(formMessages).text('Oops! An error occured and your message could not be sent.');
+    }
+});
+
+
+</script>
 
 
     </body>
