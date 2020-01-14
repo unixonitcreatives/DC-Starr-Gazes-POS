@@ -169,7 +169,7 @@ if (mysqli_num_rows($result) > 0) {
                       <h4 class="modal-title">Update Payment</h4>
                     </div>
                     <div class="modal-body">
-                      <form id="add-user" action="action.php" method="POST">
+                      <form id="add-user" action="functions/insert_installment_payment.php" method="POST">
                         <div class="form-group">
                           <input type="hidden" value="<?php echo $trans_id; ?>" name="txNum" id="txNum" class="form-control"/>
                         </div>
@@ -177,14 +177,14 @@ if (mysqli_num_rows($result) > 0) {
                           <p>Amount Paid:</p><input type="number" name="amount_paid" id="amount_paid" placeholder="0.00" class="form-control" required/>
                         </div>
                         <div class="form-group">
-                          <p>Mode of Payment:</p><select id="mop" name="mop" onChange="changetextbox();" class="form-control select2" style="width: 100%;" required>
+                          <p>Mode of Payment:</p><select id="mop" name="mop" onChange="changetextbox()" class="form-control select2" style="width: 100%;" required>
                             <option value="Cash">Cash</option>
                             <option value="Card" name="card">Card</option>
                             <option value="Cheque" name="cheque">Cheque</option>
                           </select>
                         </div>
                         <div class="form-group">
-                          <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control"  disabled/>
+                          <p>Reference No:</p><input id="ref" type="text" name="refNum" Placeholder="Reference No" class="form-control" disabled/>
                         </div>
                         <div class="form-group">
                           <p>Payment Date:</p>
@@ -199,7 +199,7 @@ if (mysqli_num_rows($result) > 0) {
 
                       <div class="modal-footer">
                         <button type="button" class="update btn btn-primary" name="paymentBtn" id="action">Submit</a>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
                       </div>
                     </form>
                   </div>
@@ -210,9 +210,10 @@ if (mysqli_num_rows($result) > 0) {
               <!-- == Transaction history table == -->
               <br>
               <!-- dito table -->
-              <div id='result'>
 
-              </div>
+                <div id="result">
+                </div>
+
 
             </div>
 
@@ -236,11 +237,12 @@ if (mysqli_num_rows($result) > 0) {
           fetch();
           function fetch(){
             var action = 'select';
+            var txID = $('#txNum').val();
             //var amountP = $('#amountP').val();
             $.ajax({
               url: "select2.php",
               method: "POST",
-              data:{action:action},
+              data:{action:action,txID:txID},
               success:function(data){
                 $('#amount_p').val();
                 $('#mop').val();
@@ -251,96 +253,29 @@ if (mysqli_num_rows($result) > 0) {
             })
           }
 
-          $('#action').click(function(){
-
-            var amount_paid = $('#amount_p').val();
-            var mop = $('#mop').val();
-            var reference_num = $('#ref').val();
-            var payment_date = $('#datepicker').val();
-            var action = $('#action').text();
-
-            if(amount_paid != "" || mop != "" || reference_num != "" || payment_date != ""){
+          $('#action').click( function(){
+            var form = $('#add-user');
+            var formData = $(form).serialize();
+            var close = $('#close');
+            //if(amount_paid != "" || mop != "" || payment_date != ""){
               $.ajax({
-                url: "action.php",
+                url: $(form).attr('action'),
                 method: "POST",
-                data:{amountPaid:amount_paid,mop:mop,refNum:reference_num,payment_date:payment_date,action:action},
+                data:formData,
                 success:function(response){
-                  Notify("INSERTED", "success");
-                  fetch();
+
+                    fetch();
+                    $('#add-user')[0].reset();
+                    $('#updatePayment').modal('hide');
+                    location.reload();
+                    Notify("INSERTED", "success");
                 }
-              })
-            }
+              });
+
+            //}
           });
         });
       </script>
-
-
-      <script>
-  $(function() {
-    // Get the form.
-    var form = $('#ajax-contact');
-
-    // Get the messages div.
-    var formMessages = $('#form-messages');
-
-   // Set up an event listener for the contact form.
-$(form).submit(function(event) {
-    // Stop the browser from submitting the form.
-    event.preventDefault();
-
-    // TODO
-});
-
-// Set up an event listener for the contact form.
-$(form).submit(function(event) {
-    // Stop the browser from submitting the form.
-    event.preventDefault();
-
-    // TODO
-});
-
-// Serialize the form data.
-var formData = $(form).serialize();
-
-// Submit the form using AJAX.
-$.ajax({
-    type: 'POST',
-    url: $(form).attr('action'),
-    data: formData
-})
-
-.done(function(response) {
-    // Make sure that the formMessages div has the 'success' class.
-    $(formMessages).removeClass('error');
-    $(formMessages).addClass('success');
-
-    // Set the message text.
-    $(formMessages).text(response);
-
-    // Clear the form.
-    $('#txNum').val('');
-    $('#amount_paid').val('');
-    $('#mop').val('');
-    $('#ref').val('');
-
-})
-
-.fail(function(data) {
-    // Make sure that the formMessages div has the 'error' class.
-    $(formMessages).removeClass('success');
-    $(formMessages).addClass('error');
-
-    // Set the message text.
-    if (data.responseText !== '') {
-        $(formMessages).text(data.responseText);
-    } else {
-        $(formMessages).text('Oops! An error occured and your message could not be sent.');
-    }
-});
-
-
-</script>
-
 
     </body>
     </html>

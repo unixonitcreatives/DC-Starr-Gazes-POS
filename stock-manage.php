@@ -6,7 +6,7 @@
   $Manager_auth = 0;
   $Cashier_auth = 0;
   include('template/user_auth.php');
-  
+
   ?>
   <!-- ====================Expired Script====================== -->
   <?php
@@ -27,7 +27,7 @@
       $updateResult = mysqli_query($link, $updateStatus);
 
       if($updateResult){
-        $deleteFromList = "DELETE from stock WHERE expiry_date = '".$curdate."' ";
+        $deleteFromList = "DELETE from stocks WHERE expiry_date = '".$curdate."' ";
         $deleteResult = mysqli_query($link, $deleteFromList);
 
         $alertMessage = "<div class='alert alert-success' role='alert'>Expired products transfered to expired section.</div>";
@@ -35,7 +35,13 @@
         $alertMessage = "<div class='alert alert-danger' role='alert'>Error updating stocks.</div>";
       }
     }
- 
+
+    include("simple_html_dom.php");
+
+
+//$rows = $tables->children(0)->children();
+
+
   ?>
 
   <!-- ================================================================ -->
@@ -128,7 +134,7 @@
 
                           if($row['stock_status']=="In Stock"){
                             echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-                           
+
 
                             echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 
@@ -189,6 +195,24 @@
       <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
 
+      <!-- <script>
+    var table = $('#example1');
+
+    function ExportToExcel(table){
+       // var htmltable= document.getElementById('example1');
+       // var html = htmltable.outerHTML;
+       // var blob = new Blob([table],{type:"text/plain;charset=utf-8"});
+       // saveAs(blob,"helloworld.xlsx");
+       //saveAs(new Blob[table],{type:"application/octet-stream"}), "test.xlsx");
+      //var value = document.getElementsByTagName('table')[0].rows[2].textContent;
+       var tb = $("#tb").val();
+       var url = 'data:application/vnd.ms-excel,' + encodeURIComponent(tb);
+
+       location.href = url;
+        return false;
+
+     }
+    </script> -->
 
     </body>
     </html>

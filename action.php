@@ -4,13 +4,14 @@ require_once 'config.php';
 $output=$ins_amount=$ins_mop=$ins_ref_no=$ins_tx_date= "";
 
 if($_POST['action']){
-  $amountP = valData($_POST['amount_p']);
+  //$amountP = valData($_POST['amount_p']);
   $ins_amount = valData($_POST['amountPaid']);
   $ins_mop = valData($_POST['mop']);
   $ins_ref_no = valData($_POST['refNum']);
   $ins_tx_date = valData($_POST['payment_date']);
   $card = valData($_POST['card']);
   $cheque = valData($_POST['cheque']);
+  $si_id = valData($_POST['txNum']);
 
   if($ins_amount == "" || $ins_mop == "" || $ins_ref_no == "" || $ins_tx_date == ""){
     $IDtype = "SITX";
@@ -25,8 +26,7 @@ if($_POST['action']){
     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
     $in_tx_id = $custnewID;
-    $q = 'SELECT si_id FROM installment_history';
-    $si_id = $_GET["txID"];
+  //  $q = 'SELECT si_id FROM installment_history';
 
     $loginUSer = $_SESSION['username'];
 
@@ -42,7 +42,7 @@ if($_POST['action']){
 
 
   //return $output;
-  echo $output;
+  //echo $output;
   //exit($output);
 }
 

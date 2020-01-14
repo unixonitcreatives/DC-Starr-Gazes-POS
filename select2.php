@@ -1,11 +1,18 @@
 <?php
 require_once 'config.php';
 
+
 if($_POST["action"]){
+
+$trans_id = $_POST['txID'];
+
 $response = "";
-$query = "SELECT * FROM installment_history";
+$query = "SELECT * FROM installment_history WHERE si_id='$trans_id'";
 $result = mysqli_query($link,$query);
-  $response .= '<table id="example2" class="table table-bordered table-hover dataTable" role="grid">
+
+// $q = "SELECT * FROM installment_history";
+// $r = mysqli_query($link,$q);
+  $response .= '<table id="example1" class="table table-bordered table-hover dataTable" role="grid">
   <thead>
   <tr>
     <th>No.</th>
