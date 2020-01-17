@@ -132,10 +132,12 @@ if (mysqli_num_rows($result) > 0) {
                 <tr>
                   <td align="right" width="15%">Credit Total Amount:</td>
                   <td><?php echo $gTotal; ?></td>
+                  <input type='hidden' id='total' value="<?php echo $gTotal; ?>">
                 </tr>
                 <tr>
                   <td align="right" width="15%">Total Amount Paid:</td>
                   <td id='amountP'><?php echo $amountPaid; ?></td>
+                  <input type='hidden' value="<?php echo $amountPaid?>" id='amount'>
                 </tr>
 
                 <tr>
@@ -143,16 +145,27 @@ if (mysqli_num_rows($result) > 0) {
                   <td>
                     <?php
                     if($amountPaid >= $gTotal) {
-                      echo "
+                       echo "
                       <form action='#' method='POST'>
                       <button type='button' class='btn btn-primary disabled'>Update Payment</button>
                       <button class='btn btn-success' name='fullyPaid'>Full Payment</button>
                       </form>";
 
+                          if(isset($_POST['fullyPaid'])){
+                          $q = "UPDATE sales_order SET mop = 'Cash' WHERE txID = '$trans_id'";
+                          $r = mysqli_query($link,$q);
+
+                          echo "<script>window.location.href='si-credits.php'</script>";
+                          }
+                          
+                  
+//echo "<script>location.reload();</script>";
+                     
+
                     }else {
                     ?>
-                       <button class='btn btn-primary' data-toggle='modal' data-target='#updatePayment' id="<?php echo $trans_id; ?>">Update Payment</button>
-                       <button type='button' class='btn btn-default disabled'>Full Payment</button>
+                       <button class='btn btn-primary updateBtn' data-toggle='modal' data-target='#updatePayment' id="<?php echo $trans_id; ?>">Update Payment</button>
+                       <button type='button' class='btn btn-default disabled' name="fullyPaid" id='fullP'>Full Payment</button>
                     <?php } ?>
 
                   </td>
@@ -244,7 +257,7 @@ if (mysqli_num_rows($result) > 0) {
               method: "POST",
               data:{action:action,txID:txID},
               success:function(data){
-                $('#amount_p').val();
+                $('#amount_paid').val();
                 $('#mop').val();
                 $('#ref').val();
                 $('#datepicker').val();
@@ -253,27 +266,48 @@ if (mysqli_num_rows($result) > 0) {
             })
           }
 
+          fetchAmount();
+          function fetchAmount(){
+            var action = 'select';
+            var txID = $('#txNum').val();
+
+            $.ajax({
+              url: "select3.php",
+              method: "POST",
+              data:{action:action,txID:txID},
+              success:function(data){
+                  $('#amountP').html(data);
+              }
+            })
+          }
+
+          $('#action').click(function(event){
+            event.preventDefault();
+            location.reload();
+          });
+
           $('#action').click( function(){
             var form = $('#add-user');
             var formData = $(form).serialize();
             var close = $('#close');
-            //if(amount_paid != "" || mop != "" || payment_date != ""){
+            if(amount_paid != "" || mop != "" || payment_date != ""){
               $.ajax({
                 url: $(form).attr('action'),
                 method: "POST",
                 data:formData,
                 success:function(response){
-
                     fetch();
+                    fetchAmount();
                     $('#add-user')[0].reset();
                     $('#updatePayment').modal('hide');
-                    location.reload();
-                    Notify("INSERTED", "success");
+                    
+                    Notify("INSERTED", "success")
                 }
               });
+            }
 
-            //}
           });
+
         });
       </script>
 

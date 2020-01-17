@@ -127,8 +127,11 @@ function test_input($data) {
               <h3 class="box-title">Search for User Account Information</h3>
               <br><a href="user-add.php" class="text-center">+ add new user</a>
             </div>
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+            <div class="box-body" id='th'>
+              <button type="button" class="btn btn-info" onclick="exportTableToExcel('example1')">Export Excel</button>
+              <br><br>
+              <table id="example1" class="table table-bordered table-hover dataTable tb" role="grid" aria-describedby="example2_info">
+                
                       <thead>
                         <tr>
                           <th>No.</th>
@@ -177,6 +180,7 @@ function test_input($data) {
                         ?>
                       </tbody>
                     </table>
+                    
             </div>
           </div>
       </div>
@@ -194,7 +198,41 @@ function test_input($data) {
 <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
 
+<script type="text/javascript">
+// function ExportToExcel(tableID){
+//        var htmltable= document.getElementById(tableID);
+//        var html = htmltable.outerHTML;
+//        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+//     }
 
+function exportTableToExcel(tableID){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    //document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob([tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob );
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        //triggering the function
+        downloadLink.click();
+}
+
+}
+
+
+</script>
 
 
 

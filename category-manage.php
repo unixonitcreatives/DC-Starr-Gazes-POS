@@ -59,9 +59,7 @@ $alertMessage="";
             </div>
 
             <div class="box-body">
-
               <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-
                       <thead>
                         <tr>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>

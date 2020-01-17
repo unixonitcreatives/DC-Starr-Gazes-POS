@@ -54,7 +54,7 @@
           <div class="box box-default">
               <div class="box-header with-border">
                 <h3 class="box-title">Search for Sales Invoice data</h3><br>
-                <a href="so-generate.php" class="text-center">+ Generate new Sales Invoice</a>
+                <a href="si-generate.php" class="text-center">+ Generate new Sales Invoice</a>
               </div>
               <div class="box-body">
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
@@ -81,7 +81,7 @@
                               <tr>
                               <td><?php echo $ctr; ?></td>
                               <td><a href="si-view-in-rows.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></a></td>
-                              <td><?php echo $row['mop'];?></td>
+                              <td><?php echo $row['mop']; ?></td>
                               <td>
                                 <a  href='#' data-toggle='modal' data-target='#modal-delete<?php echo $row['id']; ?>'><span class='glyphicon glyphicon-trash'></span></a>
 

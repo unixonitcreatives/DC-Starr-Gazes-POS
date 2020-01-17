@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Sales Invoice Credit Record<br>
+         Sales Invoice Record<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -53,52 +53,39 @@
           <!-- general form elements -->
           <div class="box box-default">
               <div class="box-header with-border">
-                <h3 class="box-title">Search for Sales Invoice Credit Data</h3><br>
-                <a href="so-generate.php" class="text-center">+ Generate new Sales Invoice</a>
+                <h3 class="box-title">Search for Sales Invoice data</h3><br>
+                <a href="si-generate.php" class="text-center">+ Generate new Sales Invoice</a>
               </div>
               <div class="box-body">
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%"></th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Sales Invoice No.</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer ID</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Credit/s</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Credit Status</th>
-
-                          <th >Action</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">NO.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer Name</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Paid Amount</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         // Include config file
                         require_once 'config.php';
-                        $mop="";
+
                         // Attempt select query execution
-                        $query = "SELECT txID, so_cust, SUM(so_price)-SUM(discount) AS TPrice, mop FROM sales_order WHERE mop='Installment' GROUP BY txID";
+                        $query = "SELECT * FROM sales_order GROUP BY txID ORDER BY soID desc";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
-
                             $ctr = 0;
                             while($row = mysqli_fetch_array($result)){
-                              $mop = $row['mop'];
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><a href="si-view-in-rows.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></td>
-                              <td><?php echo $row['so_cust'];?></td>
-                              <td><?php echo $row['TPrice'];?></td>
-                              <?php
-                            if ($mop == 'Installment'){
-                              echo "<td>Unpaid</td>";
-                            }else if ($mop == 'Paid'){
-                              echo "<td>Paid</td>";
-                            }
-                              ?>
-                              <td>
-                               <a href='si-print-data.php?id=<?php echo $row['txID']; ?>' title="Print" data-toggle="tooltip"><span class="glyphicon glyphicon-print"></span></a>
-                               <a href='si-view-credits.php?txID=<?php echo $row['txID']; ?>&&so_cust=<?php echo $row['so_cust']; ?>' title="Update Payment" data-toggle="tooltip"><span class="glyphicon glyphicon-th-list"></span></a>
-                              </td>
+                              <td><</td>
+                              <td><?php echo $row['mop']; ?></td>
+                              <td></td>
+
                             <?php }
                             // Free result set
                             mysqli_free_result($result);
