@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Sales Invoice Record<br>
+         Sales Ledger Report<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -49,22 +49,41 @@
    <!-- ======================== MAIN CONTENT ======================= -->
 
   <section class="content">
-
           <!-- general form elements -->
           <div class="box box-default">
               <div class="box-header with-border">
-                <h3 class="box-title">Search for Sales Invoice data</h3><br>
-                <a href="si-generate.php" class="text-center">+ Generate new Sales Invoice</a>
+                <h3 class="box-title">Sales Ledger Data</h3><br>
+                <a href="index.php" class="text-center">go to Dashboard</a>
               </div>
               <div class="box-body">
+                <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel()">Export To Excel</button>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="form" method="POST">
+                      <h4>Date Range</h4>
+                      <div class="row">
+                          <div class="offset-md-1 col-md-8">                          
+                            <div class="input-daterange input-group" id="date-range">
+                              <input type="date" name="start" class="form-control">
+                                <span class="input-group-addon bg-blue text-white" style="border: none; border-radius: -5px;">to</span>
+                              <input type="date" name="end" class="form-control">                                    
+                            </div>                                    
+                          </div>
+
+                          <div class="col-md-3">
+                            <button type="submit" name="action" class="btn btn-primary">Search</button>
+                          </div>
+                      </div>
+                    </form>
+
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+
                       <thead>
                         <tr>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">NO.</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Sales Invoice ID</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer Name</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Amount</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Paid Amount</th>
+                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Remaining Amount</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date</th>
                         </tr>
                       </thead>
@@ -72,19 +91,42 @@
                         <?php
                         // Include config file
                         require_once 'config.php';
+                        $start = $end = "";
 
+                        
+            
+                          $start = date("Y-m-d", $_POST['start']);
+                          $end = date("Y-m-d", $_POST['end']);
+                        
+                       
                         // Attempt select query execution
-                        $query = "SELECT * FROM sales_order GROUP BY txID ORDER BY soID desc";
+                          if(!empty($start) && !empty($end)){
+                            $query = "SELECT customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_price,sales_order.txID,installment_history.ins_amount FROM customers 
+                          INNER JOIN sales_order ON customers.custID = sales_order.so_cust 
+                          INNER JOIN installment_history ON installment_history.ins_amount WHERE sales_order.created_at BETWEEN '$start' AND '$end' ORDER BY sales_order.created_at DESC";
+                          }
+                          
+                          
+            
+                   
+                 
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
-                            while($row = mysqli_fetch_array($result)){
+                            while($row = mysqli_fetch_assoc($result)){
+                               $date = $row['created_at'];
+                               $date = date('M d,Y', strtotime($date));
+
+                      
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><</td>
-                              <td><?php echo $row['mop']; ?></td>
+                              <td><?php echo $row['txID']; ?></td>
+                              <td><?php echo $row['firstName']; echo '&nbsp;'; echo $row['lastName']; ?></td>
+                              <td><?php echo $row['so_price']; ?></td>
+                              <td><?php echo $row['ins_amount']?></td>
                               <td></td>
+                              <td><?php echo $date; ?></td>
 
                             <?php }
                             // Free result set
@@ -93,7 +135,7 @@
                             echo "<p class='lead'><em>No records were found.</em></p>";
                           }
                         } else{
-                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                          echo "ERROR: Could not able to execute $query. " . mysqli_error($link);
                         }
 
                         // Close connection
@@ -120,7 +162,35 @@
 <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
 
+<script>
+  
+  function exportTableToExcel(){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById('example2');
+    var table_html = '<table><thead><tr><th>NO.</th><th>Sales Invoice ID</th><th>Customer Name</th><th>Total Amount</th><th>Paid Amount</th><th>Remaining</th><th>Date</th></tr></thead></table>';
+    var tableHTML = table_html + tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    //document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob([tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob );
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ',' + tableHTML;
+    
+        //triggering the function
+        downloadLink.click();
+}
 
+}
+</script>
 
 </body>
 </html>

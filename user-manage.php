@@ -128,11 +128,11 @@ function test_input($data) {
               <br><a href="user-add.php" class="text-center">+ add new user</a>
             </div>
             <div class="box-body" id='th'>
-              <button type="button" class="btn btn-info" onclick="exportTableToExcel('example1')">Export Excel</button>
+              <button type="button" class="btn btn-primary pull-right" onclick="exportTb()">Export Excel</button>
               <br><br>
               <table id="example1" class="table table-bordered table-hover dataTable tb" role="grid" aria-describedby="example2_info">
                 
-                      <thead>
+                      <thead id='thead'>
                         <tr>
                           <th>No.</th>
                           <th>ACC No.</th>
@@ -152,7 +152,8 @@ function test_input($data) {
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
-                            while($row = mysqli_fetch_array($result)){
+                            while($row = mysqli_fetch_assoc($result)){
+                              //$id = $row['custID'];
                               $ctr++;
                               echo "<tr>";
                               echo "<td>" . $ctr . "</td>";
@@ -205,11 +206,12 @@ function test_input($data) {
 //        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
 //     }
 
-function exportTableToExcel(tableID){
+function exportTb(){
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(tableID);
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    var tableSelect = document.getElementById('example1');
+    var table_html = '<table><thead><tr><th>NO.</th><th>User ID</th><th>Username</th><th>Usertype</th><th>Created &nbsp; At</th></tr></thead></table>';
+    var tableHTML = table_html + tableSelect.outerHTML.replace(/ /g, '%20');
     
     // Create download link element
     downloadLink = document.createElement("a");
@@ -223,7 +225,7 @@ function exportTableToExcel(tableID){
         navigator.msSaveOrOpenBlob( blob );
     }else{
         // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+        downloadLink.href = 'data:' + dataType + ',' + tableHTML;
     
         //triggering the function
         downloadLink.click();

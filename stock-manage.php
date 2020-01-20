@@ -77,14 +77,16 @@
           <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-default">
-              <div class="box-header with-border">
-                <h3 class="box-title"></h3>
+           
+               
                 <!-- <br><a href="po-generate.php" class="text-center">+ generate new PO</a> -->
-              </div>
+    
               <div class="box-body">
+                
+                 <div id="tb-w">
                 <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                  <thead>
-
+                  <button type="button" class="btn btn-primary pull-right" id='export' onclick="ExportToExcel()">Export To Excel</button>
+                  <thead id="headers">
                     <tr>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SC No.</th>
@@ -94,11 +96,10 @@
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Expiry Date</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Approved By</th>
-
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="ex1">
                     <?php
                     // Attempt select query execution
                     $query = "SELECT * FROM stock WHERE stock_status='In Stock' ORDER BY custID, warehouse_ID asc";
@@ -178,6 +179,7 @@
                     ?>
                   </tbody>
                 </table>
+                </div>
               </div>
             </div>
           </div>
@@ -195,24 +197,53 @@
       <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
 
-      <!-- <script>
-    var table = $('#example1');
 
-    function ExportToExcel(table){
-       // var htmltable= document.getElementById('example1');
-       // var html = htmltable.outerHTML;
-       // var blob = new Blob([table],{type:"text/plain;charset=utf-8"});
-       // saveAs(blob,"helloworld.xlsx");
-       //saveAs(new Blob[table],{type:"application/octet-stream"}), "test.xlsx");
-      //var value = document.getElementsByTagName('table')[0].rows[2].textContent;
-       var tb = $("#tb").val();
-       var url = 'data:application/vnd.ms-excel,' + encodeURIComponent(tb);
+     <script type="text/javascript">
+// function ExportToExcel(tableID){
+//        var htmltable= document.getElementById(tableID);
+//        var html = htmltable.outerHTML;
+//        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+//     }
 
-       location.href = url;
-        return false;
+// function exportTableToExcel(){
+//     var downloadLink;
+//     var dataType = 'application/vnd.ms-excel';
+//     var tableSelect = document.getElementById('example1');
+//     var table_html = '<table><thead><tr><th>NO.</th><th>SC No.</th><th>PO NO.</th><th>SKU</th><th>Warehouse</th><th>Status</th><th>Expiry Date</th><th>Approved by</th></tr></thead></table>';
+//     var tableHTML = table_html + tableSelect.outerHTML.replace(/ /g, '%20');
+    
+//     // Create download link element
+//     downloadLink = document.createElement("a");
+    
+//     //document.body.appendChild(downloadLink);
+    
+//     if(navigator.msSaveOrOpenBlob){
+//         var blob = new Blob([tableHTML], {
+//             type: dataType
+//         });
+//         navigator.msSaveOrOpenBlob( blob );
+//     }else{
+//         // Create a link to the file
+//         downloadLink.href = 'data:' + dataType + ',' + tableHTML;
+    
+//         //triggering the function
+//         downloadLink.click();
+// }
 
-     }
-    </script> -->
+// }
+
+function ExportToExcel(){
+       var downloadLink;
+       var htmltable= document.getElementById('example1');
+       var table_html = '<table><thead><tr><th>NO.</th><th>SC No.</th><th>PO NO.</th><th>SKU</th><th>Warehouse</th><th>Status</th><th>Expiry Date</th><th>Approved by</th></tr></thead></table>';
+       var html = table_html + htmltable.outerHTML;
+
+       window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+
+
+    }
+
+</script>
 
     </body>
     </html>

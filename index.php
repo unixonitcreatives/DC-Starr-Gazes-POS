@@ -58,10 +58,54 @@ if (mysqli_num_rows($result) > 0) {
         <small>Insert Tagline, Contact Details or Important Details</small>
       </h1>
     </section>
+    <style type="text/css">
+
+      td {
+      text-align: center;
+      padding: .75rem;
+      border-top: 1px solid #dee2e6;
+      }
+
+    th {
+      text-align: center;
+      display: table-cell;
+      font-weight: bold;
+    }
+
+
+    .box {
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0.3px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    border-radius: 7px;
+  }
+
+  .btn-tool{
+      color: gray;
+      font-size: 15px;
+  }
+
+  .box-header {
+    margin-left: 5px;
+    margin-top: 10px;
+  }
+
+  .text-uppercase {
+    color: gray;
+  }
+
+    </style>
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
+
+
       <div class="row">
+
       <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="box box-block tile tile-2 bg-success mb-2">
                 <div class="t-icon right"><i class="ti-shopping-cart-full"></i></div>
@@ -71,61 +115,71 @@ if (mysqli_num_rows($result) > 0) {
                   </div>
               </div>
         </div>
+
  -->
-       <?php
+           <!--  <div class="chart col-md-12">
+              
+              <canvas id="salesChart" style="height: 180px;"></canvas>
+           </div> -->
+      <?php
         $q = "SELECT COUNT(id) as total_customers FROM customers";
         $r = mysqli_query($link,$q);
 
         while($row = mysqli_fetch_assoc($r)){
        ?> 
-          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div class="box box-block bg-white tile tile-4 mb-2">
-                  <div class="fa fa-users t-icon bg-success"></div>
-                  <div class="t-content text-right">
-                    <h6 class="text-uppercase" style='font-size: 13px;'>Total Customer</h6>
-                    <h2 class="mb-0"><?php echo $row['total_customers']; ?></h2>
-                  </div>
+        <div class="col-md-3">
+            <div class="box" style="height: 115px;">
+              <span class="info-box-icon bg-green" style="height: 115px;"><i class="fa fa-users" style="margin-top: 30px"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14.1px;">Total Customers</span>
+                  <br> 
+                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_customers']?></span>
                 </div>
-              </div>
+            </div>
+        </div>
 
-          <?php } ?>
+      <?php } ?>
 
-           <?php
+       
+
+      <?php
         $q = "SELECT COUNT(id) as total_stocks FROM stock WHERE stock_status = 'In Stock'";
         $r = mysqli_query($link,$q);
 
         while($row = mysqli_fetch_assoc($r)){
        ?> 
-          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div class="box box-block bg-white tile tile-4 mb-2">
-                  <div class="fa fa-cubes t-icon bg-danger"></div>
-                  <div class="t-content text-right">
-                    <h6 class="text-uppercase" style='font-size: 13px;'>Total Items In-Stock</h6>
-                    <h2 class="mb-0"><?php echo $row['total_stocks']; ?></h2>
-                  </div>
+          <div class="col-md-3">
+            <div class="box" style="height: 115px;">
+              <span class="info-box-icon bg-red" style="height: 115px;"><i class="fa fa-cubes" style="margin-top: 30px;"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14.1px;">Total Items<br>In-Stock</span>
+                  
+                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_stocks']?></span>
                 </div>
-              </div>
+            </div>
+          </div>
 
-          <?php } ?>
+      <?php } ?>
 
 
-           <?php
+      <?php
         $q = "SELECT COUNT(id) as total_suppliers FROM supplier";
         $r = mysqli_query($link,$q);
 
         while($row = mysqli_fetch_assoc($r)){
-       ?> 
-          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div class="box box-block bg-white tile tile-4 mb-2">
-                  <div class="fa fa-id-card-o t-icon bg-warning"></div>
-                  <div class="t-content text-right">
-                    <h6 class="text-uppercase" style='font-size: 13px;'>Total Suppliers</h6>
-                    <h2 class="mb-0"><?php echo $row['total_suppliers']; ?></h2>
-                  </div>
+      ?> 
+        <div class="col-md-3">
+            <div class="box" style="height: 115px;">
+              <span class="info-box-icon bg-yellow" style="height: 115px;"><i class="fa fa-id-card-o" style="margin-top: 30px;"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14.1px;">Total Suppliers</span>
+                  <br>
+                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_suppliers']?></span>
                 </div>
-              </div>
+            </div>
+        </div>
 
-          <?php } ?>
+        <?php } ?>
 
 
            <?php
@@ -134,32 +188,44 @@ if (mysqli_num_rows($result) > 0) {
 
         while($row = mysqli_fetch_assoc($r)){
        ?> 
-          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div class="box box-block bg-white tile tile-4 mb-2">
-                  <div class="fa fa-dropbox t-icon bg-primary"></div>
-                  <div class="t-content text-right">
-                    <h6 class="text-uppercase" style='font-size: 13px;'>Total Warehouse</h6>
-                    <h2 class="mb-0"><?php echo $row['total_warehouse']; ?></h2>
-                  </div>
+          <div class="col-md-3">
+            <div class="box" style="height: 115px;">
+              <span class="info-box-icon bg-blue" style="height: 115px;"><i class="fa fa-dropbox" style="margin-top: 30px;"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 13.8px;">Total Warehouse</span>
+                  <br>
+                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_warehouse']?></span>
                 </div>
-              </div>
+            </div>
+          </div>
 
           <?php } ?>
 
+          <div class="col-lg-12">
+            <div class="box">
+              <div class="box-header">
+                <h4 class="box-title lead" style="margin-left: 5px; margin-top: 10px;">Quick Access:</h4>
+              </div>
+
+              <div class="box-content">
+                <button class="btn btn-info">asdasd</button>
+              </div>
+            </div>
+          </div>
+
         <div class="col-lg-6">
             <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title" >UNPAID INVOICE</h3>
+              <div class="box-header">
+                <h3 class="box-title lead" style="margin-left: 5px; margin-top: 10px;">UNPAID INVOICES</h3>
                   <a href="si-credits.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-bars"></i>
+                    <i class="fa fa-bars" title="Manage Invoice" data-toggle='tooltip'></i>
                   </a>
                   <a href="si-generate.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-plus"></i>
-                  </a> 
+                    <i class="fa fa-plus" title="Add Invoice" data-toggle="tooltip"></i>
+                  </a>
               </div>
-        
-              <div class="box-body">
-                <table class="table table-responsive table-striped table-bordered">
+                <br>
+                <table class="table table-responsive table-striped">
                   <thead>
                   <tr>
                     <th>No</th>
@@ -182,7 +248,7 @@ if (mysqli_num_rows($result) > 0) {
                       echo "<tr>
                               <td>".$ctr."</td>
                               <td>".$row['firstName']."&nbsp;".$row['lastName']."</td>
-                              <td class='text-center text-danger' style='font-weight:bold; font-size:15px;'>UNPAID</td>
+                              <td class='text-center text-danger' style='font-weight: 550; font-size: 15px;'>UNPAID</td>
                               <td>".$row['created_at']."</td>
                             </tr>
                       ";
@@ -193,22 +259,20 @@ if (mysqli_num_rows($result) > 0) {
 
                   ?>
                       </tbody>
-                </table>
-            </div>      
+                </table>      
       </div>
       <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title">RECENT CATEGORY</h3>
+              <div class="box-header">
+                <h3 class='box-title lead' style="margin-left: 5px; margin-top: 10px;">RECENT CATEGORY</h3>
                 <a href="category-manage.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-bars"></i>
+                    <i class="fa fa-bars" title="Manage Category" data-toggle="tooltip"></i>
                   </a>
                   <a href="category-add.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa fa-plus" title="Add Category" data-toggle='tooltip'></i>
                   </a> 
               </div>
-            
-              <div class="box-body">
-                <table class="table table-striped table-responsive table-bordered">
+                <br>
+                <table class="table table-striped table-responsive">
                   <thead>
                   <tr>
                     <th>No</th>
@@ -242,7 +306,7 @@ if (mysqli_num_rows($result) > 0) {
                   ?>
                   </tbody>
                 </table>
-            </div>      
+                  
       </div>
      
             
@@ -250,18 +314,17 @@ if (mysqli_num_rows($result) > 0) {
 
     <div class="col-lg-6">
       <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title">RECENT CUSTOMERS</h3>
+              <div class="box-header">
+                <h3 class="box-title lead" style="margin-left: 5px; margin-top: 10px;">RECENT CUSTOMERS</h3>
                 <a href="customer-manage.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-bars"></i>
+                    <i class="fa fa-bars" title="Manage Customers" data-toggle="tooltip"></i>
                   </a>
                   <a href="customer-add.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa fa-plus" title="Add Customer" data-toggle="tooltip"></i>
                   </a> 
               </div>
-          
-              <div class="box-body">
-                <table class="table table-responsive table-striped table-bordered">
+              <br>
+               <table class="table table-responsive table-striped">
                   <thead>
                   <tr>
                     <th>No</th>
@@ -295,22 +358,21 @@ if (mysqli_num_rows($result) > 0) {
                   ?>
                       </tbody>
                 </table>
-            </div>      
+                  
       </div>
             
       <div class="box">
               <div class="box-header">
-                <h3 class="box-title">RECENT SUB-CATEGORY</h3>
+                <h3 class="box-title lead" style="margin-left: 5px; margin-top: 10px;">RECENT SUB CATEGORY</h3>
                 <a href="category-sub-manage.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-bars"></i>
+                    <i class="fa fa-bars" title="Manage Sub Categories" data-toggle="tooltip"></i>
                   </a>
                   <a href="category-sub-add.php" class="btn btn-tool btn-sm pull-right">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa fa-plus" title="Add Sub Categories" data-toggle='tooltip'></i>
                   </a> 
               </div>
-              <div style="border-bottom: solid 1px #F6F5F6"></div>
-              <div class="box-body">
-                <table class="table table-responsive table-striped table-bordered">
+              <br>
+                <table class="table table-responsive table-striped">
                   <thead>
                   <tr>
                     <th>No</th>
@@ -346,7 +408,6 @@ if (mysqli_num_rows($result) > 0) {
                   ?>
                   </tbody>
                 </table>
-            </div>      
       </div>
     </div>
     </div>

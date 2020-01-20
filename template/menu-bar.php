@@ -21,7 +21,7 @@
           <li class="dropdown user user-menu">
 
           </li>
-
+          
           <li class="dropdown user user-menu">
             <a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default">
               <span class="hidden-xs">Log out</span>

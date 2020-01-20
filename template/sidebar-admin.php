@@ -133,7 +133,16 @@
                             </ul>
                         </li>
 
-                        <li><a href="reports.php"><i class="fa fa-pie-chart"></i> <span>Reports</span></a>
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-pie-chart"></i> <span>Reports</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+
+                            <ul class="treeview-menu">
+                                <li><a href='sales-ledger.php'>Sales Ledger</a></li>
+                            </ul>   
                         </li>
 
                         <li><a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default"><i class="fa fa-close"></i> <span>Logout</span></a>
