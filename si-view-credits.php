@@ -184,7 +184,7 @@ if (mysqli_num_rows($result) > 0) {
                     <div class="modal-body">
                       <form id="add-user" action="functions/insert_installment_payment.php" method="POST">
                         <div class="form-group">
-                          <input type="hidden" value="<?php echo $trans_id; ?>" name="txNum" id="txNum" class="form-control"/>
+                          <input type="text" value="<?php echo $trans_id; ?>" name="txNum" id="txNum" class="form-control"/>
                         </div>
                         <div class="form-group">
                           <p>Amount Paid:</p><input type="number" name="amount_paid" id="amount_paid" placeholder="0.00" class="form-control" required/>

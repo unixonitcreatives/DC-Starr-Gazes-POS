@@ -6,30 +6,30 @@
 
 require_once "config.php"; 
 
-//$custName = $_GET['so_cust'];
+// //$custName = $_GET['so_cust'];
 
-//$q = "SELECT * FROM customers";
-$q = "SELECT * FROM sales_order WHERE mop='Installment'";
-$r = mysqli_query($link,$q);
+// //$q = "SELECT * FROM customers";
+// $q = "SELECT * FROM sales_order WHERE mop='Installment'";
+// $r = mysqli_query($link,$q);
 
-while($row = mysqli_fetch_assoc($r)){
-  $custName = $row['so_cust'];
+// while($row = mysqli_fetch_assoc($r)){
+//   $custName = $row['so_cust'];
 
-}
-$query = "SELECT * FROM customers WHERE custID='$custName'";
-$result = mysqli_query($link, $query) or die(mysqli_error($link));
+// }
+// $query = "SELECT * FROM customers WHERE custID='$custName'";
+// $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-if (mysqli_num_rows($result) > 0) {
+// if (mysqli_num_rows($result) > 0) {
 
-  while ($row = mysqli_fetch_assoc($result)){
-    $firstname        = $row['firstName'];
-    $lastname         = $row['lastName'];
-    $custID           = $row['custID'];
-  }
-  //$num_rows = mysqli_num_rows($result);
-} else{
-  echo "<p class='lead'><em>No records were found.</em></p>";
-}
+//   while ($row = mysqli_fetch_assoc($result)){
+//     $firstname        = $row['firstName'];
+//     $lastname         = $row['lastName'];
+//     $custID           = $row['custID'];
+//   }
+//   //$num_rows = mysqli_num_rows($result);
+// } else{
+//   echo "<p class='lead'><em>No records were found.</em></p>";
+// }
 
 ?>
 
@@ -131,7 +131,7 @@ if (mysqli_num_rows($result) > 0) {
             <div class="box" style="height: 115px;">
               <span class="info-box-icon bg-green" style="height: 115px;"><i class="fa fa-users" style="margin-top: 30px"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14.1px;">Total Customers</span>
+                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14px;">Total Customers</span>
                   <br> 
                   <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_customers']?></span>
                 </div>
@@ -204,12 +204,20 @@ if (mysqli_num_rows($result) > 0) {
           <div class="col-lg-12">
             <div class="box">
               <div class="box-header">
-                <h4 class="box-title lead" style="margin-left: 5px; margin-top: 10px;">Quick Access:</h4>
+                <h4 class="box-title lead" style="margin-left: 5px; margin-top: 10px; font-size: 20px;">Quick Access:</h4>
               </div>
 
-              <div class="box-content">
-                <button class="btn btn-info">asdasd</button>
-              </div>
+                <div class="box-body">
+                
+                  <a href='si_generate.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;">Add Invoice</a>
+                  <a href='po_generate.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;">Add Purchase Order</a>
+                  <a href='warehouse-add.php' class="btn bg-primary" style="padding: 11px;font-size:15px;border-radius:7px;">Add Warehouse</a>
+                  <a href='customer-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;">Add Customer</a>
+                  <a href='supplier-add.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;">Add Supplier</a>
+                  <a href='product-model-add.php' class="btn bg-primary" style="padding: 11px;font-size:15px;border-radius:7px;">Add Product Model</a>
+                  <a href='category-add.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;">Add Category</a>
+                  <a href='category-sub-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;">Add Sub-Category</a>
+                </div>
             </div>
           </div>
 

@@ -90,21 +90,49 @@
                       <tbody>
                         <?php
                         // Include config file
-                        require_once 'config.php';
+                        include('config.php');
                         $start = $end = "";
 
-                        
+                          //$start = $_POST['start'];
+                          //$end = $_POST['end'];            
             
-                          $start = date("Y-m-d", $_POST['start']);
-                          $end = date("Y-m-d", $_POST['end']);
+                          //$ss = new DateTime($_POST['start']);
+                          //$start = $ss->format('Y-m-d H:i:s');
+
+                          //$ee = new DateTime($_POST['end']); 
+                          //$end = $ee->format('Y-m-d H:i:s');
+                          
+                          // $ss = time();
+                          // $ee = time();
+
+                          @$start = date('Y-m-d', strtotime($_POST['start']));
+                          @$end = date('Y-m-d', strtotime($_POST['end']));
                         
-                       
+                        //$start = date_timestamp_get($_POST['start']);
+                        //$end = date_timestamp_get($_POST['end']);
+
+                        //$start = date_parse_from_format('mmddyyyy', $_POST['start']);
+                        //$end = date_parse_from_format('mmddyyyy', $_POST['end']);
+
                         // Attempt select query execution
-                          if(!empty($start) && !empty($end)){
-                            $query = "SELECT customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_price,sales_order.txID,installment_history.ins_amount FROM customers 
-                          INNER JOIN sales_order ON customers.custID = sales_order.so_cust 
-                          INNER JOIN installment_history ON installment_history.ins_amount WHERE sales_order.created_at BETWEEN '$start' AND '$end' ORDER BY sales_order.created_at DESC";
-                          }
+                if(!empty($start) && !empty($end)){
+                  // $query = "SELECT * FROM sales_order 
+                  //   WHERE sales_order.created_at BETWEEN '$start' AND '$end'";
+                    $q = "SELECT * FROM installment_history";
+                    $r = mysqli_query($link,$q);
+                    $row = mysqli_fetch_assoc($r);
+                    if($row['ins_amount'] == ''){
+                    $query = "SELECT customers.custID,customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_cust,sales_order.so_price,sales_order.txID FROM customers
+                       INNER JOIN sales_order ON customers.custID = sales_order.so_cust 
+                       WHERE sales_order.created_at BETWEEN '$start' AND '$end' ORDER BY sales_order.created_at DESC";
+                    } else {
+                      $query = "SELECT customers.custID,customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_cust,sales_order.so_price,sales_order.txID FROM customers
+                       INNER JOIN sales_order ON customers.custID = sales_order.so_cust
+                       INNER JOIN installment_history ON installment_history.ins_amount 
+                       WHERE sales_order.created_at BETWEEN '$start' AND '$end' ORDER BY sales_order.created_at DESC";
+                    }
+                  
+                }
                           
                           
             
@@ -113,9 +141,15 @@
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
+
                             while($row = mysqli_fetch_assoc($result)){
+                               $q = "SELECT * FROM installment_history INNER JOIN sales_order WHERE installment_history.si_id = sales_order.txID";
+                               $r = mysqli_query($link,$q);
+                               $rw = mysqli_fetch_assoc($r);
+                               $ins = ''; 
                                $date = $row['created_at'];
                                $date = date('M d,Y', strtotime($date));
+                               $ins = $rw['ins_amount'];
 
                       
                               $ctr++;?>
@@ -124,8 +158,8 @@
                               <td><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['firstName']; echo '&nbsp;'; echo $row['lastName']; ?></td>
                               <td><?php echo $row['so_price']; ?></td>
-                              <td><?php echo $row['ins_amount']?></td>
-                              <td></td>
+                              <td><?php echo $ins; ?></td>
+                              <td><?php echo $row['so_price'] - $ins;?></td>
                               <td><?php echo $date; ?></td>
 
                             <?php }
