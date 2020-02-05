@@ -143,7 +143,7 @@
                             $ctr = 0;
 
                             while($row = mysqli_fetch_assoc($result)){
-                               $q = "SELECT * FROM installment_history INNER JOIN sales_order WHERE installment_history.si_id = sales_order.txID";
+                               $q = "SELECT * FROM installment_history INNER JOIN sales_order WHERE ";
                                $r = mysqli_query($link,$q);
                                $rw = mysqli_fetch_assoc($r);
                                $ins = ''; 
@@ -201,7 +201,7 @@
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(id);
     //var table_html = '<table><thead><tr><th>NO.</th><th>Sales Invoice ID</th><th>Customer Name</th><th>Total Amount</th><th>Paid Amount</th><th>Remaining</th><th>Date</th></tr></thead></table>';
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '');
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
     
     // Create download link element
     downloadLink = document.createElement("a");
