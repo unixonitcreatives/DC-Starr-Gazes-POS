@@ -141,7 +141,8 @@
                             </a>
 
                             <ul class="treeview-menu">
-                                <li><a href='sales-ledger.php'>Sales Ledger</a></li>
+                                <li><a href='sales-ledger.php'>Fully Paid Reports</a></li>
+                                <li><a href='installment-report.php'>Installment Reports</a></li>
                             </ul>   
                         </li>
 

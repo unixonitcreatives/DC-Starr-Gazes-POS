@@ -82,8 +82,8 @@
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Sales Invoice ID</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer Name</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Amount</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Paid Amount</th>
-                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Mode of Payment</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Paid Amount</th>
+                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Remaining Amount</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date</th>
                         </tr>
                       </thead>
@@ -124,14 +124,15 @@
                     if($row['ins_amount'] == ''){
                     $query = "SELECT customers.custID,customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_cust,sales_order.mop,SUM(sales_order.so_price) AS total_price,sales_order.txID FROM customers
                        INNER JOIN sales_order ON customers.custID = sales_order.so_cust 
-                       WHERE sales_order.created_at BETWEEN '$start' AND '$end' GROUP BY sales_order.txID ORDER BY sales_order.created_at DESC";
+                       WHERE sales_order.mop='Installment' AND sales_order.created_at BETWEEN '$start' AND '$end' GROUP BY sales_order.txID ORDER BY sales_order.created_at DESC";
                     } else {
                       $query = "SELECT customers.custID,customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_cust,sales_order.mop,SUM(sales_order.so_price) AS total_price,sales_order.txID FROM customers
                        INNER JOIN sales_order ON customers.custID = sales_order.so_cust
                        INNER JOIN installment_history ON installment_history.ins_amount 
-                       WHERE sales_order.created_at BETWEEN '$start' AND '$end' GROUP BY sales_order.txID ORDER BY sales_order.created_at DESC";
+                       WHERE sales_order.mop='Installment' AND sales_order.created_at BETWEEN '$start' AND '$end'  GROUP BY sales_order.txID ORDER BY sales_order.created_at DESC";
                     }
-                  
+
+
                 }
                           
                           
@@ -151,15 +152,14 @@
                                // $date = date('M d,Y', strtotime($date));
                                $ins = $rw['ins_amount'];
 
-                      
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
                               <td><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['firstName']; echo '&nbsp;'; echo $row['lastName']; ?></td>
                               <td><?php echo $row['total_price']; ?></td>
-                              <td><?php echo $row['total_price']; ?></td>
-                              <td><?php echo $row['mop'];?></td>
+                              <td><?php echo $ins; ?></td>
+                              <td><?php echo $row['total_price']; - $ins;?></td>
                               <td><?php echo $row['created_at']; ?></td>
 
                             <?php }
