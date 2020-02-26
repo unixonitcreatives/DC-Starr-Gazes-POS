@@ -54,8 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     
                             
         if($result){
-        echo "<script>Notify('new user added succesfully','Success');</script>";
+//        echo "<script>Notify('new user added succesfully','Success');</script>";
         echo "<script>console.log('new user added');</script>";
+//        echo "<script>window.href='customer-manage.php'</script>";    
+            header("Location: customer-manage.php");
         }else{
         //If execution failed
 
@@ -134,7 +136,7 @@ function test_input($data) {
 
                 <div class="form-group">
                   <label>Phone</label>
-                  <input type="text" class="form-control" id="" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' name="contact" data-mask>
+                  <input type="text" class="form-control" id="" placeholder="Phone" name="contact" data-mask>
                 </div>
 
                 <div class="form-group">

@@ -175,9 +175,9 @@ function test_input($data) {
                               <td><span data-toggle='tooltip' title=''><?php echo $row['product_category'];?></span></td>
                               <td><span data-toggle='tooltip' title=''><?php echo $row['product_sub_category'];?></span></td>
                               <td><?php echo $row['product_supplier'];?></td>
-                              <td><?php echo  number_format($row['supplier_price'],2);?></td>
-                              <td><?php echo  number_format($row['sell_price'],2);?></td>
-                              <td><?php echo  number_format($row['suggested_retail_price'],2);?></td>
+                              <td><?php echo  $row['supplier_price'];?></td>
+                              <td><?php echo  $row['sell_price'];?></td>
+                              <td><?php echo  $row['suggested_retail_price'];?></td>
                               <td><?php echo $row['product_detail'];?></td>
                               <td>
                               <a href='product-model-update.php?id=<?php echo $row['id'];?>' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
