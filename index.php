@@ -59,6 +59,9 @@ require_once "config.php";
       </h1>
     </section>
     <style type="text/css">
+        html{
+            height: auto;
+        }    
 
       td {
       text-align: center;
