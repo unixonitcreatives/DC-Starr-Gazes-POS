@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     if($result){
                                     echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
-                                    echo "<script>window.location('po-manage.php');</script>";
+                                    header('Location: po-manage.php');
                                     }else{
                                       //If execution failed
                                       $alertMessage = "<div class='alert alert-danger' role='alert'>
