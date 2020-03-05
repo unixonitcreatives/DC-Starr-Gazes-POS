@@ -78,7 +78,7 @@
 
                       <thead>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">NO.</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">NO</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Sales Invoice ID</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer Name</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Amount</th>
@@ -201,7 +201,7 @@
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(id);
     //var table_html = '<table><thead><tr><th>NO.</th><th>Sales Invoice ID</th><th>Customer Name</th><th>Total Amount</th><th>Paid Amount</th><th>Remaining</th><th>Date</th></tr></thead></table>';
-    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    var tableHTML = tableSelect.outerHTML;
     
     // Create download link element
     downloadLink = document.createElement("a");
@@ -215,7 +215,7 @@
         navigator.msSaveOrOpenBlob( blob );
     }else{
         // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ',' + tableHTML;
+        downloadLink.href = 'data:' + dataType + ',' + encodeURIComponent(tableHTML);
     
         //triggering the function
         downloadLink.click();

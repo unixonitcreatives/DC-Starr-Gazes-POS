@@ -73,21 +73,23 @@
         <!-- ======================== MAIN CONTENT ======================= -->
         <?php echo $alertMessage; ?>
         <!-- Main content -->
-        <section class="content">
-          <div class="col-md-12">
+        <section class="content">    
             <!-- general form elements -->
             <div class="box box-default">
-           
-               
                 <!-- <br><a href="po-generate.php" class="text-center">+ generate new PO</a> -->
     
               <div class="box-body">
-                
+                <button type="button" class="btn btn-primary pull-right" id='export' onclick="ExportToExcel()">Export To Excel</button>
+                  <br><br>
                  <div id="tb-w">
+                     
                 <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                  <button type="button" class="btn btn-primary pull-right" id='export' onclick="ExportToExcel()">Export To Excel</button>
+                  
+                    
                   <thead id="headers">
+                      
                     <tr>
+                        
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SC No.</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO No.</th>
@@ -157,9 +159,10 @@
                             echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
 
                             echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                              
 
                           } else {
-
+                             
                           }
 
                           echo "</td>";
@@ -180,7 +183,7 @@
                   </tbody>
                 </table>
                 </div>
-              </div>
+             
             </div>
           </div>
         </section>
@@ -237,8 +240,22 @@ function ExportToExcel(){
        var htmltable= document.getElementById('example1');
        var table_html = '<table><thead><tr><th>NO.</th><th>SC No.</th><th>PO NO.</th><th>SKU</th><th>Warehouse</th><th>Status</th><th>Expiry Date</th><th>Approved by</th></tr></thead></table>';
        var html = table_html + htmltable.outerHTML;
+    
+     downloadLink = document.createElement("a");
 
-       window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+       //window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+     if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob([html], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob );
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+    
+        //triggering the function
+        downloadLink.click();
+}
 
 
     }
