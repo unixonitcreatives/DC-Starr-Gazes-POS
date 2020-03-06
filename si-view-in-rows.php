@@ -196,12 +196,12 @@ if (mysqli_num_rows($result) > 0) {
 
                 <?php
                 require_once "config.php";
-                $query = "SELECT SUM(so_price)as totalPrice, SUM(discount) as Discount  from sales_order WHERE txID = '$SI'";
+                $query = "SELECT SUM(so_price)as totalPrice, discount  from sales_order WHERE txID = '$SI'";
                 $result = mysqli_query($link, $query) or die(mysqli_error($link));
                 if (mysqli_num_rows($result) > 0) {
                   while ($row = mysqli_fetch_assoc($result)){
 
-                    $gDiscount = $row['Discount'];
+                    $gDiscount = $row['discount'];
                     $Total = $row['totalPrice'];
 
                   }

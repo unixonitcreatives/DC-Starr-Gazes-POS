@@ -78,8 +78,8 @@
 
 
                 <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" class="form-control" id="username_ID" name="username_ID" value=<?php echo $_SESSION['username']; ?> disabled>
+                  <!--<label>Username</label>-->
+                  <input type="hidden" class="form-control" id="username_ID" name="username_ID" value=<?php echo $_SESSION['username']; ?> readonly>
                 </div>
 
 
@@ -191,7 +191,7 @@ $gTotal = $row['totalAmount'];
 
 <div class="box-footer">
 
-<input type="text" class="my-input" id="my-putin" autofocus /><!--  style="width:0px;top:-100000px;height:0px;position:absolute;" /> -->
+<input type="hidden" class="my-input" id="my-putin" autofocus /><!--  style="width:0px;top:-100000px;height:0px;position:absolute;" /> -->
 
 <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product Manually</a>
 <a class="btn btn-success" data-toggle="modal" data-target="#modal-checkout" >Check out</a>
