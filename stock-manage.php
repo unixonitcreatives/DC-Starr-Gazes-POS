@@ -238,7 +238,7 @@
 function ExportToExcel(){
        var downloadLink;
        var htmltable= document.getElementById('example1');
-       var table_html = '<table><thead><tr><th>NO.</th><th>SC No.</th><th>PO NO.</th><th>SKU</th><th>Warehouse</th><th>Status</th><th>Expiry Date</th><th>Approved by</th></tr></thead></table>';
+       var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
        var html = table_html + htmltable.outerHTML;
     
      downloadLink = document.createElement("a");
