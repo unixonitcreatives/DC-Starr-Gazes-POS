@@ -11,6 +11,8 @@
 <!-- ================================================================ -->
 <?php
 // Define variables and initialize with empty values
+$status="";
+
 
 require_once "config.php";
 
@@ -56,6 +58,42 @@ if (mysqli_num_rows($result) > 0) {
 
 
 ?>
+
+
+
+
+<?php //void query
+
+//select stock_id in sales order table
+$selectSOquery = "SELECT * from sales_order WHERE txID ='$trans_id' ";
+$SOresult = mysqli_query($link, $selectSOquery) or die(mysqli_error($link));
+if (mysqli_num_rows($SOresult) > 0) {
+
+  while ($row = mysqli_fetch_assoc($SOresult)){
+      $stockID = $row['stock_ID'];
+      $status = $row['mop'];
+  }
+} 
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+  $scUpdateQuery =  "UPDATE stock SET stock_status = 'In Stock', qty = 1 WHERE custID = '$stockID' "; 
+  $scUpdateResult = mysqli_query($link, $scUpdateQuery) or die(mysqli_error($link));
+
+
+  if($scUpdateResult){
+
+    $soUpdateQuery = "UPDATE sales_order SET mop = 'Void' WHERE txID = '$trans_id' "; 
+    $s0UpdateResult = mysqli_query($link, $soUpdateQuery) or die(mysqli_error($link));
+
+    header("Location: si-manage.php");
+
+  }
+
+}
+
+?>
+
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -161,7 +199,7 @@ if (mysqli_num_rows($result) > 0) {
                 <tbody>
                   <?php
                   require_once "config.php";
-                  $query = "SELECT so_desc, so_qty, so_price as Price from sales_order WHERE txID = '$SI' ";
+                  $query = "SELECT stock_ID, so_desc, so_qty, so_price as Price from sales_order WHERE txID = '$SI' ";
                   $result = mysqli_query($link, $query) or die(mysqli_error($link));
                   if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)){
@@ -171,7 +209,7 @@ if (mysqli_num_rows($result) > 0) {
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
-                      //echo "<td>" . $row['stock_ID'] . "</td>";
+                      echo "<td>" . $row['stock_ID'] . "</td>";
                       echo "<td>" . $row['so_desc'] . "</td>";
                       echo "<td>" . $row['so_qty'] . "</td>";
 
@@ -237,9 +275,24 @@ if (mysqli_num_rows($result) > 0) {
   <!-- this row will not appear when printing -->
   <div class="row no-print">
     <div class="col-xs-12">
-        <form  method="POST"  class="pull-right" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
+        <form  method="POST"  class="pull-right" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
             <button onclick="Print()" target="_blank" class='btn btn-primary' name='Approved'> Print</button>
-            <button onclick="Print()" target="_blank" class='btn btn-secondary' name='Approved'> Void</button>
+
+            <?php 
+              if($mop == 'Void'){
+
+                echo "<button type='submit' class='btn btn-secondary' name='Void' disabled> Void</button>";
+
+              }else {
+
+                echo "<button type='submit' class='btn btn-secondary' name='Void'> Void</button>";
+
+              }
+
+            ?>
+            
+            
         </form>
 
         </div>

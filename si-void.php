@@ -72,7 +72,7 @@
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT txID, mop FROM sales_order WHERE so_status = 'Void' GROUP BY txID ORDER BY soID desc";
+                        $query = "SELECT txID, mop FROM sales_order WHERE mop = 'Void' GROUP BY txID ORDER BY soID desc";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
