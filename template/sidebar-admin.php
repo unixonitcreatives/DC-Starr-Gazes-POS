@@ -143,8 +143,6 @@
                             <ul class="treeview-menu">
                                 <li><a href='sales-ledger.php'>Fully Paid Reports</a></li>
                                 <li><a href='installment-report.php'>Installment Reports</a></li>
-                                <li><a href="void-report.php">Void Invoice Reports</a></li>
-                                <li><a href='stock-expired-report.php'>Expired Stocks Reports</a></li>
                             </ul>   
                         </li>
 
