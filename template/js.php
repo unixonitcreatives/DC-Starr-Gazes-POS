@@ -1,6 +1,5 @@
 
 
-
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -33,26 +32,19 @@
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-
 <!-- Sparkline -->
 <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 <!-- jvectormap  -->
 <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-
 <!-- ChartJS -->
 <script src="bower_components/chart.js/Chart.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard2.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
-
 <!-- Notify -->
+<script src="dist/js/notify.min.js"></script>
+
 
 <!-- =========================== PAGE SCRIPT ======================== -->
 
@@ -323,11 +315,6 @@ $(function() {
 </script>
 
 
-<!-- Notify -->
-<script src="dist/js/notify.js"></script>
-<!-- Notify -->
-<script src="dist/js/notify.min.js"></script>
-
 <script>
 //uppercase text box
 function upperCase(a){
@@ -367,5 +354,16 @@ function changetextbox()
     } else {
         document.getElementById("ref").disabled='';
     }
+}
+</script>
+
+
+<script>
+  //uppercase text box
+  function upperCaseF(a){
+    setTimeout(function(){
+        a.value = a.value.toUpperCase();
+
+    }, 1);
 }
 </script>
