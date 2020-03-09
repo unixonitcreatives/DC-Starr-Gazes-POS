@@ -61,14 +61,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Accounting";
     header('location: dashboard.php');
-
   }
+
   else
   {
     // Display an error message
     $alertError = "Invalid username & password combination";
   }
-
+   
   // Close connection
   mysqli_close($link);
 }
@@ -76,6 +76,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
 }
+
+function getRealIpAddr() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
+      $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
+      $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+  }
 
 function test_input($data) {
     $data = trim($data);

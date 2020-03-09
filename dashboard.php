@@ -42,7 +42,7 @@ require_once "config.php";
 <!-- ======================= CSS ================================= -->
 <?php include('template/css.php'); ?>
 </head>
-<body class="hold-transition skin-blue fixed sidebar-mini">
+<body class="hold-transition fixed sidebar-mini skin-blue">
 <div class="wrapper">
 
   <!-- ======================= MENU BAR =========================== -->

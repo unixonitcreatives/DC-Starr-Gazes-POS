@@ -77,14 +77,24 @@ if (mysqli_num_rows($SOresult) > 0) {
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-  $scUpdateQuery =  "UPDATE stock SET stock_status = 'In Stock', qty = 1 WHERE custID = '$stockID' "; 
-  $scUpdateResult = mysqli_query($link, $scUpdateQuery) or die(mysqli_error($link));
+  $soUpdateQuery = "UPDATE sales_order SET mop = 'Void' WHERE txID = '$trans_id' "; 
+  $s0UpdateResult = mysqli_query($link, $soUpdateQuery) or die(mysqli_error($link));
 
 
-  if($scUpdateResult){
+  if($s0UpdateResult){
+    $date_n = date('Y-m-d');
 
-    $soUpdateQuery = "UPDATE sales_order SET mop = 'Void' WHERE txID = '$trans_id' "; 
-    $s0UpdateResult = mysqli_query($link, $soUpdateQuery) or die(mysqli_error($link));
+    $up = "UPDATE void_so SET mop = 'Void', created_at = '$date_n' WHERE txID = '$trans_id'";
+    $rr = mysqli_query($link,$up);
+
+   /* $scUpdateQuery =  "UPDATE stock SET stock_status = 'In Stock', qty = 1 WHERE custID = '$stockID' "; 
+    $scUpdateResult = mysqli_query($link, $scUpdateQuery) or die(mysqli_error($link));
+
+    if($scUpdateResult){
+
+      return;
+
+    }*/
 
     header("Location: si-manage.php");
 
@@ -174,7 +184,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                 <b>Mode of Payment:</b>
                   <?php
-                  echo $mop;
+               
+
+                      if($status == "Cash") {
+                        echo "<div class='badge bg-green'>" . $mop . "</div>";
+                      } 
+
+                      else if($status == "Void") {
+                        echo "<div class='badge bg-red'>" . $mop . "</div>";
+                      }
+
+                      else if($status == "Installment") {
+                        echo "<div class='badge bg-orange'>" . $mop . "</div>";
+                      }
+                   
+                  
+                  
+
+                 
+                  
                   ?>
 
 
@@ -275,7 +303,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   <!-- this row will not appear when printing -->
   <div class="row no-print">
     <div class="col-xs-12">
-        <form  method="POST"  class="pull-right" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <form  method="POST"  class="pull-right" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?txID=<?php echo $trans_id; ?>">
 
             <button onclick="Print()" target="_blank" class='btn btn-primary' name='Approved'> Print</button>
 
