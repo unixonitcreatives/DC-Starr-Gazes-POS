@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Void Invoice Report<br>
+         Returns Report<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -52,12 +52,13 @@
           <!-- general form elements -->
           <div class="box box-default">
               <div class="box-header with-border">
-                <h3 class="box-title">Void Invoice Data</h3><br>
+                <h3 class="box-title">Returns Data</h3><br>
                 <a href="index.php" class="text-center">go to Dashboard</a>
-                   <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel('example2')">Export To Excel</button>
+                <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel('example2')">Export To Excel</button>
               </div>
+              
               <div class="box-body">
-               
+                
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="form" method="POST">
                       <h4>Date Range</h4>
                       <div class="row">
@@ -68,93 +69,86 @@
                               <input type="date" name="end" class="form-control">                                    
                             </div>                                    
                           </div>
-
-                          <div class="col-md-3">
+                          
+                          <div class="col-md-4">
                             <button type="submit" name="action" class="btn btn-primary">Search</button>
                           </div>
+                          
                       </div>
                     </form>
+                  
                   <br>
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 
-                      <thead>
+                      <thead id='head'>
                         <tr>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">NO</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Invoice NO.</th>    
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Product Description</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Quantity</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Status</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Price</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date of Purchase</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Transaction ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Item</th>
+                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Quantity</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Cashier</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Remarks</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         // Include config file
-                        include('config.php');
+                           // Include config file
+                        require_once 'config.php';
                         $start = $end = "";
 
-                          //$start = $_POST['start'];
-                          //$end = $_POST['end'];            
-            
-                          //$ss = new DateTime($_POST['start']);
-                          //$start = $ss->format('Y-m-d H:i:s');
-
-                          //$ee = new DateTime($_POST['end']); 
-                          //$end = $ee->format('Y-m-d H:i:s');
-                          
-                          // $ss = time();
-                          // $ee = time();
-
+             
                           @$start = date('Y-m-d', strtotime($_POST['start']));
                           @$end = date('Y-m-d', strtotime($_POST['end']));
+                          
+                        // Attempt select query execution
+             
+//                    $query = "SELECT returns.date_purchase,returns.qty,returns.trans_id,returns.remarks,customers.lastName,customers.firstName,users.username,returns.created_at FROM returns 
+//                    INNER JOIN customers ON returns.customer = customers.custID  
+//                    INNER JOIN product_model ON returns.item = product_model.product_description
+//                    INNER JOIN users ON returns.cashier = users.username WHERE returns.created_at BETWEEN '$start' AND '$end'";
                         
-                        //$start = date_timestamp_get($_POST['start']);
-                        //$end = date_timestamp_get($_POST['end']);
-
-                        //$start = date_parse_from_format('mmddyyyy', $_POST['start']);
-                        //$end = date_parse_from_format('mmddyyyy', $_POST['end']);
+                    $query = "SELECT * FROM returns WHERE created_at BETWEEN '$start' AND '$end'";    
 
                         // Attempt select query execution
-                if(!empty($start) && !empty($end)){
-                  // $query = "SELECT * FROM sales_order 
-                  //   WHERE sales_order.created_at BETWEEN '$start' AND '$end'";
-//                    $q = "SELECT * FROM sales_order";
-//                    $r = mysqli_query($link,$q);
-//                    $row = mysqli_fetch_assoc($r);
-                    
-//                    $query = "SELECT void_so.txID,void_so.stock_ID,void_so.so_qty,void_so.mop,void_so.so_price FROM void_so 
-//                    INNER JOIN product_model ON product_model.product_description 
-//                    WHERE mop='Void' AND void_so.created_at BETWEEN '$start' AND '$end' ORDER BY void_so.created_at DESC";
-                    
-                    $query = "SELECT product_model.product_description,void_so.txID,void_so.stock_ID,void_so.so_qty,void_so.mop,void_so.so_price,void_so.created_at FROM void_so INNER JOIN stock ON void_so.stock_ID = stock.custID INNER JOIN product_model ON stock.PO_ID = product_model.product_SKU WHERE void_so.mop='Void' AND void_so.created_at BETWEEN '$start' AND '$end' ORDER BY void_so.created_at DESC";
-                }
-                          
-                 
+                       
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
-
-                            while($row = mysqli_fetch_assoc($result)){
-                              $ctr++;?>
-                              <tr>
-                              <td><?php echo $ctr; ?></td>
-                              <td><?php echo $row['txID']; ?></td>
-                              <td><?php echo $row['product_description']; ?></td>
-                              <td><?php echo $row['so_qty']; ?></td>
-                              <td><?php echo $row['mop']; ?></td>
-                              <td><?php echo $row['so_price']; ?></td>
-                            <?php }
+                            while($row = mysqli_fetch_assoc($result)){ 
+                              //$id = $row['custID'];
+                              $ctr++;
+                              echo "<tr>";
+                              echo "<td>" . $ctr . "</td>";
+                              echo "<td>" . $row['date_purchase'] . "</td>";
+                              echo "<td>" . $row['trans_id'] ."</td>";
+                              echo "<td>" . $row['customer'] . "</td>";
+                              echo "<td>" . $row['item'] . "</td>";
+                              echo "<td>" . $row['qty'] . "</td>";
+                              echo "<td>" . $row['cashier'] . "</td>";
+                              echo "<td>" . $row['remarks'] . "</td>";
+//                              echo "<td>";
+////                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+////                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+//                              echo "</td>";
+                              echo "</tr>";
+                            
                             // Free result set
-                            mysqli_free_result($result);
+                      
+                            }
+                                    mysqli_free_result($result);
+                          } else{
+                            echo "<p class='lead'><em>No records were found.</em></p>";
                           }
                         } else{
-                          echo "ERROR: Could not able to execute $query. " . mysqli_error($link);
+                          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                         }
 
                         // Close connection
-                        mysqli_close($link);
+    
                         ?>
-                        </tr>
                       </tbody>
                     </table>
               </div>
@@ -181,9 +175,8 @@
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(id);
-    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
-      
-    var tableHTML = table_html + tableSelect.outerHTML;
+    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
+    var tableHTML = tableSelect.outerHTML;
     
     // Create download link element
     downloadLink = document.createElement("a");

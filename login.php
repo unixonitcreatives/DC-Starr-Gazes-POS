@@ -62,6 +62,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $_SESSION["usertype"] = "Accounting";
     header('location: dashboard.php');
   }
+  else
+  if ($rows['usertype'] == 'Cashier') {
+    $_SESSION["loggedin"] = true;
+    $_SESSION["username"] = $username;
+    $_SESSION["usertype"] = "Cashier";
+    header('location: dashboard.php');
+  }
 
   else
   {

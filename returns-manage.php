@@ -113,58 +113,64 @@ function test_input($data) {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Manage Customer Accounts<br>
+         Manage Returns<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          <div class="col-md-12">
+       
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
-              <h3 class="box-title">Search for User Customer Information</h3>
-              <br><a href="customer-add.php" class="text-center">+ add new customer</a>
+              <h3 class="box-title">Search for Returns Information</h3>
+              <br><a href="returns-add.php" class="text-center">+ add new return</a>
             </div>
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                      <thead>
+            <div class="box-body" id='th'>
+              <button type="button" class="btn btn-primary pull-right" onclick="exportTb()">Export Excel</button>
+              <br><br>
+              <table id="example1" class="table table-bordered table-hover dataTable tb" role="grid" aria-describedby="example2_info">
+                
+                      <thead id='thead'>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">CS No.</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Last Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">First Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Contact</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Address</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Time Created</th>
-                          <th>Action</th>
+                          <th>No.</th>
+                          <th>Date of Purchase</th>
+                          <th>Transaction ID</th>
+                          <th>Customer</th>
+                          <th>Item</th>
+                          <th>Quantity</th>
+                          <th>Cashier</th>
+                          <th>Remarks</th>
                         </tr>
                       </thead>
+                  
                       <tbody>
                         <?php
                         // Include config file
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM customers ORDER BY custID, lastName, firstName asc";
+                        $query = "SELECT * FROM returns";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
-                            while($row = mysqli_fetch_array($result)){
+                            while($row = mysqli_fetch_assoc($result)){
+                              //$id = $row['custID'];
                               $ctr++;
                               echo "<tr>";
                               echo "<td>" . $ctr . "</td>";
-                              echo "<td>" . $row['custID'] . "</td>";
-                              echo "<td>" . $row['lastName'] . "</td>";
-                              echo "<td>" . $row['firstName'] . "</td>";
-                              echo "<td>" . $row['contact'] . "</td>";
-                              echo "<td>" . $row['address'] . "</td>";
-                              echo "<td>" . $row['created_at'] . "</td>";
-                              echo "<td>";
-                              echo "<a href='customer-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                              echo "</td>";
+                              echo "<td>" . $row['date_purchase'] . "</td>";
+                              echo "<td>" . $row['trans_id'] ."</td>";
+                              echo "<td>" . $row['customer'] . "</td>";
+                              echo "<td>" . $row['item'] . "</td>";
+                              echo "<td>" . $row['qty'] . "</td>";
+                              echo "<td>" . $row['cashier'] . "</td>";
+                              echo "<td>" . $row['remarks'] . "</td>";
+//                              echo "<td>";
+////                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+////                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+//                              echo "</td>";
                               echo "</tr>";
                             }
                             // Free result set
@@ -183,10 +189,12 @@ function test_input($data) {
                     </table>
             </div>
           </div>
-      </div>
+     
     </section>
   <!-- /.content-wrapper -->
+    </div>
 </div>
+    
 
 
 <!-- =========================== FOOTER =========================== -->
@@ -198,6 +206,42 @@ function test_input($data) {
 <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
 
+<script type="text/javascript">
+// function ExportToExcel(tableID){
+//        var htmltable= document.getElementById(tableID);
+//        var html = htmltable.outerHTML;
+//        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+//     }
+
+function exportTb(){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById('example1');
+    var table_html = '<table><thead><tr><th>NO.</th><th>User ID</th><th>Username</th><th>Usertype</th><th>Created &nbsp; At</th></tr></thead></table>';
+    var tableHTML = table_html + tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    //document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob([tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob );
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ',' + tableHTML;
+    
+        //triggering the function
+        downloadLink.click();
+}
+
+}
+
+
+</script>
 
 
 

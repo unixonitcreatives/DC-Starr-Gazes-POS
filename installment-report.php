@@ -200,8 +200,8 @@
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(id);
-    //var table_html = '<table><thead><tr><th>NO.</th><th>Sales Invoice ID</th><th>Customer Name</th><th>Total Amount</th><th>Paid Amount</th><th>Remaining</th><th>Date</th></tr></thead></table>';
-    var tableHTML = tableSelect.outerHTML;
+    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
+    var tableHTML = table_html + tableSelect.outerHTML;
     
     // Create download link element
     downloadLink = document.createElement("a");

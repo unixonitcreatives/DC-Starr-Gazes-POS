@@ -84,6 +84,8 @@ require_once "config.php";
 
       <div class="row">
         
+          <div class='box' style="background-color: #fff; ">
+              <div class="box-body" style="border: none;">
       <?php
         $q = "SELECT COUNT(id) as total_customers FROM customers";
         $r = mysqli_query($link,$q);
@@ -163,6 +165,9 @@ require_once "config.php";
           </div>
 
           <?php } ?>
+                  </div>
+          </div>
+          
 
           <div class="col-lg-12">
             <div class="box">
@@ -174,10 +179,10 @@ require_once "config.php";
                 
                   <a href='si_generate.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;">Add Invoice</a>
                   <a href='po_generate.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;">Add Purchase Order</a>
-                  <a href='warehouse-add.php' class="btn bg-primary" style="padding: 11px;font-size:15px;border-radius:7px;">Add Warehouse</a>
+                  <a href='warehouse-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;">Add Warehouse</a>
                   <a href='customer-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;">Add Customer</a>
                   <a href='supplier-add.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;">Add Supplier</a>
-                  <a href='product-model-add.php' class="btn bg-primary" style="padding: 11px;font-size:15px;border-radius:7px;">Add Product Model</a>
+                  <a href='product-model-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;">Add Product Model</a>
                   <a href='category-add.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;">Add Category</a>
                   <a href='category-sub-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;">Add Sub-Category</a>
                 </div>
@@ -219,7 +224,7 @@ require_once "config.php";
                       echo "<tr>
                               <td>".$ctr."</td>
                               <td>".$row['firstName']."&nbsp;".$row['lastName']."</td>
-                              <td class='text-center text-danger' style='font-weight: 550; font-size: 15px;'>UNPAID</td>
+                              <td><div class='text-center badge bg-red' style='padding: 5px; font-size: 13px; '>UNPAID</div></td>
                               <td>".$row['created_at']."</td>
                             </tr>
                       ";
@@ -227,7 +232,7 @@ require_once "config.php";
                   } else{
                     echo "<p class='lead'><em>No records were found.</em></p>";
                   }
-
+//style='font-weight: 550; font-size: 15px;'
                   ?>
                       </tbody>
                 </table>      
@@ -385,6 +390,7 @@ require_once "config.php";
     </section>
   <!-- /.content-wrapper -->
 </div>
+    </div>
 
 
 <!-- =========================== FOOTER =========================== -->

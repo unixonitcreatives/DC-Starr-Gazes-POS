@@ -132,6 +132,18 @@
                                 <li><a href="user-manage.php">Manage Users</a></li>
                             </ul>
                         </li>
+          
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-id-card-o"></i> <span>Returns</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="returns-add.php">Add Returns</a></li>
+                                <li><a href="returns-manage.php">Manage Returns</a></li>
+                            </ul>
+                        </li>
 
                         <li class="treeview">
                             <a href="#"><i class="fa fa-pie-chart"></i> <span>Reports</span>
@@ -145,6 +157,8 @@
                                 <li><a href='installment-report.php'>Installment Reports</a></li>
                                 <li><a href="void-report.php">Void Invoices Reports</a></li>
                                 <li><a href='stock-expired-report.php'>Expired Stocks Reports</a></li>
+                                <li><a href='return-reports.php'>Returns Reports</a></li>
+                                <li><a href='void-report.php'>Void Reports</a></li>
                             </ul>   
                         </li>
 

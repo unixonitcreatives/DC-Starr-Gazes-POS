@@ -144,7 +144,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           </div>
           <!-- info row -->
           <div class="row invoice-info">
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-3 invoice-col">
 
               <address>To:
                 <strong>
@@ -158,15 +158,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               </address>
             </div>
             <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-3 invoice-col">
 
               <address>From:
                 <strong>DC Starr Gasez</strong><br>
                 Cavite City, Cavite
               </address>
             </div>
+              
+            <div class="col-sm-3 invoice-col">
+              <address>Cashier:
+                  <?php
+                  
+                  
+                  $qq = "SELECT * FROM sales_order WHERE txID='$trans_id'";
+                  $rr = mysqli_query($link,$qq);
+                  
+                  while( $row = mysqli_fetch_assoc($rr) ){
+                  
+                  ?>
+                <strong><?php echo $row['created_by']; ?></strong>
+                  
+                <?php } ?>
+              </address>
+            </div>
             <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
+            <div class="col-sm-3 invoice-col">
 
                 <b>Invoice &nbsp;</b>#
                   <?php
@@ -198,11 +215,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         echo "<div class='badge bg-orange'>" . $mop . "</div>";
                       }
                    
-                  
-                  
-
-                 
-                  
                   ?>
 
 
@@ -218,6 +230,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>Stock ID</th>
                     <th>Product Description</th>
                     <th>qty</th>
                     <th class='pull-right'>Total Price</th>

@@ -54,9 +54,10 @@
               <div class="box-header with-border">
                 <h3 class="box-title">Sales Ledger Data</h3><br>
                 <a href="index.php" class="text-center">go to Dashboard</a>
+                    <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel('example2')">Export To Excel</button>
               </div>
               <div class="box-body">
-                <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel('example2')">Export To Excel</button>
+              
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="form" method="POST">
                       <h4>Date Range</h4>
                       <div class="row">
@@ -200,7 +201,8 @@
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(id);
-    var tableHTML = tableSelect.outerHTML;
+    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
+    var tableHTML = table_html + tableSelect.outerHTML;
     
     // Create download link element
     downloadLink = document.createElement("a");
