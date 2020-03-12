@@ -144,7 +144,10 @@ if (mysqli_num_rows($result) > 0) {
                   <td align="right" width="15%">Action:</td>
                   <td>
                     <?php
-                    if($amountPaid >= $gTotal) {
+                    if($amountPaid == $gTotal) {
+                        
+                        
+                        
                        echo "
                       <form action='#' method='POST'>
                       <button type='button' class='btn btn-primary disabled'>Update Payment</button>
@@ -209,6 +212,7 @@ if (mysqli_num_rows($result) > 0) {
                           </div>
                         </div>
                       </div>
+                      
 
                       <div class="modal-footer">
                         <button type="button" class="update btn btn-primary" name="paymentBtn" id="action">Submit</a>
@@ -285,6 +289,9 @@ if (mysqli_num_rows($result) > 0) {
             event.preventDefault();
             location.reload();
           });
+            
+          
+            
 
           $('#action').click( function(){
             var form = $('#add-user');

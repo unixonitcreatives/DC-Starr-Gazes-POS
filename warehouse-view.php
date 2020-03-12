@@ -36,6 +36,7 @@
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
+        <div class="row">
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
@@ -48,8 +49,8 @@
               //echo $warehouse_name[''];
 
               ?> </h3>
-              <br><a href="warehouse-manage.php" class="text-center">Warehouse Menu</a>,
-              <a href="warehouse-view-distinct.php?WHid="<?php echo $_GET['WHid']; ?>" class="text-center">Distinct Mode</a>
+              <br><a href="warehouse-manage.php" class="text-center">Warehouse Menu</a>
+              <!--<a href="warehouse-view-distinct.php?WHid="<?php //echo $_GET['WHid']; ?>" class="text-center">Distinct Mode</a>-->
             </div>
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover dataTable">
@@ -64,7 +65,7 @@
                           <th>Status</th>
                           <th>Approved By</th>
 
-                          <th>Action</th>
+<!--                          <th>Action</th>-->
                         </tr>
                       </thead>
                       <tbody>
@@ -98,31 +99,31 @@
 
                               echo "<td>" . $row['approved_by']." on ". $row['created_at'] . "</td>";
                               echo "<td>";
-
-                              if($row['stock_status']=="In Stock"){
-                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-
-                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
-
-                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
-
-                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-
-                              } elseif ($row['stock_status']=="Sold"){
-                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-
-                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
-
-                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
-
-                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-
-                              } elseif ($row['stock_status']=="Void"){
-
-
-                              } else {
-
-                              }
+//
+//                              if($row['stock_status']=="In Stock"){
+//                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+//
+//                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
+//
+//                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
+//
+//                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+//
+//                              } elseif ($row['stock_status']=="Sold"){
+//                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
+//
+//                                echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
+//
+//                                echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
+//
+//                                echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+//
+//                              } elseif ($row['stock_status']=="Void"){
+//
+//
+//                              } else {
+//
+//                              }
 
                               echo "</td>";
                               echo "</tr>";
@@ -144,6 +145,7 @@
             </div>
           </div>
       </div>
+        </div>
     </section>
   <!-- /.content-wrapper -->
 </div>

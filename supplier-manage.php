@@ -44,16 +44,19 @@ require_once "config.php";
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <?php
-    if(isset($_GET['alert']) == "success"){
+      
+    if(@$_GET['alert'] == "success"){
       $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
-    }else if(isset($_GET['alert']) == "deletesuccess"){
-      $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
-    }else if(isset($_GET['alert']) == "addsuccess"){
+    }else if(@$_GET['alert'] == "deletesuccess"){
+      $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";
+      //echo "<script>window.location.href='supplier-manage.php'</script>";
+    }else if(@$_GET['alert'] == "addsuccess"){
       $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
     }
      ?>
-     <?php echo $alertMessage; ?>
+    
     <section class="content">
+         <?php echo $alertMessage; ?>
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">

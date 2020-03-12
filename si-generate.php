@@ -29,7 +29,7 @@
     <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-
+<div class="row">
       <div class="col-md-12">
         <!-- general form elements -->
         <div class="box box-default">
@@ -191,7 +191,7 @@ $gTotal = $row['totalAmount'];
 
 <div class="box-footer">
 
-<input type="hidden" class="my-input" id="my-putin" autofocus /><!--  style="width:0px;top:-100000px;height:0px;position:absolute;" /> -->
+<input type="text" class="my-input" id="my-putin" autofocus /><!--  style="width:0px;top:-100000px;height:0px;position:absolute;" /> -->
 
 <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add-product" >Add Product Manually</a>
 <a class="btn btn-success" data-toggle="modal" data-target="#modal-checkout" >Check out</a>
@@ -203,7 +203,7 @@ $gTotal = $row['totalAmount'];
 
 
 </div>
-
+</div>
 </section>
 <!-- /.content-wrapper -->
 </div>

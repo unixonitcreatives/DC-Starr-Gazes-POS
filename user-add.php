@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $username = test_input($_POST['username']);
     $password = test_input($_POST['password']);
     $usertype = test_input($_POST['usertype']);
-
+    $hash = password_hash($password, PASSWORD_DEFAULT);
 
 
     // Validate password
@@ -50,7 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     //Try another username pop up
                                     echo "<script>$.notify('Username already exist','success');</script>";
                                     echo "<script>console.log('Username already exist');</script>";
-                                    mysqli_free_result($result);
+                                    echo "<script>alert('Username already exist');</script>";
+                                    //mysqli_free_result($result);
                                  } else{
                                     //If the username doesnt exist in the database
                                     //Proceed adding to database
@@ -74,7 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     
                                     
                                     if($result){
-                                    echo "<script>Notify('new user added succesfully','Success');</script>";
+                                   header('Location: user-manage.php?alert=addsuccess');
+                                        //echo "<script>Notify('new user added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
                                     }else{
                                       //If execution failed
@@ -82,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                       $alertMessage = "<div class='alert alert-danger' role='alert'>
                                       Error adding data.
                                       </div>";}
-                                      mysqli_close($link);
+                                   
                                  }
                              } else{
                                  echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
@@ -130,7 +132,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          
+          <div class="row">
           <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
@@ -172,9 +174,11 @@ function test_input($data) {
 
 
         </div>
+        </div>
     </section>
   <!-- /.content-wrapper -->
-</div>
+    </div>
+
 
 
 <!-- =========================== FOOTER =========================== -->

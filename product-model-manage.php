@@ -119,17 +119,18 @@ function test_input($data) {
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
   <?php
-  if(isset($_GET['alert']) == "updatesuccess"){
-    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
-  }else if(isset($_GET['alert']) == "deletesuccess"){
-    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
-  }else if(isset($_GET['alert']) == "addsuccess"){
-    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  if(@$_GET['alert'] == "updatesuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+        }else if(@$_GET['alert'] == "deletesuccess"){
+          $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";
+        }else if(@$_GET['alert'] == "addsuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
   }
    ?>
-   <?php echo $alertMessage; ?>
+ 
     <!-- Main content -->
     <section class="content">
+          <?php echo $alertMessage; ?>
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">

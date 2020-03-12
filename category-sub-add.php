@@ -138,7 +138,7 @@ function test_input($data) {
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
-                <?php echo $alertMessage ?></p>
+                <p><?php echo $alertMessage ?></p>
                 <div class="form-group">
                   <label>Sub-Category Name</label> <code class="text-orange">Max. 20 characters</code>
                   <input type="text" class="form-control" placeholder="Category" name="category" oninput="upperCase(this)" maxlength="20" required>
@@ -159,7 +159,7 @@ function test_input($data) {
 
                         while($row = mysqli_fetch_array($result)){
 
-                        echo "<option value='".$row['custID']."'>" . $row['category_name'] .  "</option>";
+                        echo "<option value='".$row['category_name']."'>" . $row['category_name'] .  "</option>";
                         }
 
                          // Free result set

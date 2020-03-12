@@ -155,7 +155,7 @@ function test_input($data) {
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
-                <?php echo $alertMessage ?></p>
+                <p><?php echo $alertMessage ?></p>
 
                 <div class="form-group">
                   <label>Product Description</label>

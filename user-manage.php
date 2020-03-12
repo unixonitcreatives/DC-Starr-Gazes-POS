@@ -91,6 +91,16 @@ function test_input($data) {
 }
 
 ?>
+
+<?php
+  if(@$_GET['alert'] == "updatesuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+        }else if(@$_GET['alert'] == "deletesuccess"){
+          $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";
+        }else if(@$_GET['alert'] == "addsuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  }
+   ?>
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -120,15 +130,18 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
+        <?php echo $alertMessage; ?>
+        <div class="row">
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
               <h3 class="box-title">Search for User Account Information</h3>
               <br><a href="user-add.php" class="text-center">+ add new user</a>
+                <button type="button" class="btn btn-primary pull-right" onclick="exportTb()">Export Excel</button>
             </div>
             <div class="box-body" id='th'>
-              <button type="button" class="btn btn-primary pull-right" onclick="exportTb()">Export Excel</button>
+              
               <br><br>
               <table id="example1" class="table table-bordered table-hover dataTable tb" role="grid" aria-describedby="example2_info">
                 
@@ -184,10 +197,13 @@ function test_input($data) {
                     
             </div>
           </div>
+              </div>
       </div>
     </section>
+    
   <!-- /.content-wrapper -->
 </div>
+    
 
 
 <!-- =========================== FOOTER =========================== -->
@@ -200,11 +216,6 @@ function test_input($data) {
       <?php include('template/js.php'); ?>
 
 <script type="text/javascript">
-// function ExportToExcel(tableID){
-//        var htmltable= document.getElementById(tableID);
-//        var html = htmltable.outerHTML;
-//        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
-//     }
 
 function exportTb(){
     var downloadLink;
@@ -235,8 +246,6 @@ function exportTb(){
 
 
 </script>
-
-
-
+   
 </body>
 </html>

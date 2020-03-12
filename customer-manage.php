@@ -91,6 +91,17 @@ function test_input($data) {
 }
 
 ?>
+
+<?php
+  if(@$_GET['alert'] == "updatesuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+        }else if(@$_GET['alert'] == "deletesuccess"){
+          $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";
+        }else if(@$_GET['alert'] == "addsuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  }
+   ?>
+
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -120,6 +131,8 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
+        <?php echo $alertMessage; ?>
+        <div class="row">
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
@@ -184,6 +197,8 @@ function test_input($data) {
             </div>
           </div>
       </div>
+            </div>
+    
     </section>
   <!-- /.content-wrapper -->
 </div>

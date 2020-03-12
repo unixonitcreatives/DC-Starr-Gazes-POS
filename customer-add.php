@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 //        echo "<script>Notify('new user added succesfully','Success');</script>";
         echo "<script>console.log('new user added');</script>";
 //        echo "<script>window.href='customer-manage.php'</script>";    
-            header("Location: customer-manage.php");
+            header("Location: customer-manage.php?alert=addsuccess");
         }else{
         //If execution failed
 
@@ -111,7 +111,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-          
+          <div class="row">
           <div class="col-md-6">
           <!-- general form elements -->
           <div class="box box-default">
@@ -123,7 +123,7 @@ function test_input($data) {
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
-                <?php echo $alertMessage ?></p>
+                <p><?php echo $alertMessage ?></p>
                 <div class="form-group">
                   <label>Last Name</label> <code class="text-orange">Max. 20 characters</code>
                   <input type="text" class="form-control" placeholder="Last Name" name="lastname" oninput="upperCase(this)" maxlength="20" required>
@@ -154,10 +154,12 @@ function test_input($data) {
             </form>
           </div>
           <!-- /.box -->
-
-
+            
         </div>
+              </div>
+    
     </section>
+    
   <!-- /.content-wrapper -->
 </div>
 

@@ -29,8 +29,8 @@ require_once "config.php";
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Welcome to DC Starr Gazes Dashboard<br>
-        <small>Insert Tagline, Contact Details or Important Details</small>
+         Welcome to DC Starr Gazes Dashboard!<br>
+        <!--<small>Insert Tagline, Contact Details or Important Details</small>-->
       </h1>
     </section>
     <style type="text/css">
@@ -83,7 +83,7 @@ require_once "config.php";
 
 
       <div class="row">
-        <div class="box-body col-lg-12" style='margin-bottom: -15px;'>
+        <div class="box-body col-lg-12">
       <?php
         $q = "SELECT COUNT(id) as total_customers FROM customers";
         $r = mysqli_query($link,$q);
@@ -161,8 +161,10 @@ require_once "config.php";
           </div>
 
           <?php } ?>
-            
        </div>
+        </div>
+          </div>
+            <div class="row">
 
           <div class="col-lg-12">
             <div class="box">
@@ -327,8 +329,7 @@ require_once "config.php";
 
                   ?>
                       </tbody>
-                </table>
-                  
+                </table> 
       </div>
             
       <div class="box">

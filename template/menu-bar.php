@@ -15,11 +15,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-
+        
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
-
+              <a href='#'>Hello, &nbsp; <?php echo $_SESSION['username']; ?></a>
           </li>
           
           <li class="dropdown user user-menu">

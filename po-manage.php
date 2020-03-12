@@ -145,6 +145,7 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
+        <div class="row">
           <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
@@ -258,8 +259,10 @@ function test_input($data) {
                     </table>
             </div>
           </div>
+              </div>
       </div>
     </section>
+    
   <!-- /.content-wrapper -->
 </div>
 

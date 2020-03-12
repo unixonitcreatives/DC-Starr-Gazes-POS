@@ -72,13 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                       $alertMessage = "<div class='alert alert-danger' role='alert'>
                                       Error adding data.
                                       </div>";}
-                                      mysqli_close($link);
+                                    
                                  }
                              } else{
                                  echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                              }
-
-                             mysqli_close($link);
 
         }
       }
@@ -88,6 +86,14 @@ function test_input($data) {
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
+}
+
+//$_GET['alert'] = "";
+
+if(@$_GET["alert"] == "success"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+} else if(@$_GET["alert"] == "deletesuccess"){
+    $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";  
 }
 
 ?>
@@ -120,16 +126,16 @@ function test_input($data) {
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-       
+       <?php echo $alertMessage; ?>
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
               <h3 class="box-title">Search for Returns Information</h3>
               <br><a href="returns-add.php" class="text-center">+ add new return</a>
+<!--                <button type="button" class="btn btn-primary pull-right" onclick="exportTb()">Export Excel</button>-->
             </div>
             <div class="box-body" id='th'>
-              <button type="button" class="btn btn-primary pull-right" onclick="exportTb()">Export Excel</button>
-              <br><br>
+              
               <table id="example1" class="table table-bordered table-hover dataTable tb" role="grid" aria-describedby="example2_info">
                 
                       <thead id='thead'>
@@ -143,6 +149,7 @@ function test_input($data) {
                           <th>Quantity</th>
                           <th>Cashier</th>
                           <th>Remarks</th>
+                          <th>Actions</th>
                         </tr>
                       </thead>
                   
@@ -169,8 +176,8 @@ function test_input($data) {
                               echo "<td>" . $row['qty'] . "</td>";
                               echo "<td>" . $row['cashier'] . "</td>";
                               echo "<td>" . $row['remarks'] . "</td>";
-//                              echo "<td>";
-////                              echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                              echo "<td>";
+                              echo "<a href='return-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 ////                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 //                              echo "</td>";
                               echo "</tr>";
@@ -195,7 +202,7 @@ function test_input($data) {
     </section>
   <!-- /.content-wrapper -->
     </div>
-</div>
+    </div>
     
 
 
@@ -219,8 +226,8 @@ function exportTb(){
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById('example1');
-    var table_html = '<table><thead><tr><th>NO.</th><th>User ID</th><th>Username</th><th>Usertype</th><th>Created &nbsp; At</th></tr></thead></table>';
-    var tableHTML = table_html + tableSelect.outerHTML.replace(/ /g, '%20');
+    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
+    var tableHTML = table_html + tableSelect.outerHTML;
     
     // Create download link element
     downloadLink = document.createElement("a");

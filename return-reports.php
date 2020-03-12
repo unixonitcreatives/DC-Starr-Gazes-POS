@@ -176,7 +176,7 @@
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(id);
     var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
-    var tableHTML = tableSelect.outerHTML;
+    var tableHTML = table_html + tableSelect.outerHTML;
     
     // Create download link element
     downloadLink = document.createElement("a");

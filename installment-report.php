@@ -118,20 +118,11 @@
                 if(!empty($start) && !empty($end)){
                   // $query = "SELECT * FROM sales_order 
                   //   WHERE sales_order.created_at BETWEEN '$start' AND '$end'";
-                    $q = "SELECT * FROM installment_history";
-                    $r = mysqli_query($link,$q);
-                    $row = mysqli_fetch_assoc($r);
-                    if($row['ins_amount'] == ''){
+              
                     $query = "SELECT customers.custID,customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_cust,sales_order.mop,SUM(sales_order.so_price) AS total_price,sales_order.txID FROM customers
                        INNER JOIN sales_order ON customers.custID = sales_order.so_cust 
                        WHERE sales_order.mop='Installment' AND sales_order.created_at BETWEEN '$start' AND '$end' GROUP BY sales_order.txID ORDER BY sales_order.created_at DESC";
-                    } else {
-                      $query = "SELECT customers.custID,customers.firstName,customers.lastName,sales_order.created_at,sales_order.so_cust,sales_order.mop,SUM(sales_order.so_price) AS total_price,sales_order.txID FROM customers
-                       INNER JOIN sales_order ON customers.custID = sales_order.so_cust
-                       INNER JOIN installment_history ON installment_history.ins_amount 
-                       WHERE sales_order.mop='Installment' AND sales_order.created_at BETWEEN '$start' AND '$end'  GROUP BY sales_order.txID ORDER BY sales_order.created_at DESC";
-                    }
-
+                  
 
                 }
                           
@@ -144,22 +135,30 @@
                             $ctr = 0;
 
                             while($row = mysqli_fetch_assoc($result)){
-                               $q = "SELECT * FROM installment_history";
+                               $q = "SELECT * FROM sales_order WHERE mop='Installment'";
                                $r = mysqli_query($link,$q);
                                $rw = mysqli_fetch_assoc($r);
+                               $rem = $rw['so_price'];    
+                                
+                               
+                                
+                               $qq = "SELECT * FROM installment_history";
+                               $rr = mysqli_query($link,$qq);    
+                               $r  = mysqli_fetch_assoc($rr);    
                                $ins = ''; 
                                // $date = $row['created_at'];
                                // $date = date('M d,Y', strtotime($date));
-                               $ins = $rw['ins_amount'];
-
+                               $ins = $r['ins_amount'];
+                               $remaining = $rem - $ins;
+                                
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
                               <td><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['firstName']; echo '&nbsp;'; echo $row['lastName']; ?></td>
-                              <td><?php echo $row['total_price']; ?></td>
+                              <td><?php echo $rw['so_price']; ?></td>
                               <td><?php echo $ins; ?></td>
-                              <td><?php echo $row['total_price']; - $ins;?></td>
+                              <td><?php echo $remaining; ?></td>
                               <td><?php echo $row['created_at']; ?></td>
 
                             <?php }

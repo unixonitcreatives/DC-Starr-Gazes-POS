@@ -1,12 +1,9 @@
 <?php
-// Initialize the session
-session_start();
-
 // Include config file
 require_once "config.php";
 
 // Define variables and initialize with empty values
-$username = $password = "";
+$username = $password = $hash="";
 $alertError = $alertMessage = $username_err = $password_err = $hashed_password = "";
 
 // Processing form data when form is submitted
@@ -29,19 +26,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   if($result){
 
-  $rows = mysqli_fetch_array($result);
+  $rows = mysqli_fetch_assoc($result);
+//if(mysqli_num_rows($result) > 0){
+//  while($rows = mysqli_fetch_array($result)){
+//      $hash = $rows['password'];
+//  }
 
-
-
+//if(password_verify($password,$hash)){
   //Direct pages with different user levels
   if ($rows['usertype'] == "Administrator") {
-
+     
+    
     session_start();
+      
     // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Administrator";
-    header('location: dashboard.php');
+    
+    echo "<script>
+                            alert('succesful login');
+                            window.location.href='dashboard.php';
+                            </script>";
     exit;
   }
   else
@@ -78,10 +84,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
    
   // Close connection
   mysqli_close($link);
-}
-
-
-
+    
+//      } // password_verify
+//    } //num rows
+  }
 }
 
 function getRealIpAddr() {

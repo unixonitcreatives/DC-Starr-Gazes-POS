@@ -82,7 +82,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           
           
         if($result){
-            header('Location: returns-manage.php');
+            
+            /*$alertMessage = "<div class='alert alert-success' role='alert'>Data Successfully Added</div>";*/
+
+            header('Location: returns-manage.php?alert=success');
+                
+          
+            
 //          echo "<script>Notify('Return succesfully','Success');</script>";
 //          echo "<script>console.log('new user added');</script>";
         }else{

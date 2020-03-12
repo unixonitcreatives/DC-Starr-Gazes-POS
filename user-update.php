@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $username = test_input($_POST['username']);
     $password = test_input($_POST['password']);
     $usertype = test_input($_POST['usertype']);
+    $hash = password_hash($password,PASSWORD_DEFAULT);
 
                                     $IDtype = "ACC";
                                     $m = date('m');
@@ -35,13 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custID = str_pad($newID, 4, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
                                     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
-                                   $query = "UPDATE users SET username='$username',password='$password',usertype='$usertype' WHERE id='$id'";
+                                   $query = "UPDATE users SET username='$username',password='$hash',usertype='$usertype' WHERE id='$id'";
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
                                     
                                     
                                     if($result){
                                     echo "<script>Notify('User Updated succesfully','Success');</script>";
-                                    echo "<script>window.location.href='user-manage.php'</script>";
+                                    echo "<script>window.location.href='user-manage.php?alert=updatesuccess'</script>";
                                     }else{
                                       //If execution failed
 

@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     
                             
         if($result){
-        echo "<script>window.location.href='customer-manage.php'</script>";
+        echo "<script>window.location.href='customer-manage.php?alert=updatesuccess'</script>";
         echo "<script>Notify('Customer Updated','Success');</script>";
         echo "<script>console.log('user updated');</script>";
         }else{

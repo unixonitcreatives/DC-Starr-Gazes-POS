@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if($result){
       //echo "<script>Notify('Category Added Succesfully','Success');</script>";
-      header("Location: category-manage.php?alert=addsuccess");
+      header("Location: category-manage.php?alert=success");
     }else{
       echo "<script>Notify('Category Add Failed','Error');</script>";
       //header("Location: category-add.php?alert=3");

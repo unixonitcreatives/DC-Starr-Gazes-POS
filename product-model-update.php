@@ -21,7 +21,7 @@ $query = "SELECT * FROM product_model WHERE id= '$get_productModel_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
   while ($row = mysqli_fetch_assoc($result)){
-    $row_custID    =   $row['custID'];
+    //$row_custID    =   $row['custID'];
     $row_product_description    =   $row['product_description'];
     $row_product_SKU   =   $row['product_SKU'];
     $row_product_category    =   $row['product_category'];
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $sql_check = "SELECT product_SKU FROM product_model WHERE product_SKU ='$product_SKU'";
     if($result = mysqli_query($link, $sql_check)){ //Execute query
 
-      $query = "UPDATE  product_model SET custID='$custnewID', product_description='$product_description', product_SKU='$product_SKU', product_category='$product_category', product_sub_category='$product_sub_category', product_supplier='$product_supplier', supplier_price='$supplier_price', sell_price='$sell_price', suggested_retail_price='$SRP', product_detail='$product_detail' WHERE id='$get_productModel_id'";
+      $query = "UPDATE  product_model SET product_description='$product_description', product_SKU='$product_SKU', product_category='$product_category', product_sub_category='$product_sub_category', product_supplier='$product_supplier', supplier_price='$supplier_price', sell_price='$sell_price', suggested_retail_price='$SRP', product_detail='$product_detail' WHERE id='$get_productModel_id'";
       $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 
       if($result){

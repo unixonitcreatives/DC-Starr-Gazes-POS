@@ -36,18 +36,18 @@
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
   <?php
-  if(isset($_GET['alert']) == "updatesuccess"){
+  if(@$_GET['alert'] == "updatesuccess"){
     $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
-  }else if(isset($_GET['alert']) == "deletesuccess"){
-    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully deleted.</div>";
-  }else if(isset($_GET['alert']) == "addsuccess"){
+  }else if(@$_GET['alert'] == "deletesuccess"){
+    $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";
+  }else if(@$_GET['alert'] == "addsuccess"){
     $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
   }
    ?>
-   <?php echo $alertMessage; ?>
+   
     <!-- Main content -->
     <section class="content">
-
+<?php echo $alertMessage; ?>
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
