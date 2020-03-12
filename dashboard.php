@@ -90,7 +90,7 @@ require_once "config.php";
 
         while($row = mysqli_fetch_assoc($r)){
        ?> 
-        <div class="col-md-3" style="padding: 5.2px;">
+        <div class="col-md-3">
             <div class="box" style="height: 115px;">
               <span class="info-box-icon bg-green" style="height: 115px;"><i class="fa fa-users" style="margin-top: 30px"></i></span>
                 <div class="info-box-content">
@@ -111,7 +111,7 @@ require_once "config.php";
 
         while($row = mysqli_fetch_assoc($r)){
        ?> 
-          <div class="col-md-3" style="padding: 5.2px;">
+          <div class="col-md-3">
             <div class="box" style="height: 115px;">
               <span class="info-box-icon bg-red" style="height: 115px;"><i class="fa fa-cubes" style="margin-top: 30px;"></i></span>
                 <div class="info-box-content">
@@ -130,7 +130,7 @@ require_once "config.php";
 
         while($row = mysqli_fetch_assoc($r)){
       ?> 
-        <div class="col-md-3" style="padding: 5.2px;">
+        <div class="col-md-3">
             <div class="box" style="height: 115px;">
               <span class="info-box-icon bg-yellow" style="height: 115px;"><i class="fa fa-id-card-o" style="margin-top: 30px;"></i></span>
                 <div class="info-box-content">
@@ -150,7 +150,7 @@ require_once "config.php";
 
         while($row = mysqli_fetch_assoc($r)){
        ?> 
-          <div class="col-md-3" style="padding: 5.2px;">
+          <div class="col-md-3">
             <div class="box" style="height: 115px;">
               <span class="info-box-icon bg-blue" style="height: 115px;"><i class="fa fa-dropbox" style="margin-top: 30px;"></i></span>
                 <div class="info-box-content">
@@ -161,7 +161,7 @@ require_once "config.php";
           </div>
 
           <?php } ?>
-          
+            
        </div>
 
           <div class="col-lg-12">
