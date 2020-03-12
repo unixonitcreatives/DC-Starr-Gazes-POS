@@ -136,6 +136,7 @@ function test_input($data) {
                         <tr>
                           <th>No.</th>
                           <th>Date of Purchase</th>
+                          <th>Date Returned</th>
                           <th>Transaction ID</th>
                           <th>Customer</th>
                           <th>Item</th>
@@ -151,7 +152,7 @@ function test_input($data) {
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM returns";
+                        $query = "SELECT * FROM returns ORDER BY created_at DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -161,6 +162,7 @@ function test_input($data) {
                               echo "<tr>";
                               echo "<td>" . $ctr . "</td>";
                               echo "<td>" . $row['date_purchase'] . "</td>";
+                              echo "<td>" . $row['created_at'] . "</td>";  
                               echo "<td>" . $row['trans_id'] ."</td>";
                               echo "<td>" . $row['customer'] . "</td>";
                               echo "<td>" . $row['item'] . "</td>";

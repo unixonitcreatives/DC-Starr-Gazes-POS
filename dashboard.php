@@ -124,7 +124,6 @@ require_once "config.php";
 
       <?php } ?>
 
-
       <?php
         $q = "SELECT COUNT(id) as total_suppliers FROM supplier";
         $r = mysqli_query($link,$q);
