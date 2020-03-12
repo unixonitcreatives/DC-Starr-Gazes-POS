@@ -158,11 +158,10 @@ require_once "config.php";
                   <br>
                   <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_warehouse']?></span>
                 </div>
-            </div>
           </div>
 
           <?php } ?>
-                
+          
        </div>
 
           <div class="col-lg-12">
@@ -172,15 +171,14 @@ require_once "config.php";
               </div>
 
                 <div class="box-body">
-                
-                  <a href='si_generate.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;">Add Invoice</a>
-                  <a href='po_generate.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;">Add Purchase Order</a>
-                  <a href='warehouse-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;">Add Warehouse</a>
-                  <a href='customer-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;">Add Customer</a>
-                  <a href='supplier-add.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;">Add Supplier</a>
-                  <a href='product-model-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;">Add Product Model</a>
-                  <a href='category-add.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;">Add Category</a>
-                  <a href='category-sub-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;">Add Sub-Category</a>
+                  <a href='si_generate.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Invoice</a>
+                  <a href='po_generate.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Purchase Order</a>
+                  <a href='warehouse-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Warehouse</a>
+                  <a href='customer-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Customer</a>
+                  <a href='supplier-add.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Supplier</a>
+                  <a href='product-model-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Product Model</a>
+                  <a href='category-add.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Category</a>
+                  <a href='category-sub-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Sub-Category</a>
                 </div>
             </div>
           </div>

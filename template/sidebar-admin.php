@@ -153,12 +153,11 @@
                             </a>
 
                             <ul class="treeview-menu">
-                                <li><a href='sales-ledger.php'>Fully Paid Reports</a></li>
-                                <li><a href='installment-report.php'>Installment Reports</a></li>
-                                <li><a href="void-report.php">Void Invoices Reports</a></li>
-                                <li><a href='stock-expired-report.php'>Expired Stocks Reports</a></li>
-                                <li><a href='return-reports.php'>Returns Reports</a></li>
-                                <li><a href='void-report.php'>Void Reports</a></li>
+                                <li><a href='sales-ledger.php'>Fully Paid Report</a></li>
+                                <li><a href='installment-report.php'>Installment Report</a></li>
+                                <li><a href="void-report.php">Void Invoices Report</a></li>
+                                <li><a href='stock-expired-report.php'>Expired Stocks Report</a></li>
+                                <li><a href='return-reports.php'>Returns Report</a></li>
                             </ul>   
                         </li>
 
