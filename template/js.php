@@ -325,7 +325,7 @@ $(function() {
 function upperCase(a){
   setTimeout(function(){
     a.value = a.value.toUpperCase();
-    $.notify("its woooorking","warn");
+    //$.notify("its woooorking","warn");
   }, 1);
 
 }

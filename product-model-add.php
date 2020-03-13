@@ -182,7 +182,7 @@ function test_input($data) {
 
                         while($row = mysqli_fetch_array($result)){
 
-                        echo "<option value='".$row['custID']."'>" . $row['category_name'] .  "</option>";
+                        echo "<option value='".$row['category_name']."'>" . $row['category_name'] .  "</option>";
                         }
 
                          // Free result set
@@ -214,7 +214,7 @@ function test_input($data) {
 
                         while($row = mysqli_fetch_array($result)){
 
-                        echo "<option value='".$row['custID']."'>" . $row['sub_category_name'] .  "</option>";
+                        echo "<option value='".$row['sub_category_name']."'>" . $row['sub_category_name'] .  "</option>";
                         }
 
                          // Free result set
@@ -245,7 +245,7 @@ function test_input($data) {
 
                         while($row = mysqli_fetch_array($result)){
 
-                        echo "<option value='".$row['custID']."'>" . $row['supplier_name'] .  "</option>";
+                        echo "<option value='".$row['supplier_name']."'>" . $row['supplier_name'] .  "</option>";
                         }
 
                          // Free result set
