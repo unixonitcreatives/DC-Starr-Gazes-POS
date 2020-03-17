@@ -2,10 +2,10 @@
 //Database credentials. Assuming you are running MySQL
 //server with default setting (user 'root' with no password)
 
-//define('DB_SERVER', 'unixondev.com');
-//define('DB_USERNAME', 'vipfouuo_dcstarr');
-//define('DB_PASSWORD', 'Bs{A6%t2R_OK');
-//define('DB_NAME', 'vipfouuo_dcstarrgazes');
+/*define('DB_SERVER', 'unixondev.com');
+define('DB_USERNAME', 'vipfouuo_dcstarr');
+define('DB_PASSWORD', 'Bs{A6%t2R_OK');
+define('DB_NAME', 'vipfouuo_dcstarrgazes');*/
 
  define('DB_SERVER', 'localhost');
  define('DB_USERNAME', 'root');
