@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $qty = test_input($_POST['qty']);
   $cashier = test_input($_POST['cashier']);
   $remarks = test_input($_POST['remarks']);
+  $stID = test_input($_POST['stID']);
 
   // Validate password
   if(empty($date_p)){
@@ -73,6 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 //          $newID = $resulta['MAX(id)'] + 1; //Get the latest ID then Add 1
 //          $custID = str_pad($newID, 4, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
 //          $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
+  if(empty($alertMessage)){
           $date = date("Y-m-d");
 
           $query = "INSERT INTO returns (date_purchase, trans_id, customer, item, qty, cashier, remarks, created_at) 
@@ -82,13 +84,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           
           
         if($result){
+            // $q = "SELECT * FROM stock";
+            // $r = mysqli_query($link,$q);
+            // $row = mysqli_fetch_assoc($r);
+            // $custID = $row['custID'];
+
+           
             
+        
+                header('Location: returns-manage.php?alert=success');
             /*$alertMessage = "<div class='alert alert-success' role='alert'>Data Successfully Added</div>";*/
 
-            header('Location: returns-manage.php?alert=success');
+           
                 
-          
-            
 //          echo "<script>Notify('Return succesfully','Success');</script>";
 //          echo "<script>console.log('new user added');</script>";
         }else{
@@ -102,8 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 //      } else{
 //       echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 //     }
-
-   
+      }
   }
 
 function test_input($data) {
@@ -202,13 +209,14 @@ function test_input($data) {
               <select class="form-control select2" style="width: 100%;" name="item" required>
                   <?php
                   
-                  $qq = "SELECT stock.custID, stock.PO_ID, product_model.product_description, product_model.product_SKU FROM stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID";
+                  $qq = "SELECT stock.custID AS scID, stock.PO_ID, stock.stock_status,product_model.product_description AS prd, product_model.product_SKU FROM stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID WHERE stock.stock_status='Sold'";
                   $rr = mysqli_query($link,$qq);
                   
                   while($row = mysqli_fetch_assoc($rr)){
+
                   ?>
                   
-                  <option value="<?php echo $row['product_description']; ?>"><?php echo $row['custID'] . '-' . $row['product_description']; ?></option>
+                  <option value="<?php echo $row['scID']; ?>"><?php echo $row['scID'] . '-' . $row['prd']; ?></option>
                 
                   <?php }?>
               </select>

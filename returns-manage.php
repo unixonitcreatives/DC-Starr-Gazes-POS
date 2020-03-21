@@ -94,7 +94,9 @@ if(@$_GET["alert"] == "success"){
     $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
 } else if(@$_GET["alert"] == "deletesuccess"){
     $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";  
-}
+} else if(@$_GET["alert"] == "returned"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Data returned in stocks.</div>";  
+} 
 
 ?>
 <!-- ================================================================ -->
@@ -157,13 +159,22 @@ if(@$_GET["alert"] == "success"){
                         <?php
                         // Include config file
                         require_once 'config.php';
+                        // $qq = "SELECT stock.PO_ID, product_model.product_SKU FROM stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID";
+
+                        // $q = "SELECT * FROM returns INNER JOIN stock on ";
+                        // $r = mysqli_query($link,$q);
+                        // $qq = "SELECT returns.date_purchase,returns.created_at,returns.id,returns.trans_id,returns.customer,returns.item,returns.qty,returns.cashier,returns.remarks,product_model.product_SKU,stock.PO_ID FROM returns INNER JOIN stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID";
+
+                        // $qq = "SELECT returns.id,returns.date_purchase,returns.created_at,returns.trans_id,returns.customer,returns.qty,returns.cashier,returns.remarks,stock.PO_ID,product_model.product_SKU FROM stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID INNER JOIN returns ";
+                        // $rr = mysqli_query($link,$qq);
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM returns ORDER BY created_at DESC";
+                        $query = "SELECT returns.id,returns.date_purchase,returns.created_at,returns.trans_id,returns.customer,returns.item,returns.qty,returns.cashier,returns.remarks FROM returns ORDER BY returns.id DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
                             while($row = mysqli_fetch_assoc($result)){
+                              //$it = $row['item'];
                               //$id = $row['custID'];
                               $ctr++;
                               echo "<tr>";
@@ -177,10 +188,12 @@ if(@$_GET["alert"] == "success"){
                               echo "<td>" . $row['cashier'] . "</td>";
                               echo "<td>" . $row['remarks'] . "</td>";
                               echo "<td>";
+                              echo "<a href='return-stock.php?sku=". $row['item'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
                               echo "<a href='return-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 ////                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
 //                              echo "</td>";
                               echo "</tr>";
+                             
                             }
                             // Free result set
                             mysqli_free_result($result);

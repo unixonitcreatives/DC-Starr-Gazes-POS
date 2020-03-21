@@ -43,18 +43,6 @@
                         </li>
 
                         <li class="treeview">
-                            <a href="#"><i class="fa fa-dropbox"></i> <span>Warehouse</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="warehouse-add.php">Add Warehouse</a></li>
-                                <li><a href="warehouse-manage.php">Manage Warehouse</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="treeview">
                             <a href="#"><i class="fa fa-cube"></i> <span>Product</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
@@ -68,8 +56,21 @@
                             </ul>
                         </li>
 
+
                         <li class="treeview">
-                            <a href="#"><i class="fa fa-cart-plus"></i> <span>Purchase Order</span>
+                            <a href="#"><i class="fa fa-dropbox"></i> <span>Warehouse</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="warehouse-add.php">Add Warehouse</a></li>
+                                <li><a href="warehouse-manage.php">Manage Warehouse</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-cart-plus"></i> <span>Supplier PO</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>

@@ -70,6 +70,7 @@ $SOresult = mysqli_query($link, $selectSOquery) or die(mysqli_error($link));
 if (mysqli_num_rows($SOresult) > 0) {
 
   while ($row = mysqli_fetch_assoc($SOresult)){
+      $qty = $row['so_qty'];
       $stockID = $row['stock_ID'];
       $status = $row['mop'];
   }
@@ -87,18 +88,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $up = "UPDATE void_so SET mop = 'Void', created_at = '$date_n' WHERE txID = '$trans_id'";
     $rr = mysqli_query($link,$up);
 
-   /* $scUpdateQuery =  "UPDATE stock SET stock_status = 'In Stock', qty = 1 WHERE custID = '$stockID' "; 
+
+    $i=0; //define i = 0
+    $count = count($qty); //count qty element
+
+    for($i=0;$i<$count;$i++){ //loop
+    
+    $scUpdateQuery =  "UPDATE stock SET stock_status[$i] = 'In Stock', qty[$i] = 1 WHERE custID = '$stockID' "; 
     $scUpdateResult = mysqli_query($link, $scUpdateQuery) or die(mysqli_error($link));
 
-    if($scUpdateResult){
+    echo "<script> alert('updated') </script>";
+    }
 
-      return;
-
-    }*/
-
+    
     header("Location: si-manage.php");
 
-  }
+}
 
 }
 

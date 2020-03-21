@@ -3,14 +3,15 @@
 require_once "config.php";
 
 // Define variables and initialize with empty values
-$username = $password = $hash="";
-$alertError = $alertMessage = $username_err = $password_err = $hashed_password = "";
+$hash="";
+$alertError = $alertMessage = $username_err = $password_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $username = test_input($_POST['username']);
   $password = test_input($_POST['password']);
+  //$hash = password_hash($password, PASSWORD_DEFAULT);
 
   // Validate username and password
   if(empty($username)){
@@ -21,63 +22,79 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   }
 
   //Query
-  $query="SELECT * FROM users WHERE username='$username' AND password='$password'";
+  $query="SELECT username,password,usertype FROM users WHERE username = '$username'";
   $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-  if($result){
+if($result){
 
-  $rows = mysqli_fetch_assoc($result);
-//if(mysqli_num_rows($result) > 0){
-//  while($rows = mysqli_fetch_array($result)){
-//      $hash = $rows['password'];
-//  }
+//select hashed password
+  // $queryPass = "SELECT * FROM users WHERE password = '$password' ";
+  // $resultPass = mysqli_query($link, $queryPass) or die(mysqli_error($link));
 
-//if(password_verify($password,$hash)){
+if(mysqli_num_rows($result) > 0){
+  while($row = mysqli_fetch_assoc($result)){
+      $username = $row['username'];
+      $hash_db = $row['password'];
+      $usertype = $row['usertype'];
+ 
+if(password_verify($password, $hash_db)){
   //Direct pages with different user levels
-  if ($rows['usertype'] == "Administrator") {
-     
-    
+  if ($row['usertype'] == "Administrator") {
     session_start();
-      
     // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Administrator";
     
-    echo "<script>
-                            alert('succesful login');
-                            window.location.href='dashboard.php';
-                            </script>";
+    echo "<script>alert('succesful login');
+      window.location.href='dashboard.php';
+          </script>";
     exit;
-  }
-  else
-  if ($rows['usertype'] == "Manager") {
+  } else if ($row['usertype'] == "Cashier") {
+    session_start();
+    // Store data in session variables
+    $_SESSION["loggedin"] = true;
+    $_SESSION["username"] = $username;
+    $_SESSION["usertype"] = "Cashier";
+    
+    echo "<script>alert('succesful login');
+      window.location.href='dashboard.php';
+          </script>";
+    exit;
+  } else if ($row['usertype'] == "Cashier") {
+    session_start();
+    // Store data in session variables
+    $_SESSION["loggedin"] = true;
+    $_SESSION["username"] = $username;
+    $_SESSION["usertype"] = "Cashier";
+    
+    echo "<script>alert('succesful login');
+      window.location.href='dashboard.php';
+          </script>";
+    exit;
+  } else if ($row['usertype'] == "Manager") {
     session_start();
     // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Manager";
-    header('location: dashboard.php');
+    
+    echo "<script>alert('succesful login');
+      window.location.href='dashboard.php';
+          </script>";
     exit;
-
-  }
-  else
-  if ($rows['usertype'] == 'Accounting') {
+  } else if ($row['usertype'] == "Accounting") {
+    session_start();
+    // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Accounting";
-    header('location: dashboard.php');
-  }
-  else
-  if ($rows['usertype'] == 'Cashier') {
-    $_SESSION["loggedin"] = true;
-    $_SESSION["username"] = $username;
-    $_SESSION["usertype"] = "Cashier";
-    header('location: dashboard.php');
-  }
-
-  else
-  {
+    
+    echo "<script>alert('succesful login');
+      window.location.href='dashboard.php';
+          </script>";
+    exit;
+  } else{
     // Display an error message
     $alertError = "Invalid username & password combination";
   }
@@ -85,10 +102,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   // Close connection
   mysqli_close($link);
     
-//      } // password_verify
-//    } //num rows
-  }
-}
+      } // password_verification
+     } //while fetching
+   } //num rows
+  } // result executed
+}  //post
 
 function getRealIpAddr() {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet

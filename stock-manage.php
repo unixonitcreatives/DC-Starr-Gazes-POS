@@ -238,9 +238,12 @@
 function ExportToExcel(){
        var downloadLink;
        var htmltable= document.getElementById('example1');
-       var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
-       var html = table_html + htmltable.outerHTML;
-    
+       var tb = "<table><thead></thead></table>"
+       var html = htmltable.outerHTML + tb;
+
+       // var headers = $('#headers').remove();
+       // var html = headers + htmltable.outerHTML;
+     
      downloadLink = document.createElement("a");
 
        //window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));

@@ -162,7 +162,7 @@ function test_input($data) {
                         require_once 'config.php';
 
                         // Attempt select query execution
-                        $query = "SELECT * FROM product_model ORDER BY product_description asc";
+                        $query = "SELECT * FROM product_model ORDER BY created_at DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;

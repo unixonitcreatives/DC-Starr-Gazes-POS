@@ -56,7 +56,7 @@
                 <a href="index.php" class="text-center">go to Dashboard</a>
                     <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel('example2')">Export To Excel</button>
 
-                    <button type="button" class="btn btn-default pull-right" onclick="Print()" target='_blank'>Print</button>
+                    <a href='sales-ledger-print.php' class="btn btn-default pull-right" onclick="Print()" target='_blank'>Print</a>
               </div>
               <div class="box-body">
               
@@ -76,18 +76,18 @@
                           </div>
                       </div>
                     </form>
-                      <br>
-                    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+<br>
+                    <table class="table table-bordered table-hover" role="grid">
 
                       <thead id='head'>
                         <tr>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">NO</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Sales Invoice ID</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Customer Name</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Amount</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Paid Amount</th>
-                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Mode of Payment</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Date</th>
+                          <th>NO</th>
+                          <th>Sales Invoice ID</th>
+                          <th>Customer Name</th>
+                          <th>Total Amount</th>
+                          <th>Total Paid Amount</th>
+                          <th>Mode of Payment</th>
+                          <th>Date</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -153,7 +153,7 @@
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><a href="si-view-in-rows.php?txID=<?php echo $row['txID']; ?>"><?php echo $row['txID']; ?></a></td>
+                              <td><?php echo $row['txID']; ?></td>
                               <td><?php echo $row['firstName']; echo '&nbsp;'; echo $row['lastName']; ?></td>
                               <td><?php echo $row['total_price']; ?></td>
                               <td><?php echo $row['total_price']; ?></td>
@@ -195,36 +195,9 @@
 <script>
 
   function Print(){
-
     window.print();
   }
-  
-  function exportTableToExcel(id){
-    var downloadLink;
-    var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(id);
-    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
-    var tableHTML = table_html + tableSelect.outerHTML;
-    
-    // Create download link element
-    downloadLink = document.createElement("a");
-    
-    //document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob([tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob );
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ',' + encodeURIComponent(tableHTML);
-    
-        //triggering the function
-        downloadLink.click();
-}
 
-}
 </script>
 
 </body>

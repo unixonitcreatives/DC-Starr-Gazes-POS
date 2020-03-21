@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
 
                                     $query = "INSERT INTO users (custID, username, password, usertype) 
-                                                   VALUES ('$custnewID', '$username', '$password', '$usertype')"; //Prepare insert query
+                                                   VALUES ('$custnewID', '$username', '$hash', '$usertype')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
                                     
