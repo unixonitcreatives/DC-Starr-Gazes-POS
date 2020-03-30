@@ -131,13 +131,13 @@ if (mysqli_num_rows($result) > 0) {
                 </tr>
                 <tr>
                   <td align="right" width="15%">Credit Total Amount:</td>
-                  <td><?php echo $gTotal; ?></td>
+                  <td id='total_g'><?php echo $gTotal; ?></td>
                   <input type='hidden' id='total' value="<?php echo $gTotal; ?>">
                 </tr>
                 <tr>
                   <td align="right" width="15%">Total Amount Paid:</td>
                   <td id='amountP'><?php echo $amountPaid; ?></td>
-                  <input type='hidden' value="<?php echo $amountPaid?>" id='amount'>
+                  <input type='hidden' value="<?php echo $amountPaid; ?>" id='amount'>
                 </tr>
 
                 <tr>
@@ -146,7 +146,12 @@ if (mysqli_num_rows($result) > 0) {
                     <?php
                     if($amountPaid == $gTotal) {
                         
-                        
+                        echo "<div class='alert alert-success alert-dismissible' role='alert'>
+                                Credit balance is now Fully Paid
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                              </div>";
                         
                        echo "
                       <form action='#' method='POST'>
@@ -191,6 +196,7 @@ if (mysqli_num_rows($result) > 0) {
                         </div>
                         <div class="form-group">
                           <p>Amount Paid:</p><input type="number" name="amount_paid" id="amount_paid" placeholder="0.00" class="form-control" required/>
+                          <input type='hidden' id='ctotal' value="<?php echo $gTotal; ?>">
                         </div>
                         <div class="form-group">
                           <p>Mode of Payment:</p><select id="mop" name="mop" onChange="changetextbox()" class="form-control select2" style="width: 100%;" required>
@@ -261,10 +267,11 @@ if (mysqli_num_rows($result) > 0) {
               method: "POST",
               data:{action:action,txID:txID},
               success:function(data){
-                $('#amount_paid').val();
-                $('#mop').val();
-                $('#ref').val();
-                $('#datepicker').val();
+                var amount_paid = $('#amount_paid').val();
+                var mop = $('#mop').val();
+                var ref = $('#ref').val();
+                var payment_date = $('#datepicker').val();
+           
                 $('#result').html(data);
               }
             })
@@ -287,18 +294,29 @@ if (mysqli_num_rows($result) > 0) {
 
           $('#action').click(function(event){
             event.preventDefault();
-            location.reload();
+     
           });
             
           
-            
-
           $('#action').click( function(){
+            var total = $.isNumeric($('#ctotal').val());
+            var amount_paid = $.isNumeric($('#amount_paid').val());
+            var mop = $('#mop').val();
+            var ref = $('#ref').val();
+            var payment_date = $('#datepicker').val();
             var form = $('#add-user');
             var formData = $(form).serialize();
             var close = $('#close');
-            if(amount_paid != "" || mop != "" || payment_date != ""){
-              $.ajax({
+           
+            if(amount_paid == "" || mop == "" || payment_date == ""){
+              Notify('All fields are required');
+              event.preventDefault();
+            } else {
+
+              if(amount_paid > total){
+                Notify("Amount paid cannot be greater than total credits.", 'warning');
+              } else{
+                  $.ajax({
                 url: $(form).attr('action'),
                 method: "POST",
                 data:formData,
@@ -308,9 +326,12 @@ if (mysqli_num_rows($result) > 0) {
                     $('#add-user')[0].reset();
                     $('#updatePayment').modal('hide');
                     
-                    Notify("INSERTED", "success")
+                    Notify("New payment added", 'success');
+                    
                 }
               });
+
+              }
             }
 
           });

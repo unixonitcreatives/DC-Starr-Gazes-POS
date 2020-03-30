@@ -158,6 +158,7 @@
                                 <li><a href='installment-report.php'>Installment Report</a></li>
                                 <li><a href="void-report.php">Void Invoices Report</a></li>
                                 <li><a href='stock-expired-report.php'>Expired Stocks Report</a></li>
+                                <li><a href='stock-instock-report.php'>In-Stock Report</a></li>
                                 <li><a href='return-reports.php'>Returns Report</a></li>
                             </ul>   
                         </li>

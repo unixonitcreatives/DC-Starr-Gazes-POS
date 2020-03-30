@@ -58,7 +58,7 @@
               <div class="box-body">
                 <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel()">Export To Excel</button>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="form" method="POST">
-                      <h4>Date</h4>
+                      <h4>Date Range</h4>
                       <div class="row">
                           <div class="offset-md-1 col-md-8">                          
                             <div class="input-daterange input-group" id="date-range">
@@ -73,7 +73,7 @@
                           </div>
                       </div>
                     </form>
-
+                    <br>
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 
                       <thead>

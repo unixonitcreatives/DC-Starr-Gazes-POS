@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Sales Ledger Report<br>
+         Installments Report<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -52,7 +52,7 @@
           <!-- general form elements -->
           <div class="box box-default">
               <div class="box-header with-border">
-                <h3 class="box-title">Sales Ledger Data</h3><br>
+                <h3 class="box-title">Installments Data</h3><br>
                 <a href="index.php" class="text-center">go to Dashboard</a>
               </div>
               <div class="box-body">
@@ -73,7 +73,7 @@
                           </div>
                       </div>
                     </form>
-
+                    <br>
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 
                       <thead>
@@ -195,11 +195,11 @@
 
 <script>
   
-  function exportTableToExcel(id){
+ function exportTableToExcel(id){
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(id);
-    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
+    var tableSelect = document.getElementById('example2');
+    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
     var tableHTML = table_html + tableSelect.outerHTML;
     
     // Create download link element
@@ -215,7 +215,14 @@
     }else{
         // Create a link to the file
         downloadLink.href = 'data:' + dataType + ',' + encodeURIComponent(tableHTML);
-    
+       var today = new Date();
+       var dd = today.getDate();
+       var mm = today.getMonth() + 1;
+       var yyyy = today.getFullYear();
+
+       today = mm + "" + dd + "" + yyyy;
+
+        downloadLink.setAttribute('download', today);
         //triggering the function
         downloadLink.click();
 }

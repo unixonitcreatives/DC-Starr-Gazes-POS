@@ -174,8 +174,8 @@
   function exportTableToExcel(id){
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(id);
-    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
+    var tableSelect = document.getElementById('example2');
+    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
     var tableHTML = table_html + tableSelect.outerHTML;
     
     // Create download link element
@@ -191,7 +191,14 @@
     }else{
         // Create a link to the file
         downloadLink.href = 'data:' + dataType + ',' + encodeURIComponent(tableHTML);
-    
+       var today = new Date();
+       var dd = today.getDate();
+       var mm = today.getMonth() + 1;
+       var yyyy = today.getFullYear();
+
+       today = mm + "" + dd + "" + yyyy;
+
+        downloadLink.setAttribute('download', today);
         //triggering the function
         downloadLink.click();
 }

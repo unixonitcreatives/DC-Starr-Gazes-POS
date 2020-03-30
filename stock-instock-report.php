@@ -31,7 +31,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Void Invoice Report<br>
+         In Stocks Report<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
@@ -52,12 +52,11 @@
           <!-- general form elements -->
           <div class="box box-default">
               <div class="box-header with-border">
-                <h3 class="box-title">Void Invoice Data</h3><br>
+                <h3 class="box-title">In-Stock Data</h3><br>
                 <a href="index.php" class="text-center">go to Dashboard</a>
-                   <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel('example2')">Export To Excel</button>
               </div>
               <div class="box-body">
-               
+                <button type="button" class="btn btn-primary pull-right" onclick="exportTableToExcel()">Export To Excel</button>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="form" method="POST">
                       <h4>Date Range</h4>
                       <div class="row">
@@ -74,20 +73,20 @@
                           </div>
                       </div>
                     </form>
-                  <br>
+                    <br>
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 
                       <thead>
                         <tr>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">NO</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Invoice NO.</th>    
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Product Description</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Quantity</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Stock Number</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Product ID</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >SKU</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Warehouse</th>
                           <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Status</th>
-                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" >Total Price</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id='tb'>
                         <?php
                         // Include config file
                         include('config.php');
@@ -118,18 +117,14 @@
                 if(!empty($start) && !empty($end)){
                   // $query = "SELECT * FROM sales_order 
                   //   WHERE sales_order.created_at BETWEEN '$start' AND '$end'";
-//                    $q = "SELECT * FROM sales_order";
-//                    $r = mysqli_query($link,$q);
-//                    $row = mysqli_fetch_assoc($r);
+                    $q = "SELECT * FROM sales_order";
+                    $r = mysqli_query($link,$q);
+                    $row = mysqli_fetch_assoc($r);
                     
-//                    $query = "SELECT void_so.txID,void_so.stock_ID,void_so.so_qty,void_so.mop,void_so.so_price FROM void_so 
-//                    INNER JOIN product_model ON product_model.product_description 
-//                    WHERE mop='Void' AND void_so.created_at BETWEEN '$start' AND '$end' ORDER BY void_so.created_at DESC";
-                    
-                    $query = "SELECT product_model.product_description,void_so.txID,void_so.stock_ID,void_so.so_qty,void_so.mop,void_so.so_price,void_so.created_at FROM void_so INNER JOIN stock ON void_so.stock_ID = stock.custID INNER JOIN product_model ON stock.PO_ID = product_model.product_SKU WHERE void_so.mop='Void' AND void_so.created_at BETWEEN '$start' AND '$end' ORDER BY void_so.created_at DESC";
+                    $query = "SELECT * from stock
+                       WHERE stock_status='In stock' AND expiry_date BETWEEN '$start' AND '$end'";
                 }
-                          
-                 
+                  
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
@@ -138,11 +133,11 @@
                               $ctr++;?>
                               <tr>
                               <td><?php echo $ctr; ?></td>
-                              <td><?php echo $row['txID']; ?></td>
-                              <td><?php echo $row['product_description']; ?></td>
-                              <td><?php echo $row['so_qty']; ?></td>
-                              <td><?php echo $row['mop']; ?></td>
-                              <td><?php echo $row['so_price']; ?></td>
+                              <td><?php echo $row['custID']; ?></td>
+                              <td><?php echo $row['PO_ID']; ?></td>
+                              <td><?php echo $row['product_SKU']; ?></td>
+                              <td><?php echo $row['warehouse_ID']; ?></td>
+                              <td>In Stock</td>
                             <?php }
                             // Free result set
                             mysqli_free_result($result);
@@ -177,10 +172,10 @@
 
 <script>
   
-function exportTableToExcel(id){
+  function exportTableToExcel(id){
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById(id);
+    var tableSelect = document.getElementById('example2');
     var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
     var tableHTML = table_html + tableSelect.outerHTML;
     
