@@ -39,22 +39,18 @@
                                                     
                                                     $qq = 'INSERT INTO void_so ( txID, stock_ID, so_desc, so_qty, so_price, so_cust, so_warehouse, mop,discount, created_by, created_at)
 												 		VALUES ("'. $custnewID . '","'.$p['custID'].'","'.$p['product_SKU'].'",1,'.$p['UnitPrice'].',"'.$p['so_cust'].'","'.$p['warehouseID'].'","'.$p['mop'].'","'.$p['discount'].'", "'.$p['username'].'","'.$date.'")';
-
-                                                    if($link->query($qq) === TRUE){
-                                                        $validator['success'] = true;
-                                                    } else {
-											    		echo "Error: " . $sql . "<br>" . $link->error;
-													}
                                                     
 													if ($link->query($sql) === TRUE) {
-														
 											    		$validator['success'] = true;
+											    		$link->query($qq);
+   
 													} else {
 											    		echo "Error: " . $sql . "<br>" . $link->error;
 													}
 												}
 
 $validator['success'] = true;
+
 echo json_encode($validator);
 
 	}
