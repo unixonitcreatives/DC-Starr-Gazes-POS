@@ -55,6 +55,14 @@ require_once "config.php";
                                                               $result_update = mysqli_query($link, $query_update) or die(mysqli_error($link));
                                                               if($result_update){
                                                                 //Update Query OK
+
+                                                                 //logs
+                                                                $info = $_SESSION['username']." approved a PO request";
+                                                                $info2 = "Details: item: ".$product_SKU."&nbsp; qty: ".$count."pcs on " . $warehouse_ID.", status: approved";
+
+                                                                $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                                                                $r = mysqli_query($link, $q) or die(mysqli_error($link));  
+
                                                                 echo "<script>$.notify('success','success');</script>";
                                                                 header( "Location: po-manage.php" );
 

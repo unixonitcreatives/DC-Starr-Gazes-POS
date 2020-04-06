@@ -69,6 +69,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     if($result){
                                     //echo "<script>Notify('new user added succesfully','Success');</script>";
                                     //echo "<script>console.log('new user added');</script>";
+
+                                      //logs
+                                    $info = $_SESSION['username']." added a new warehouse";
+                                    $info2 = "Details: warehouse name: ".$warehouse_name." address: ".$address."";
+
+                                    $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                                    $r = mysqli_query($link, $q) or die(mysqli_error($link));  
+
+
                                     header("Location: warehouse-manage.php?alert=addsuccess");
                                     }else{
                                       //If execution failed

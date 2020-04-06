@@ -80,6 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
                                     if($result){
+                                    //logs
+                                    $info = $_SESSION['username']." generated a new PO";
+                                    $info2 = "Details: item: ".$product_SKU."&nbsp; qty:".$qty."pcs on " . $warehouse_name.", status: pending";
+
+                                    $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                                    $r = mysqli_query($link, $q) or die(mysqli_error($link));
+                                      
                                     echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
                                     header('Location: po-manage.php');

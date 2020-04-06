@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $firstname = test_input($_POST['firstname']);
     $contact = test_input($_POST['contact']);
     $address = test_input($_POST['address']);
+    $id = test_input($_POST['custID']);
 
     // Validate password
     if(empty($firstname)){
@@ -55,6 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                             
         if($result){
 //        echo "<script>Notify('new user added succesfully','Success');</script>";
+
+           //logs
+        $info = $_SESSION['username']." added a new customer";
+        $info2 = "Details: customer: ".$firstname . "&nbsp;". $lastname . ", id: ".$custID."";
+
+        $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+        $r = mysqli_query($link, $q) or die(mysqli_error($link));
         echo "<script>console.log('new user added');</script>";
 //        echo "<script>window.href='customer-manage.php'</script>";    
             header("Location: customer-manage.php?alert=addsuccess");

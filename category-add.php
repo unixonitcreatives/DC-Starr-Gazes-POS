@@ -60,6 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                     if($result){
                                     //echo "<script>Notify('Category Added Succesfully','Success');</script>";
+                                          //logs
+                                    $info = $_SESSION['username']." added a category";
+                                    $info2 = "Details: category name: ".$category.", id: ".$custnewID."";
+
+                                    $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                                    $r = mysqli_query($link, $q) or die(mysqli_error($link)); 
+
                                     header("Location: category-manage.php?alert=addsuccess");
                                     }else{
                                     echo "<script>Notify('Category Add Failed','Error');</script>";

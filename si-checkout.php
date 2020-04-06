@@ -47,6 +47,7 @@
 													}
                                                     
 													if ($link->query($sql) === TRUE) {
+														
 											    		$validator['success'] = true;
 													} else {
 											    		echo "Error: " . $sql . "<br>" . $link->error;

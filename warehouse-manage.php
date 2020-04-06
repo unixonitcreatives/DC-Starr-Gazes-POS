@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         <td><?php echo $row['warehouse_name']; ?></td>
                         <td><?php echo $row['address']; ?></td>
                         <td>
-                        <a href='warehouse-update.php?id=<?php echo $row['id']; ?>' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
+                        <a href='warehouse-update.php?id=<?php echo $row['id']; ?>&name=<?php echo $row['warehouse_name']; ?>&add=<?php echo $row['address'];?>' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
                          &nbsp; <a href='#' title='Delete Record' data-toggle='modal' data-target="#deleteModal<?php echo $row['id']; ?>"><span class='glyphicon glyphicon-trash'></span></a>
                         </td>
                         <!-- =========================== DELETE MODAL ====================== -->
@@ -184,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <a class="btn btn-danger" href='warehouse-delete.php?id=<?php echo $row['id'];?>'>Delete</a>
+                                <a class="btn btn-danger" href='warehouse-delete.php?id=<?php echo $row['id']; ?>&name=<?php echo $row['warehouse_name']; ?>&add=<?php echo $row['address'];?>'>Delete</a>
                               </div>
                             </div>
                             <!-- /.modal-content -->

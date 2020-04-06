@@ -88,7 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             // $r = mysqli_query($link,$q);
             // $row = mysqli_fetch_assoc($r);
             // $custID = $row['custID'];
+                 //logs
+                $info = $_SESSION['username']." added a new return";
+                $info2 = "Details: item: ".$item.", Transaction ID: ".$si."";
 
+                $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                $r = mysqli_query($link, $q) or die(mysqli_error($link));
            
             
         

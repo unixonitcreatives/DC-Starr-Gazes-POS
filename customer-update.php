@@ -24,12 +24,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $firstname = test_input($_POST['firstname']);
     $contact = test_input($_POST['contact']);
     $address = test_input($_POST['address']);
+    //$id = test_input($_POST['id']);
 
         $query = "UPDATE customers SET lastName='$lastname', firstName='$firstname',contact='$contact',address='$address' WHERE id='$id'";  
         $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
                                     
                             
         if($result){
+             //logs
+        $info = $_SESSION['username']." updated a customer";
+        $info2 = "Details: customer: ". $firstname . "&nbsp;" . $lastname .", id: ".$id."";
+
+        $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+        $r = mysqli_query($link, $q) or die(mysqli_error($link)); 
+
         echo "<script>window.location.href='customer-manage.php?alert=updatesuccess'</script>";
         echo "<script>Notify('Customer Updated','Success');</script>";
         echo "<script>console.log('user updated');</script>";

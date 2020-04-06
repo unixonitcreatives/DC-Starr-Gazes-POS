@@ -45,43 +45,80 @@ if(password_verify($password, $hash_db)){
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Administrator";
+
+    //logs
+    $info = $_SESSION['username']." Logged In";
+    $info2 = "Details: ".$username.", ".$usertype." IP:".getRealIpAddr();
+
+    $query="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
     
+    if($result){
     echo "<script>alert('succesful login');
       window.location.href='dashboard.php';
           </script>";
     exit;
+    }
   } else if ($row['usertype'] == "Cashier") {
     session_start();
     // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Cashier";
+
+     //logs
+    $info = $_SESSION['username']." Logged In";
+    $info2 = "Details: ".$username.", ".$usertype." IP:".getRealIpAddr();
+
+    $query="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
     
+    if($result){
     echo "<script>alert('succesful login');
       window.location.href='dashboard.php';
           </script>";
     exit;
+    }
   } else if ($row['usertype'] == "Cashier") {
     session_start();
     // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Cashier";
+
+     //logs
+    $info = $_SESSION['username']." Logged In";
+    $info2 = "Details: ".$username.", ".$usertype." IP:".getRealIpAddr();
+
+    $query="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
     
+    if($result){
     echo "<script>alert('succesful login');
       window.location.href='dashboard.php';
           </script>";
     exit;
+    }
   } else if ($row['usertype'] == "Manager") {
     session_start();
     // Store data in session variables
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Manager";
+
+     //logs
+    $info = $_SESSION['username']." Logged In";
+    $info2 = "Details: ".$username.", ".$usertype." IP:".getRealIpAddr();
+
+    $query="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
     
+    if($result){
     echo "<script>alert('succesful login');
       window.location.href='dashboard.php';
           </script>";
+    exit;
+    }
     exit;
   } else if ($row['usertype'] == "Accounting") {
     session_start();
@@ -89,11 +126,21 @@ if(password_verify($password, $hash_db)){
     $_SESSION["loggedin"] = true;
     $_SESSION["username"] = $username;
     $_SESSION["usertype"] = "Accounting";
+
+     //logs
+    $info = $_SESSION['username']." Logged In";
+    $info2 = "Details: ".$username.", ".$usertype." IP:".getRealIpAddr();
+
+    $query="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
     
+    if($result){
     echo "<script>alert('succesful login');
       window.location.href='dashboard.php';
           </script>";
     exit;
+    }
+ 
   } else{
     // Display an error message
     $alertError = "Invalid username & password combination";

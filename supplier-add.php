@@ -77,6 +77,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
         if($result){
+          $info = $_SESSION['username']." added a new supplier";
+          $info2 = "Details: supplier name: ".$supplier_name."";
+
+          $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+          $r = mysqli_query($link, $q) or die(mysqli_error($link)); 
+
           header("Location: supplier-manage.php?alert=addsuccess");
           //echo "<script>Notify('new supplier added succesfully','Success');</script>";
           //echo "<script>console.log('new user added');</script>";

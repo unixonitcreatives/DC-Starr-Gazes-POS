@@ -75,7 +75,7 @@
                         require_once 'config.php';
                         $mop="";
                         // Attempt select query execution
-                        $query = "SELECT txID, so_cust, SUM(so_price)-SUM(discount) AS TPrice, mop FROM sales_order WHERE mop='Installment' GROUP BY txID";
+                        $query = "SELECT txID, so_cust, SUM(so_price)-SUM(discount) AS TPrice, mop FROM sales_order WHERE mop='Installment' GROUP BY txID ORDER BY created_at DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
 

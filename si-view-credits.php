@@ -120,7 +120,7 @@ if (mysqli_num_rows($result) > 0) {
 
           <div class="box-body">
             <div id='result2'></div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" id='tb'>
               <tr>
                 <td align="right" width="15%">Sales Invoice No:</td>
                 <td><a href="si-view-in-rows.php?txID=<?php echo $_GET['txID']; ?>"><?php echo $trans_id; ?><a/></td>
@@ -179,7 +179,7 @@ if (mysqli_num_rows($result) > 0) {
                   </td>
                 </tr>
 
-              </table>
+              </table> 
 
               <!-- Modal Update Payment-->
               <div class="modal fade" id="updatePayment" role="dialog">
@@ -296,7 +296,13 @@ if (mysqli_num_rows($result) > 0) {
             event.preventDefault();
      
           });
-            
+
+
+          // function refreshTable(){
+          //   $('#tb').load('creditsTable.php',function(){
+          //        setTimeout(refreshTable, 500);
+          //   });
+          // }
           
           $('#action').click( function(){
             var total = $.isNumeric($('#ctotal').val());
@@ -313,7 +319,7 @@ if (mysqli_num_rows($result) > 0) {
               event.preventDefault();
             } else {
 
-              if(amount_paid > total){
+              if(amount_paid > total){ //not working
                 Notify("Amount paid cannot be greater than total credits.", 'warning');
               } else{
                   $.ajax({
@@ -327,10 +333,10 @@ if (mysqli_num_rows($result) > 0) {
                     $('#updatePayment').modal('hide');
                     
                     Notify("New payment added", 'success');
-                    
+  
                 }
               });
-
+                //refreshTable();
               }
             }
 

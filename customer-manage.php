@@ -176,7 +176,7 @@ function test_input($data) {
                               echo "<td>" . $row['created_at'] . "</td>";
                               echo "<td>";
                               echo "<a href='customer-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                              echo " &nbsp; <a href='customer-delete.php?id=".$row['id']."&custf=". $row['firstName'] . "&custl=" . $row['lastName']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                               echo "</td>";
                               echo "</tr>";
                             }

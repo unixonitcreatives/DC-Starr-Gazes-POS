@@ -95,7 +95,7 @@ $alertMessage="";
                               echo "<td>" . $row['created_at'] . "</td>";
                               echo "<td>";
                               echo "<a href='user-update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'].'&user='.$row['username'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                               echo "</td>";
                               echo "</tr>";
                             }

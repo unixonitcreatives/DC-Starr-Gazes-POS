@@ -41,6 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     
                                     
                                     if($result){
+
+                                     //logs
+                                    $info = $_SESSION['username']." updated a user";
+                                    $info2 = "Details: ".$username." as ".$usertype." IP:".getRealIpAddr();
+
+                                    $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                                    $r = mysqli_query($link, $q) or die(mysqli_error($link));
+                                      
                                     echo "<script>Notify('User Updated succesfully','Success');</script>";
                                     echo "<script>window.location.href='user-manage.php?alert=updatesuccess'</script>";
                                     }else{
@@ -52,6 +60,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     }
                                       mysqli_close($link);                                  
       }
+function getRealIpAddr() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
+      $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
+      $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+  }
+
 
 function test_input($data) {
     $data = trim($data);

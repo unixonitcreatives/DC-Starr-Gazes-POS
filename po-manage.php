@@ -57,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){ //dito bro, hindi pumapasok dito kapa
                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 
                     if($result){
+                                   
+
                                     echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     echo "<script>console.log('new user added');</script>";
                                     echo "<script>window.location('po-manage.php');</script>";

@@ -88,26 +88,26 @@
                 <select class="form-control select2" style="width: 100%;" oninput="upperCase(this)" name="warehouse_name" id="warehouse_name" required>
                 <?php
                 // Include config file
-                require_once "config.php";
-                // Attempt select query execution
-                $query = "";
-                $query = "SELECT * FROM warehouse ORDER BY warehouse_name asc";
-                if($result = mysqli_query($link, $query)){
-                if(mysqli_num_rows($result) > 0){
+      //           require_once "config.php";
+      //           // Attempt select query execution
+      //           $query = "";
+      //           $query = "SELECT * FROM warehouse ORDER BY warehouse_name asc";
+      //           if($result = mysqli_query($link, $query)){
+      //           if(mysqli_num_rows($result) > 0){
 
-                while($row = mysqli_fetch_array($result)){
+      //           while($row = mysqli_fetch_array($result)){
 
-                echo "<option value='".$row['custID']."'>" . $row['warehouse_name'] .  "</option>";
-              }
+      //           echo "<option value='".$row['custID']."'>" . $row['warehouse_name'] .  "</option>";
+      //         }
 
-              // Free result set
-              mysqli_free_result($result);
-            } else{
-            echo "<p class='lead'><em>No records were found.</em></p>";
-          }
-        } else{
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-      }
+      //         // Free result set
+      //         mysqli_free_result($result);
+      //       } else{
+      //       echo "<p class='lead'><em>No records were found.</em></p>";
+      //     }
+      //   } else{
+      //   echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+      // }
 
       //mysqli_close($link);
 
@@ -135,50 +135,6 @@
     </tr>
   </thead>
   <tbody>
-
-    <!--
-    <?php
-    require_once ('config.php');
-    $desc=$qty=$price="";
-
-    $query  = "SELECT so_desc AS DESCRIPTION, so_cat as CATEGORY, COUNT(so_qty) AS QTY, COUNT(so_unit_price) AS UNITPRICE, SUM(so_price) AS PRICE  from sales_order GROUP BY so_desc";
-    $result = mysqli_query($link, $query);
-
-    if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result)) {
-    $desc = $row['DESCRIPTION'];
-    $cat = $row['CATEGORY'];
-    $qty = $row['QTY'];
-    $uprice = $row['UNITPRICE'];
-    $price = $row['PRICE'];
-    echo "<tr>";
-    echo "<td>" . $desc . "</td>";
-    echo "<td>" . $qty . "</td>";
-    echo "<td>" . $price . "</td>";
-    echo "</tr>";
-
-  }
-} else {
-echo "<center>0 results on database</center>";
-}
-
-//mysqli_close($link);
-
-?>
-
-<?php
-require_once 'config.php';
-$gTotal="";
-$totalQuery = "SELECT SUM(so_price) AS totalAmount FROM sales_order";
-$totalResult = mysqli_query($link, $totalQuery);
-
-while ($row = mysqli_fetch_assoc($totalResult)){
-$gTotal = $row['totalAmount'];
-
-}
-?> -->
-
 
 </tbody>
 </table>
@@ -235,7 +191,7 @@ $gTotal = $row['totalAmount'];
             b.product_SKU,b.suggested_retail_price,c.category_name
             FROM stock a
             INNER JOIN product_model b on b.product_SKU=a.PO_ID
-            INNER JOIN  categories c on c.custID=b.product_category
+            INNER JOIN  categories c on c.category_name=b.product_description
             WHERE a.qty>0";
             if($result = mysqli_query($link, $query)){
               if(mysqli_num_rows($result) > 0){

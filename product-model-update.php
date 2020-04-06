@@ -83,6 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       if($result){
         //echo "<script>Notify('new product model added succesfully','Success');</script>";
         //echo "<script>console.log('new user added');</script>";
+            //logs
+        $info = $_SESSION['username']." updated a product model";
+        $info2 = "Details: product: ".$product_SKU.", description: ".$product_description."";
+
+        $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+        $r = mysqli_query($link, $q) or die(mysqli_error($link)); 
         header("Location: product-model-manage.php?alert=updatesuccess");
       }else{
         //If execution failed

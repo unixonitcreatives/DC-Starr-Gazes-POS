@@ -163,6 +163,18 @@
                             </ul>   
                         </li>
 
+
+                        <li class="treeview">
+                            <a href="#"><i class="fa fa-id-card-o"></i> <span>Logs</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="logs-manage.php">Manage Logs</a></li>
+                            </ul>
+                        </li>
+
                         <li><a href="#" class="icon-bar" data-toggle="modal" data-target="#modal-default"><i class="fa fa-close"></i> <span>Logout</span></a>
                         </li>
                     </ul>

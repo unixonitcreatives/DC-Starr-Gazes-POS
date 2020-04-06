@@ -72,11 +72,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                       $alertMessage = "<div class='alert alert-danger' role='alert'>
                                       Error adding data.
                                       </div>";}
-                                    
+                                      mysqli_close($link);
                                  }
                              } else{
                                  echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                              }
+
+                             mysqli_close($link);
 
         }
       }
@@ -88,17 +90,18 @@ function test_input($data) {
     return $data;
 }
 
-//$_GET['alert'] = "";
-
-if(@$_GET["alert"] == "success"){
-    $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
-} else if(@$_GET["alert"] == "deletesuccess"){
-    $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";  
-} else if(@$_GET["alert"] == "returned"){
-    $alertMessage = "<div class='alert alert-success' role='alert'>Data returned in stocks.</div>";  
-} 
-
 ?>
+
+<?php
+  if(@$_GET['alert'] == "updatesuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully updated.</div>";
+        }else if(@$_GET['alert'] == "deletesuccess"){
+          $alertMessage = "<div class='alert alert-danger' role='alert'>Data successfully deleted.</div>";
+        }else if(@$_GET['alert'] == "addsuccess"){
+          $alertMessage = "<div class='alert alert-success' role='alert'>Data successfully added.</div>";
+  }
+   ?>
+
 <!-- ================================================================ -->
 <!DOCTYPE html>
 <html>
@@ -121,79 +124,48 @@ if(@$_GET["alert"] == "success"){
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Manage Returns<br>
+         Manage Logs<br>
         <small>DC Starr Gazes Inventory Management System</small>
       </h1>
     </section>
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-       <?php echo $alertMessage; ?>
+        <?php echo $alertMessage; ?>
+        <div class="row">
+          <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-default">
             <div class="box-header with-border">
-              <h3 class="box-title">Search for Returns Information</h3>
-              <br><a href="returns-add.php" class="text-center">+ add new return</a>
-<!--                <button type="button" class="btn btn-primary pull-right" onclick="exportTb()">Export Excel</button>-->
-            </div>
-            <div class="box-body" id='th'>
+              <h3 class="box-title">Search for Logs Information</h3>
               
-              <table id="example1" class="table table-bordered table-hover dataTable tb" role="grid" aria-describedby="example2_info">
-                
-                      <thead id='thead'>
+            </div>
+            <div class="box-body">
+              <!-- <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                      <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Date of Purchase</th>
-                          <th>Date Returned</th>
-                          <th>Transaction ID</th>
-                          <th>Customer</th>
-                          <th>Item</th>
-                          <th>Quantity</th>
-                          <th>Cashier</th>
-                          <th>Remarks</th>
-                          <th>Actions</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Logs</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Details</th>
+                          <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Date / Time Created</th>
                         </tr>
                       </thead>
-                  
                       <tbody>
                         <?php
                         // Include config file
                         require_once 'config.php';
-                        // $qq = "SELECT stock.PO_ID, product_model.product_SKU FROM stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID";
-
-                        // $q = "SELECT * FROM returns INNER JOIN stock on ";
-                        // $r = mysqli_query($link,$q);
-                        // $qq = "SELECT returns.date_purchase,returns.created_at,returns.id,returns.trans_id,returns.customer,returns.item,returns.qty,returns.cashier,returns.remarks,product_model.product_SKU,stock.PO_ID FROM returns INNER JOIN stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID";
-
-                        // $qq = "SELECT returns.id,returns.date_purchase,returns.created_at,returns.trans_id,returns.customer,returns.qty,returns.cashier,returns.remarks,stock.PO_ID,product_model.product_SKU FROM stock INNER JOIN product_model on product_model.product_SKU = stock.PO_ID INNER JOIN returns ";
-                        // $rr = mysqli_query($link,$qq);
 
                         // Attempt select query execution
-                        $query = "SELECT returns.id,returns.date_purchase,returns.created_at,returns.trans_id,returns.customer,returns.item,returns.qty,returns.cashier,returns.remarks FROM returns ORDER BY returns.id DESC";
+                        $query = "SELECT * FROM logs ORDER BY id DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
                             $ctr = 0;
-                            while($row = mysqli_fetch_assoc($result)){
-                              //$it = $row['item'];
-                              //$id = $row['custID'];
+                            while($row = mysqli_fetch_array($result)){
                               $ctr++;
                               echo "<tr>";
-                              echo "<td>" . $ctr . "</td>";
-                              echo "<td>" . $row['date_purchase'] . "</td>";
-                              echo "<td>" . $row['created_at'] . "</td>";  
-                              echo "<td>" . $row['trans_id'] ."</td>";
-                              echo "<td>" . $row['customer'] . "</td>";
-                              echo "<td>" . $row['item'] . "</td>";
-                              echo "<td>" . $row['qty'] . "</td>";
-                              echo "<td>" . $row['cashier'] . "</td>";
-                              echo "<td>" . $row['remarks'] . "</td>";
-                              echo "<td>";
-                              echo "<a href='return-stock.php?sku=". $row['item'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                              echo "<a href='return-delete.php?id=". $row['id']."&tx=". $row['trans_id'] ."&item=". $row['item'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-////                              echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-//                              echo "</td>";
+                              echo "<td>" . $row['info'] . "</td>";
+                              echo "<td>" . $row['info2'] . "</td>";
+                              echo "<td>" . $row['created_at'] . "</td>";
                               echo "</tr>";
-                             
                             }
                             // Free result set
                             mysqli_free_result($result);
@@ -208,15 +180,17 @@ if(@$_GET["alert"] == "success"){
                         mysqli_close($link);
                         ?>
                       </tbody>
-                    </table>
+                    </table> -->
+              
+              <div id='table-holder'>
             </div>
           </div>
-     
+      </div>
+            </div>
+    
     </section>
   <!-- /.content-wrapper -->
-    </div>
-    </div>
-    
+</div>
 
 
 <!-- =========================== FOOTER =========================== -->
@@ -228,44 +202,22 @@ if(@$_GET["alert"] == "success"){
 <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
 
-<script type="text/javascript">
-// function ExportToExcel(tableID){
-//        var htmltable= document.getElementById(tableID);
-//        var html = htmltable.outerHTML;
-//        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
-//     }
 
-function exportTb(){
-    var downloadLink;
-    var dataType = 'application/vnd.ms-excel';
-    var tableSelect = document.getElementById('example1');
-    var table_html = '<table><thead><tr><th></th><th></th><th></th><th></th><th></th></tr></thead></table>';
-    var tableHTML = table_html + tableSelect.outerHTML;
-    
-    // Create download link element
-    downloadLink = document.createElement("a");
-    
-    //document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob([tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob );
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ',' + tableHTML;
-    
-        //triggering the function
-        downloadLink.click();
-}
+<script>
 
-}
+    var table = $('#example2');  
 
+    $(document).ready(function(){
+    refreshTable();
+    });
+
+    function refreshTable(){
+    $('#table-holder').load('getLogsTable.php', function(){
+         setTimeout(refreshTable, 500);
+    });
+    }
 
 </script>
-
-
 
 </body>
 </html>

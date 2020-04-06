@@ -117,7 +117,7 @@ require_once "config.php";
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                      <a class="btn btn-danger" href='supplier-delete.php?id=<?php echo $row['id'];?>'>Delete</a>
+                                      <a class="btn btn-danger" href='supplier-delete.php?id=<?php echo $row['id'];?>&name=<?php echo $row['supplier_name']; ?>'>Delete</a>
                                     </div>
                                   </div>
                                   <!-- /.modal-content -->

@@ -9,7 +9,7 @@
 					   b.product_SKU,b.sell_price,c.category_name
 					   FROM stock a
 					 INNER JOIN product_model b on b.product_SKU=a.PO_ID
-					 INNER JOIN  categories c on c.custID=b.product_category
+					 INNER JOIN  categories c on c.category_name=b.product_description
 					 WHERE a.qty>0 and a.custID= '$id'";
 		$query = $link->query($sql);
 		$row = $query->fetch_assoc();

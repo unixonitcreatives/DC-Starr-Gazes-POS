@@ -72,6 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                     if($result){
                                     //echo "<script>Notify('Category Added Succesfully','Success');</script>";
+
+                                     $info = $_SESSION['username']." added a new sub-category";
+                                    $info2 = "Details: sub-category name: ".$category.", parent-category: ".$p_category."";
+
+                                    $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                                    $r = mysqli_query($link,$q); 
                                     header("Location: category-sub-manage.php?alert=addsuccess");
 
                                     }else{

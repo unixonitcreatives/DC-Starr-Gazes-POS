@@ -53,6 +53,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
     if($result){
+       //logs
+    $info = $_SESSION['username']." updated a warehouse";
+    $info2 = "Details: warehouse name: ".$warehouse_name.", address: ".$address."";
+
+    $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+    $r = mysqli_query($link, $q) or die(mysqli_error($link));
+
       header("Location: warehouse-manage.php?alert=updatesuccess");
     }else{
       //If execution failed

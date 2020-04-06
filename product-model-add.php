@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     //Try another username pop up
                                     echo "<script>alert('product SKU already exist','success');</script>";
                                     echo "<script>console.log('Username already exist');</script>";
-                                    mysqli_free_result($result);
+                                    //mysqli_free_result($result);
                                  } else{
                                     //If the username doesnt exist in the database
                                     //Proceed adding to database
@@ -83,6 +83,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     if($result){
                                     //echo "<script>Notify('new product model added succesfully','Success');</script>";
                                     //echo "<script>console.log('new user added');</script>";
+                                     //logs
+                                    $info = $_SESSION['username']." added a new product model";
+                                    $info2 = "Details: product sku: ".$product_SKU.", description: ".$product_description."";
+
+                                    $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+                                    $r = mysqli_query($link, $q) or die(mysqli_error($link));  
+
                                     header("Location: product-model-manage.php?alert=addsuccess");
                                     }else{
                                       //If execution failed
