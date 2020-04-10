@@ -50,27 +50,27 @@
 
 <!-- Alert animation -->
 <script type="text/javascript">
-$(document).ready(function () {
+  $(document).ready(function () {
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
+    window.setTimeout(function() {
+      $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove();
         var uri = window.location.toString();
         if (uri.indexOf("?") > 0) {
-            var clean_uri = uri.substring(0, uri.indexOf("?"));
-            window.history.replaceState({}, document.title, clean_uri);
+          var clean_uri = uri.substring(0, uri.indexOf("?"));
+          window.history.replaceState({}, document.title, clean_uri);
         }
-    });
-  }, 1000);
+      });
+    }, 1000);
 
-});
+  });
 </script>
 
 <script type="text/javascript">
-var orders=[];
-var custID;
+  var orders=[];
+  var custID;
 
-$(function () {
+  $(function () {
 
   //Initialize Select2 Elements
   $('.select2').select2()
@@ -88,21 +88,21 @@ $(function () {
   $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
   //Date range as a button
   $('#daterange-btn').daterangepicker(
-    {
-      ranges   : {
-        'Today'       : [moment(), moment()],
-        'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-        'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-      },
-      startDate: moment().subtract(29, 'days'),
-      endDate  : moment()
+  {
+    ranges   : {
+      'Today'       : [moment(), moment()],
+      'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+      'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+      'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+      'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
     },
-    function (start, end) {
-      $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-    }
+    startDate: moment().subtract(29, 'days'),
+    endDate  : moment()
+  },
+  function (start, end) {
+    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+  }
   )
 
   //Date picker
@@ -188,6 +188,12 @@ $(function () {
       }
     });
   });
+
+
+
+   // $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
+   // $r = mysqli_query($link, $q) or die(mysqli_error($link))
+
   //manual data entry
   $('#btnadd').on('click',function(){
     check_stock($('#warehouse_name').val());
@@ -262,17 +268,17 @@ function get_orders(){
     data: orders,
     bInfo:false,
     columns: [
-      { data: "Description" },
-      { data: "Category" },
-      { data: "Qty" },
-      { data: "UnitPrice" },
-      { data: "TotalPrice" },
-      {
-        data: function (data) {
-          indx++;
-          return '<input id="' + indx + '"  type="button" class="btn btn-small btn-danger" value="-"  onclick="RemoveItem(\'' + data.custID + '\')" />';
-        }
+    { data: "Description" },
+    { data: "Category" },
+    { data: "Qty" },
+    { data: "UnitPrice" },
+    { data: "TotalPrice" },
+    {
+      data: function (data) {
+        indx++;
+        return '<input id="' + indx + '"  type="button" class="btn btn-small btn-danger" value="-"  onclick="RemoveItem(\'' + data.custID + '\')" />';
       }
+    }
     ]
   });
   //bibilangin nya ung sales order items
@@ -295,7 +301,7 @@ function RemoveItem(id){
     for(var i=0 ; i<orders.length; i++)
     {
       if(orders[i].custID==id)
-      orders.splice(i);
+        orders.splice(i);
     }
 
     get_orders();
@@ -305,18 +311,18 @@ function RemoveItem(id){
 </script>
 
 <script>
-$(function() {
-  $('#example2').DataTable()
-  $('#example1').DataTable({
-    'paging'      : true,
-    'lengthChange': true,
-    'searching'   : true,
-    'ordering'    : true,
-    'info'        : true,
-    'autoWidth'   : false,
-    'scrollX'     : true
+  $(function() {
+    $('#example2').DataTable()
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false,
+      'scrollX'     : true
+    })
   })
-})
 </script>
 
 
@@ -339,27 +345,27 @@ function Notify(msg,mode){
 
 <!-- Alert animation -->
 <script type="text/javascript">
-$(document).ready(function () {
+  $(document).ready(function () {
 
-  window.setTimeout(function() {
-    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-      $(this).remove();
-    });
-  }, 1000);
+    window.setTimeout(function() {
+      $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove();
+      });
+    }, 1000);
 
-});
+  });
 </script>
 
 <script type="text/javascript">
-function changetextbox()
-{
+  function changetextbox()
+  {
     if (document.getElementById("mop").value === "Cash") {
-        document.getElementById("ref").disabled='true';
-        document.getElementById("ref").value='';
+      document.getElementById("ref").disabled='true';
+      document.getElementById("ref").value='';
     } else {
-        document.getElementById("ref").disabled='';
+      document.getElementById("ref").disabled='';
     }
-}
+  }
 </script>
 
 
@@ -367,8 +373,8 @@ function changetextbox()
   //uppercase text box
   function upperCaseF(a){
     setTimeout(function(){
-        a.value = a.value.toUpperCase();
+      a.value = a.value.toUpperCase();
 
     }, 1);
-}
+  }
 </script>

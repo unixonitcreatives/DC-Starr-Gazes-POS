@@ -2,11 +2,41 @@
 <?php include('template/session.php'); ?>
 <!-- =================================================== -->
 
-<?php 
+<!-- ====================Expired Script====================== -->
+  <?php
+  $alertMessage = "";
 
-require_once "config.php"; 
+  // Include config file
+  include ('config.php');
 
-?>
+  $curdate = date("Y-m-d");
+
+    //insert into expired product table
+    $insertToExpList = "INSERT INTO expired_stocks (custID, PO_ID, product_SKU, warehouse_ID, stock_status, expiry_date, approved_by, created_at) SELECT custID, PO_ID, product_SKU, warehouse_ID, stock_status,  expiry_date, approved_by, created_at FROM stock WHERE expiry_date = '".$curdate."' ";
+    $insertResult = mysqli_query($link, $insertToExpList);
+
+    //if already inserted, delete from product list
+    if($insertResult){
+      $updateStatus = "UPDATE expired_stocks SET stock_status = 'Expired' ";
+      $updateResult = mysqli_query($link, $updateStatus);
+
+      if($updateResult){
+        $deleteFromList = "DELETE from stocks WHERE expiry_date = '".$curdate."' ";
+        $deleteResult = mysqli_query($link, $deleteFromList);
+
+        $alertMessage = "<div class='alert alert-success' role='alert'>Expired products transfered to expired section.</div>";
+      }else {
+        $alertMessage = "<div class='alert alert-danger' role='alert'>Error updating stocks.</div>";
+      }
+    }
+
+    include("simple_html_dom.php");
+
+
+//$rows = $tables->children(0)->children();
+
+
+  ?>
 
 <!DOCTYPE html>
 <html>
@@ -84,40 +114,22 @@ require_once "config.php";
 
       <div class="row">
         <div class="box-body col-lg-12">
-      <?php
-        $q = "SELECT COUNT(id) as total_customers FROM customers";
-        $r = mysqli_query($link,$q);
-
-        while($row = mysqli_fetch_assoc($r)){
-       ?> 
-        <div class="col-md-3">
-            <div class="box" style="height: 115px;">
-              <span class="info-box-icon bg-green" style="height: 115px;"><i class="fa fa-users" style="margin-top: 30px"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14px;">Total Customers</span>
-                  <br> 
-                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_customers']?></span>
-                </div>
-            </div>
-        </div>
-
-      <?php } ?>
-
-       
-
+      
       <?php
         $q = "SELECT COUNT(id) as total_stocks FROM stock WHERE stock_status = 'In Stock'";
         $r = mysqli_query($link,$q);
 
         while($row = mysqli_fetch_assoc($r)){
        ?> 
-          <div class="col-md-3">
+          <div class="col-md-6">
             <div class="box" style="height: 115px;">
-              <span class="info-box-icon bg-red" style="height: 115px;"><i class="fa fa-cubes" style="margin-top: 30px;"></i></span>
+              <span class="info-box-icon bg-orange" style="height: 115px;"><i class="fa fa-cubes" style="margin-top: 30px;"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14.1px;">Total Items<br>In-Stock</span>
-                  
-                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_stocks']?></span>
+                  <span class="info-box-text" style="color: gray; font-weight: 500; font-size: 1.3em;">Total Items In-Stock</span>
+                  <br>
+                  <center>
+                  <span class="info-box-number" style="font-size: 30px; text-align: center;"><?php echo $row['total_stocks']?></span>
+                  </center>
                 </div>
             </div>
           </div>
@@ -125,38 +137,22 @@ require_once "config.php";
       <?php } ?>
 
       <?php
-        $q = "SELECT COUNT(id) as total_suppliers FROM supplier";
+
+        $q = "SELECT count(id) as total_expired FROM expired_stocks";
         $r = mysqli_query($link,$q);
 
         while($row = mysqli_fetch_assoc($r)){
+
       ?> 
-        <div class="col-md-3">
+          <div class="col-md-6">
             <div class="box" style="height: 115px;">
-              <span class="info-box-icon bg-yellow" style="height: 115px;"><i class="fa fa-id-card-o" style="margin-top: 30px;"></i></span>
+              <span class="info-box-icon bg-red" style="height: 115px;"><i class="fa fa-cart" style="margin-top: 30px;"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 14.1px;">Total Suppliers</span>
+                  <span class="info-box-text" style="color: gray; font-weight: 500; font-size: 1.3em;">Total Expired Stocks</span>
                   <br>
-                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_suppliers']?></span>
-                </div>
-            </div>
-        </div>
-
-        <?php } ?>
-
-
-           <?php
-        $q = "SELECT COUNT(id) as total_warehouse FROM warehouse";
-        $r = mysqli_query($link,$q);
-
-        while($row = mysqli_fetch_assoc($r)){
-       ?> 
-          <div class="col-md-3">
-            <div class="box" style="height: 115px;">
-              <span class="info-box-icon bg-blue" style="height: 115px;"><i class="fa fa-dropbox" style="margin-top: 30px;"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text" style="color: gray; font-weight: 600; font-size: 13.8px;">Total Warehouse</span>
-                  <br>
-                  <span class="info-box-number" style="font-size: 30px; text-align: right;"><?php echo $row['total_warehouse']?></span>
+                  
+                  <span class="info-box-number" style="font-size: 30px; text-align: center;"><?php echo $row['total_expired']?></span>
+                  
                 </div>
           </div>
 
@@ -165,25 +161,6 @@ require_once "config.php";
         </div>
           </div>
             <div class="row">
-
-          <div class="col-lg-12">
-            <div class="box">
-              <div class="box-header">
-                <h4 class="box-title lead" style="margin-left: 5px; margin-top: 10px; font-size: 20px;">Quick Access:</h4>
-              </div>
-
-                <div class="box-body">
-                  <a href='si_generate.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Invoice</a>
-                  <a href='po_generate.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Purchase Order</a>
-                  <a href='warehouse-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Warehouse</a>
-                  <a href='customer-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Customer</a>
-                  <a href='supplier-add.php' class="btn bg-green" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Supplier</a>
-                  <a href='product-model-add.php' class="btn bg-blue" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Product Model</a>
-                  <a href='category-add.php' class="btn bg-red" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Category</a>
-                  <a href='category-sub-add.php' class="btn bg-yellow" style="padding: 11px;font-size:15px;border-radius:7px;margin-bottom:5px;margin-right:5px;">Add Sub-Category</a>
-                </div>
-            </div>
-          </div>
 
         <div class="col-lg-6">
             <div class="box">

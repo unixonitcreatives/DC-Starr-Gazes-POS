@@ -212,7 +212,7 @@
               echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
             }
 
-            mysqli_close($link);
+            //mysqli_close($link);
 
             ?>
           </select>
@@ -280,7 +280,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-default btn" data-dismiss="modal">Close</button>
-        <button id="btnsave" class="btn btn-warning btn">Save</button>
+        <button id="btnsave" class="btn btn-warning btn" onclick="logs()">Save</button>
       </div>
     </div>
   </div>
@@ -289,6 +289,45 @@
 
 <!-- =========================== JAVASCRIPT ========================= -->
 <?php include('template/js.php'); ?>
+
+<?php
+                            $IDtype = "SI";
+                            $m = date('m');
+                            $y = date('y');
+                            $d = date('d');
+
+                            // Attempt select query execution
+                            $qry = mysqli_query($link,"SELECT MAX(soID) FROM `sales_order`"); // Get the latest ID sa database ng sales_order
+                            $resulta = mysqli_fetch_assoc($qry);
+                            $newID = $resulta['MAX(soID)'] + 1; //Get the latest ID then Add 1
+                            $custID = str_pad($newID, 5, '0', STR_PAD_LEFT); //Prepare custom ID with 8 Paddings
+                            $custnewID = $IDtype.$m.$d.$y.$custID;
+
+?>
+
+<script>
+  
+  function logs() {
+    
+    var custnewID = $('#custnewID').val();
+    var session = '<?php echo $_SESSION['username']; ?>';
+    var info =  session + ' added a new invoice';
+    var info2 = 'Details: Transaction ID: <?php echo $custnewID; ?>';
+    var url_t = 'logs-query.php';
+
+    $.ajax({
+      type: 'POST',
+      url: 'logs-query.php',
+      data: {'info2':info2, 'info':info},
+      success:function(d){
+         $('#modal-checkout').modal('hide');
+         location.reload();
+      } 
+    });
+    
+  }
+
+</script>
 
 <!-- =========================== FOOTER =========================== -->
 <footer class="main-footer">

@@ -8,41 +8,7 @@
   include('template/user_auth.php');
 
   ?>
-  <!-- ====================Expired Script====================== -->
-  <?php
-  $alertMessage = "";
-
-  // Include config file
-  include ('config.php');
-
-  $curdate = date("Y-m-d");
-
-    //insert into expired product table
-    $insertToExpList = "INSERT INTO expired_stocks (custID, PO_ID, product_SKU, warehouse_ID, stock_status, expiry_date, approved_by, created_at) SELECT custID, PO_ID, product_SKU, warehouse_ID, stock_status,  expiry_date, approved_by, created_at FROM stock WHERE expiry_date = '".$curdate."' ";
-    $insertResult = mysqli_query($link, $insertToExpList);
-
-    //if already inserted, delete from product list
-    if($insertResult){
-      $updateStatus = "UPDATE expired_stocks SET stock_status = 'Expired' ";
-      $updateResult = mysqli_query($link, $updateStatus);
-
-      if($updateResult){
-        $deleteFromList = "DELETE from stocks WHERE expiry_date = '".$curdate."' ";
-        $deleteResult = mysqli_query($link, $deleteFromList);
-
-        $alertMessage = "<div class='alert alert-success' role='alert'>Expired products transfered to expired section.</div>";
-      }else {
-        $alertMessage = "<div class='alert alert-danger' role='alert'>Error updating stocks.</div>";
-      }
-    }
-
-    include("simple_html_dom.php");
-
-
-//$rows = $tables->children(0)->children();
-
-
-  ?>
+  
 
   <!-- ================================================================ -->
   <!DOCTYPE html>

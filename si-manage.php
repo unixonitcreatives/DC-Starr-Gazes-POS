@@ -7,6 +7,10 @@
   $Cashier_auth = 0;
  include('template/user_auth.php');
  $alertMessage="";
+
+ if(@$_GET["alert"] == "void"){
+    $alertMessage = "<div class='alert alert-success' role='alert'>Invoice Voided.</div>";
+ }
 ?>
 
 <!-- ================================================================ -->
