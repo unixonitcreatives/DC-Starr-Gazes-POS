@@ -123,7 +123,7 @@
        ?> 
           <div class="col-md-6">
             <div class="box" style="height: 115px;">
-              <span class="info-box-icon bg-orange" style="height: 115px;"><i class="fa fa-cubes" style="margin-top: 30px;"></i></span>
+              <span class="info-box-icon bg-yellow" style="height: 115px;"><i class="fa fa-cubes" style="margin-top: 30px;"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text" style="color: gray; font-weight: 500; font-size: 1.3em;">Total Items In-Stock</span>
                   <br>
@@ -146,7 +146,7 @@
       ?> 
           <div class="col-md-6">
             <div class="box" style="height: 115px;">
-              <span class="info-box-icon bg-red" style="height: 115px;"><i class="fa fa-cart" style="margin-top: 30px;"></i></span>
+              <span class="info-box-icon bg-red" style="height: 115px;"><i class="fa fa-cubes" style="margin-top: 30px;"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text" style="color: gray; font-weight: 500; font-size: 1.3em;">Total Expired Stocks</span>
                   <br>
