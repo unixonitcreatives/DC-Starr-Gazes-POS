@@ -145,6 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     <th>No.</th>
                     <th>ACC No.</th>
                     <th>Warehouse Name</th>
+                    <th>Address</th>
                     <th>Action</th>
                   </tr>
                 </thead>

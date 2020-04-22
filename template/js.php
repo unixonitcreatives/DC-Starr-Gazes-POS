@@ -295,17 +295,31 @@ function get_orders(){
   $('#username_ID').text();
   console.log(orders);
 }
+
 function RemoveItem(id){
   var r = confirm("Are you sure you want to remove " + id + "?" );
   if (r == true) {
-    for(var i=0 ; i<orders.length; i++)
+    for(var i = 0; i<orders.length; i++)
     {
-      if(orders[i].custID==id)
-        orders.splice(i);
+      if(orders[i].custID===id){
+          var s = $.inArray(id);
+          //var i = 0;
+
+          orders.splice(i,1);       
+        
+         //$('#tOrders').closest('tr').remove();
+         
+
+        // var r = arrayRemove(orders, i);
+        
+        console.log(id);
+      }
     }
 
-    get_orders();
+    
   }
+  get_orders();
+
 }
 
 </script>

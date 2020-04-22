@@ -17,12 +17,16 @@
 
     //if already inserted, delete from product list
     if($insertResult){
-      $updateStatus = "UPDATE expired_stocks SET stock_status = 'Expired' ";
-      $updateResult = mysqli_query($link, $updateStatus);
+        $updateStatus = "UPDATE stock SET stock_status = 'Expired' WHERE expiry_date = '$curdate'";
+        $updateResult = mysqli_query($link, $updateStatus);
 
       if($updateResult){
-        $deleteFromList = "DELETE from stocks WHERE expiry_date = '".$curdate."' ";
+
+        $deleteFromList = "DELETE from stock WHERE stock_status = 'Expired' ";
         $deleteResult = mysqli_query($link, $deleteFromList);
+
+        $updateExpired = "UPDATE expired_stocks SET stock_status = 'Expired'";
+        $updateResultEx = mysqli_query($link,$updateExpired);
 
         $alertMessage = "<div class='alert alert-success' role='alert'>Expired products transfered to expired section.</div>";
       }else {
@@ -110,7 +114,7 @@
   <!-- ======================== MAIN CONTENT ======================= -->
     <!-- Main content -->
     <section class="content">
-
+      <p><?php echo $alertMessage?></p>
 
       <div class="row">
         <div class="box-body col-lg-12">
@@ -197,7 +201,7 @@
                       echo "<tr>
                               <td>".$ctr."</td>
                               <td>".$row['firstName']."&nbsp;".$row['lastName']."</td>
-                              <td><div class='text-center badge bg-red' style='padding: 5px; font-size: 13px; '>UNPAID</div></td>
+                              <td><div class='text-center badge bg-red' style='margin-left: 8px;'>UNPAID</div></td>
                               <td>".$row['created_at']."</td>
                             </tr>
                       ";

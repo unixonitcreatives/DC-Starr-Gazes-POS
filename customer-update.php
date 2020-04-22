@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $address = test_input($_POST['address']);
     //$id = test_input($_POST['id']);
 
-        $query = "UPDATE customers SET lastName='$lastname', firstName='$firstname',contact='$contact',address='$address' WHERE id='$id'";  
+        $query = "UPDATE customers SET lastName='$lastname', firstName='$firstname',contact='$contact',address='$address' WHERE custID='$id'";  
         $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute query
                                     
                             
@@ -108,7 +108,7 @@ function test_input($data) {
               <div class="box-body">
                 <?php echo $alertMessage ?></p>
                 <?php
-                  $q = "SELECT * FROM customers WHERE id='$id'";
+                  $q = "SELECT * FROM customers WHERE custID='$id'";
                   $r = mysqli_query($link,$q);
 
                   while($row = mysqli_fetch_assoc($r)){

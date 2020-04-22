@@ -23,12 +23,15 @@
 
     //if already inserted, delete from product list
     if($insertResult){
-      $updateStatus = "UPDATE expired_stocks SET stock_status = 'Expired' ";
-      $updateResult = mysqli_query($link, $updateStatus);
+        $updateStatus = "UPDATE stock SET stock_status = 'Expired' WHERE expiry_date <= '$curdate'";
+        $updateResult = mysqli_query($link, $updateStatus);
 
       if($updateResult){
-        $deleteFromList = "DELETE from stocks WHERE expiry_date = '".$curdate."' ";
+        $deleteFromList = "DELETE from stock WHERE stock_status = 'Expired' ";
         $deleteResult = mysqli_query($link, $deleteFromList);
+
+        $updateExpired = "UPDATE expired_stocks SET stock_status = 'Expired'";
+        $updateResultEx = mysqli_query($link,$updateExpired);
 
         $alertMessage = "<div class='alert alert-success' role='alert'>Expired products transfered to expired section.</div>";
       }else {
@@ -71,7 +74,6 @@
           </h1>
         </section>
         <!-- ======================== MAIN CONTENT ======================= -->
-        <?php echo $alertMessage; ?>
         <!-- Main content -->
         <section class="content">    
             <!-- general form elements -->
@@ -98,7 +100,7 @@
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Expiry Date</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Approved By</th>
-                      <th>Action</th>
+                      
                     </tr>
                   </thead>
                   <tbody id="ex1">
@@ -135,35 +137,7 @@
                           echo "<td>" . $row['approved_by']." on ". $row['created_at'] . "</td>";
                           echo "<td>";
 
-                          if($row['stock_status']=="In Stock"){
-                            echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-
-
-                            echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-
-                          } elseif ($row['stock_status']=="Sold"){
-                            echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-
-                            echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
-
-                            echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
-
-                            echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-
-
-                          } elseif ($row['stock_status']=="Void"){
-                            echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-ok'></span></a>";
-
-                            echo " &nbsp; <a href='#". $row['id'] ."' title='Some Function Here' data-toggle='tooltip'><span class='glyphicon glyphicon-cog'></span></a>";
-
-                            echo " &nbsp; <a href='#". $row['id'] ."' title='Print Barcode' data-toggle='tooltip'><span class='glyphicon glyphicon-barcode'></span></a>";
-
-                            echo " &nbsp; <a href='user-delete.php?id=". $row['id'] ."' title='Void' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                              
-
-                          } else {
-                             
-                          }
+          
 
                           echo "</td>";
                           echo "</tr>";
@@ -202,38 +176,7 @@
 
 
      <script type="text/javascript">
-// function ExportToExcel(tableID){
-//        var htmltable= document.getElementById(tableID);
-//        var html = htmltable.outerHTML;
-//        window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
-//     }
 
-// function exportTableToExcel(){
-//     var downloadLink;
-//     var dataType = 'application/vnd.ms-excel';
-//     var tableSelect = document.getElementById('example1');
-//     var table_html = '<table><thead><tr><th>NO.</th><th>SC No.</th><th>PO NO.</th><th>SKU</th><th>Warehouse</th><th>Status</th><th>Expiry Date</th><th>Approved by</th></tr></thead></table>';
-//     var tableHTML = table_html + tableSelect.outerHTML.replace(/ /g, '%20');
-    
-//     // Create download link element
-//     downloadLink = document.createElement("a");
-    
-//     //document.body.appendChild(downloadLink);
-    
-//     if(navigator.msSaveOrOpenBlob){
-//         var blob = new Blob([tableHTML], {
-//             type: dataType
-//         });
-//         navigator.msSaveOrOpenBlob( blob );
-//     }else{
-//         // Create a link to the file
-//         downloadLink.href = 'data:' + dataType + ',' + tableHTML;
-    
-//         //triggering the function
-//         downloadLink.click();
-// }
-
-// }
 
 function ExportToExcel(){
        var downloadLink;

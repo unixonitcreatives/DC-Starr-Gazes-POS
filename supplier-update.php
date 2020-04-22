@@ -60,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $sql_check = "UPDATE supplier SET supplier_name='$supplier_name', supplier_contact_person='$supplier_contact_person', supplier_contact_no='$supplier_contact_no', supplier_email='$supplier_email', supplier_address='$supplier_address' WHERE  id='$get_supplier_id'  ";
     $result = mysqli_query($link, $sql_check); //Execute query
     if($result){
-      $info = $_SESSION['username']." updated a supplier";
-      $info2 = "Details: supplier name: ".$supplier_name."";
+      $info = $_SESSION['username']." updated a supplier data";
+      $info2 = "Details: supplier name: ".$supplier_name. "";
 
       $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
       $r = mysqli_query($link, $q) or die(mysqli_error($link)); 

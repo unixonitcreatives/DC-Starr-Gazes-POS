@@ -29,22 +29,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     //validations
     if(empty($product_description)){
-        $alertMessage = "Please enter product description.";
+        $alertMessage = "Please enter required fields.";
     }
 
 
     if(empty($product_SKU)){
-        $alertMessage = "Please enter product SKU.";
+        $alertMessage = "Please enter required fields.";
     }
 
 
     if(empty($product_category)){
-        $alertMessage = "Please enter product category.";
+        $alertMessage = "Please enter required fields.";
     }
 
 
     if(empty($product_supplier)){
-        $alertMessage = "Please enter product supplier.";
+        $alertMessage = "Please enter required fields.";
     }
 
     // Check input errors before inserting in database
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     //echo "<script>console.log('new user added');</script>";
                                      //logs
                                     $info = $_SESSION['username']." added a new product model";
-                                    $info2 = "Details: product sku: ".$product_SKU.", description: ".$product_description."";
+                                    $info2 = "Details: product sku: ".$product_SKU.", name: ".$product_description."";
 
                                     $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
                                     $r = mysqli_query($link, $q) or die(mysqli_error($link));  
@@ -162,11 +162,11 @@ function test_input($data) {
             <!-- form start -->
             <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
               <div class="box-body">
-                <p><?php echo $alertMessage ?></p>
+                <p class="text-red"><?php echo $alertMessage ?></p>
 
                 <div class="form-group">
-                  <label>Product Description</label>
-                  <input type="text" class="form-control" placeholder="Product Description" name="product_description" oninput="upperCase(this)" maxlength="150" required>
+                  <label>Product Name</label>
+                  <input type="text" class="form-control" placeholder="Product Name" name="product_description" oninput="upperCase(this)" maxlength="150" required>
                 </div>
 
                 <div class="form-group">

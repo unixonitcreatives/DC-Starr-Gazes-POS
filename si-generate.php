@@ -187,11 +187,11 @@
             require_once "config.php";
             // Attempt select query execution
             $query = "";
-            $query = "SELECT a.custID,a.warehouse_ID,b.product_description,
+            $query = "SELECT a.custID,a.warehouse_ID,b.product_category,b.product_description,
             b.product_SKU,b.suggested_retail_price,c.category_name
             FROM stock a
             INNER JOIN product_model b on b.product_SKU=a.PO_ID
-            INNER JOIN  categories c on c.category_name=b.product_description
+            INNER JOIN  categories c on c.category_name=b.product_category
             WHERE a.qty>0";
             if($result = mysqli_query($link, $query)){
               if(mysqli_num_rows($result) > 0){

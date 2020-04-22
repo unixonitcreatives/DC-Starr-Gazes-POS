@@ -25,33 +25,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $qty = test_input($_POST['qty']);
   $cashier = test_input($_POST['cashier']);
   $remarks = test_input($_POST['remarks']);
-  $stID = test_input($_POST['stID']);
+  //$stID = test_input($_POST['stID']);
 
   // Validate password
   if(empty($date_p)){
-      $alertMessage = "Please enter a date of purchase.";
+      $alertMessage = "All Fields are Required.";
   }
 
   // Validate username
   if(empty($si)){
-      $alertMessage = "Please enter a transaction id.";
+      $alertMessage = "All Fields are Required.";
   }
 
   // Validate user type
   if(empty($customer)){
-      $alertMessage = "Please enter a customer.";
+      $alertMessage = "All Fields are Required.";
   }
 
   if(empty($item)){
-      $alertMessage = "Please enter a item.";
+      $alertMessage = "All Fields are Required.";
   }
 
   if(empty($qty)){
-      $alertMessage = "Please enter a quantity.";
+      $alertMessage = "All Fields are Required.";
   }
 
   if(empty($cashier)){
-      $alertMessage = "Please enter a cashier name.";
+     $alertMessage = "All Fields are Required.";
   }
 
   // if(empty($remarks)){
@@ -167,7 +167,7 @@ function test_input($data) {
           <!-- form start -->
           <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="box-body">
-              <p><?php echo $alertMessage ?></p>
+              <p class="text-red"><?php echo $alertMessage ?></p>
               <div class="form-group">
                 <label>Date of Purchase</label> <!--<code class="text-orange">Max. 10 characters</code>-->
                 <input type="date" class="form-control" style="width: 100%;" name="date_p" required>

@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
            //logs
         $info = $_SESSION['username']." added a new customer";
-        $info2 = "Details: customer: ".$firstname . "&nbsp;". $lastname . ", id: ".$custID."";
+        $info2 = "Details: customer: ".$firstname . "&nbsp;". $lastname . ", id: ".$custnewID."";
 
         $q="INSERT INTO logs (info, info2, created_at) VALUES ('$info', '$info2', CURRENT_TIMESTAMP)"; //Prepare insert query
         $r = mysqli_query($link, $q) or die(mysqli_error($link));

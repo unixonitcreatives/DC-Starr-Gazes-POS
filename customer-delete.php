@@ -5,7 +5,7 @@ $get_customer_id = $_GET['id'];
 $custf = $_GET['custf'];
 $custl = $_GET['custl'];
 
-$query = "DELETE from customers WHERE id='$get_customer_id'";
+$query = "DELETE from customers WHERE custID='$get_customer_id'";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if ($result){
        //logs
