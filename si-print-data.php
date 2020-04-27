@@ -14,7 +14,7 @@
 
 require_once "config.php";
 
-$trans_id = $_GET['txID'];
+$trans_id = $_GET['id'];
 
 $query = "SELECT * from sales_order WHERE txID='$trans_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));

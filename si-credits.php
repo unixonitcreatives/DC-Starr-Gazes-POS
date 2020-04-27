@@ -54,7 +54,7 @@
           <div class="box box-default">
               <div class="box-header with-border">
                 <h3 class="box-title">Search for Sales Invoice Credit Data</h3><br>
-                <a href="so-generate.php" class="text-center">+ Generate new Sales Invoice</a>
+                <a href="si-generate.php" class="text-center">+ Generate new Sales Invoice</a>
               </div>
               <div class="box-body">
                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
@@ -75,7 +75,7 @@
                         require_once 'config.php';
                         $mop="";
                         // Attempt select query execution
-                        $query = "SELECT txID, so_cust, SUM(so_price)-SUM(discount) AS TPrice, mop FROM sales_order WHERE mop='Installment' GROUP BY txID ORDER BY created_at DESC";
+                        $query = "SELECT txID, so_cust, SUM(so_price)-discount AS TPrice, mop FROM sales_order WHERE mop='Installment' GROUP BY txID ORDER BY created_at DESC";
                         if($result = mysqli_query($link, $query)){
                           if(mysqli_num_rows($result) > 0){
 

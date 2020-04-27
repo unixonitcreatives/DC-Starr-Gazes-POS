@@ -19,7 +19,7 @@ require_once "config.php";
 $trans_id = $_GET['txID'];
 $custName = $_GET['so_cust'];
 
-$query = "SELECT soID,txID,stock_ID,so_desc,SUM(so_qty) as Qty,SUM(discount) AS discount,SUM(so_price) as Price,so_cust,so_warehouse,mop,created_by FROM sales_order WHERE txID = '$trans_id' ";
+$query = "SELECT soID,txID,stock_ID,so_desc,SUM(so_qty) as Qty,discount,SUM(so_price) as Price,so_cust,so_warehouse,mop,created_by FROM sales_order WHERE txID = '$trans_id' ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
@@ -112,6 +112,8 @@ if (mysqli_num_rows($result) > 0) {
       <?php echo $alertMessage; ?>
       <!-- ======================== MAIN CONTENT ======================= -->
       <section class="content">
+
+
         <!-- general form elements -->
         <div class="box box-default">
           <div class="box-header with-border">
@@ -145,25 +147,26 @@ if (mysqli_num_rows($result) > 0) {
                   <td>
                     <?php
                     if($amountPaid == $gTotal) {
-                        
-                        echo "<div class='alert alert-success alert-dismissible' role='alert'>
-                                Credit balance is now Fully Paid
-                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                    <span aria-hidden='true'>&times;</span>
-                                </button>
-                              </div>";
-                        
+                    // echo "<div class='alert alert-success alert-dismissible' role='alert'>
+                    //             Credit balance is now Fully Paid
+                    //             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    //                 <span aria-hidden='true'>&times;</span>
+                    //             </button>
+                    //           </div>";
+                       echo "<script>alert('Credit balance is now Fully Paid');</script>"; 
+
                        echo "
-                      <form action='#' method='POST'>
+                      <form method='POST'>
                       <button type='button' class='btn btn-primary disabled'>Update Payment</button>
-                      <button class='btn btn-success' name='fullyPaid'>Full Payment</button>
+                      <button class='btn btn-success' name='fullyPaid' id='fullPaid'>Full Payment</button>
                       </form>";
 
+                       
                           if(isset($_POST['fullyPaid'])){
-                          $q = "UPDATE sales_order SET mop = 'Cash' WHERE txID = '$trans_id'";
+                          $q = "UPDATE sales_order SET mop = 'Fully Paid' WHERE txID = '$trans_id'";
                           $r = mysqli_query($link,$q);
 
-                          echo "<script>window.location.href='si-credits.php'</script>";
+                          echo "<script>window.location.href='si-credits.php';</script>";
                           }
                           
                   
@@ -297,6 +300,27 @@ if (mysqli_num_rows($result) > 0) {
      
           });
 
+          var total = $('#ctotal').val();
+          var amountp = $('#amount_paid').val();
+
+          if(total == amountp){
+            location.reload();
+          }
+
+          // $('#fullPaid').on('click', function(){
+          //    var txID = $('#txNum').val();
+
+          //   $.ajax({
+          //     url: 'fullPaid.php',
+          //     type: 'POST',
+          //     data: {txID:'txID'},
+          //     success:function(data){
+          //       alert(data);
+          //       window.location.href='si-credits.php';
+          //     }
+
+          //   })
+          // }); 
 
           // function refreshTable(){
           //   $('#tb').load('creditsTable.php',function(){

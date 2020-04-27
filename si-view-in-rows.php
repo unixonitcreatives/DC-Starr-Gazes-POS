@@ -186,6 +186,10 @@ if (mysqli_num_rows($result) > 0) {
 
               else if($status == "Installment") {
                 echo "<div class='badge bg-orange'>" . $mop . "</div>";
+              } else if($status == "Fully Paid"){
+                echo "<div class='badge bg-green'>". $mop ."</div>";
+              } else if($status == "Paid"){
+                echo "<div class='badge bg-green'>". $mop ."</div>";
               }
 
               ?>

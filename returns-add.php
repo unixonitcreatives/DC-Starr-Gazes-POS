@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $si = test_input($_POST['trans']);
   $customer = test_input($_POST['customer']);
   $item = test_input($_POST['item']);
-  $qty = test_input($_POST['qty']);
+
   $cashier = test_input($_POST['cashier']);
   $remarks = test_input($_POST['remarks']);
   //$stID = test_input($_POST['stID']);
@@ -43,10 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   }
 
   if(empty($item)){
-      $alertMessage = "All Fields are Required.";
-  }
-
-  if(empty($qty)){
       $alertMessage = "All Fields are Required.";
   }
 
@@ -74,11 +70,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 //          $newID = $resulta['MAX(id)'] + 1; //Get the latest ID then Add 1
 //          $custID = str_pad($newID, 4, '0', STR_PAD_LEFT); //Prepare custom ID with Paddings
 //          $custnewID = $IDtype.$m.$d.$y.$custID; //Prepare custom ID
-  if(empty($alertMessage)){
+  if(!$alertMessage){
           $date = date("Y-m-d");
 
           $query = "INSERT INTO returns (date_purchase, trans_id, customer, item, qty, cashier, remarks, created_at) 
-                         VALUES ('$date_p', '$si', '$customer', '$item', '$qty', '$cashier', '$remarks', '$date')"; //Prepare insert query
+                         VALUES ('$date_p', '$si', '$customer', '$item', '1', '$cashier', '$remarks', '$date')"; //Prepare insert query
 
           $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
           
@@ -225,11 +221,6 @@ function test_input($data) {
                 
                   <?php }?>
               </select>
-          </div>
-                
-          <div class="form-group">
-              <label>Quantity</label>
-              <input type="number" class="form-control" style="width: 100%;" name='qty' required>
           </div>
                 
           <div class="form-group">
