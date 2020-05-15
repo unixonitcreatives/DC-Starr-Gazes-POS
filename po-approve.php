@@ -23,7 +23,7 @@ require_once "config.php";
                             while($row = mysqli_fetch_array($result)){ // This is where the Magic Begins
 
                             $count = $row['qty']; //$count is equal to the quantity in the PO
-                            $j = 0; //set lng ng mga variable
+                            
                             $product_SKU = $row['product_description']; //kukunin product description ng PO
                             $warehouse_ID = $row['warehouse_name']; //kukunin warehouse info ng PO
                             $stock_status = "In Stock"; //Automatic pag ka approve, In Stock na
@@ -45,7 +45,7 @@ require_once "config.php";
                                                           $query = "INSERT INTO stock
                                                           (custID, product_SKU, PO_ID, warehouse_ID, stock_status, qty, expiry_date, approved_by)
                                                           VALUES
-                                                          ('$custnewID', '$PO', '$product_SKU', '$warehouse_ID', '$stock_status', 1, '$expiry_date','$approved_by')"; //Prepare insert query
+                                                          ('$custnewID','$product_SKU', '$PO', '$warehouse_ID', '$stock_status', 1, '$expiry_date','$approved_by')"; //Prepare insert query
 
                                                           $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 

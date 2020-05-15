@@ -83,8 +83,7 @@
               <div class="box-body">
                 <button type="button" class="btn btn-primary pull-right" id='export' onclick="ExportToExcel()">Export To Excel</button>
                   <br><br>
-                 <div id="tb-w">
-                     
+                
                 <table id="example1" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                   
                     
@@ -94,8 +93,8 @@
                         
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">No.</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SC No.</th>
-                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO No.</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">SKU</th>
+                      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">PO No.</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Warehouse</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
                       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Expiry Date</th>
@@ -103,7 +102,7 @@
                       
                     </tr>
                   </thead>
-                  <tbody id="ex1">
+                  <tbody>
                     <?php
                     // Attempt select query execution
                     $query = "SELECT * FROM stock WHERE stock_status='In Stock' ORDER BY custID, warehouse_ID asc";
@@ -135,11 +134,7 @@
                           }
 
                           echo "<td>" . $row['approved_by']." on ". $row['created_at'] . "</td>";
-                          echo "<td>";
-
-          
-
-                          echo "</td>";
+               
                           echo "</tr>";
                         }
                         // Free result set
@@ -156,7 +151,7 @@
                     ?>
                   </tbody>
                 </table>
-                </div>
+                
              
             </div>
           </div>
@@ -164,16 +159,20 @@
         <!-- /.content-wrapper -->
       </div>
 
+      
+
+
 
       <!-- =========================== FOOTER =========================== -->
       <footer class="main-footer">
         <?php include('template/footer.php'); ?>
       </footer>
 
-
       <!-- =========================== JAVASCRIPT ========================= -->
       <?php include('template/js.php'); ?>
 
+
+      
 
      <script type="text/javascript">
 
@@ -206,6 +205,8 @@ function ExportToExcel(){
 
     }
 
+
+   
 </script>
 
     </body>
