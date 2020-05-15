@@ -65,6 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $y = date('y');
                                     $d = date('d');
 
+                                    $created_by = $_SESSION['username'];
+
                                     $qry = mysqli_query($link,"SELECT MAX(id) FROM `generate_po`"); // Get the latest ID
                                     $resulta = mysqli_fetch_array($qry);
                                     $newID = $resulta['MAX(id)'] + 1; //Get the latest ID then Add 1
@@ -74,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     $query = "INSERT INTO generate_po
                                     (custID, product_description, warehouse_name, qty, expiry_date, po_status, created_by)
                                     VALUES
-                                    ('$custnewID', '$product_SKU', '$warehouse_name', '$qty', '$expiry','Pending', 'Vince')"; //Prepare insert query
+                                    ('$custnewID', '$product_SKU', '$warehouse_name', '$qty', '$expiry','Pending', '$created_by')"; //Prepare insert query
 
                                     $result = mysqli_query($link, $query) or die(mysqli_error($link)); //Execute  insert query
 
